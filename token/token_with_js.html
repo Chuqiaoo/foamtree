@@ -157,97 +157,91 @@
                     id: "visualization",
                     dataObject: {
                         groups:  convert(newMapping),
-                        pixelRatio: window.devicePixelRatio || 1,
 
-
-//          hold a polygonal to junp to real reactome page
-                        onGroupHold: function (event) {
-                            event.preventDefault();
-                            window.open(event.group.url);
-
-                        },
-
-
-                        // Disable animations
-                        rolloutDuration: 0,
-                        pullbackDuration: 0,
-
-                        //Customize borders, fill and strokes
-                        groupBorderWidth: 2,
-                        groupInsetWidth: 4,
-                        groupBorderRadius: 0.1,
-                        groupBorderRadiusCorrection: 1,
-
-                        groupSelectionOutlineWidth: 3.5,
-
-                        groupFillType: "gradient",
-                        groupFillGradientRadius: 3,
-                        groupFillGradientCenterLightnessShift: 20,
-
-                        groupStrokeWidth: 0.33,
-                        groupStrokeType: "plain",
-                        groupStrokePlainLightnessShift: -10,
-
-                        // Allow some more time to draw
-                        finalCompleteDrawMaxDuration: 500,
-                        finalIncrementalDrawMaxDuration: 500,
-
-                        // Make the line spacing and the total height of the
-                        // label smaller than the default to make space for
-                        // the coverage value display
-                        groupLabelLineHeight: 1.0,
-
-
-                        groupSelectionOutlineColor: "#58C3E5",
-                        titleBar: "inscribed",
-                        titleBarFontFamily: "monospace",
-                        //maxLabelSizeForTitleBar: Number.MAX_VALUE,
-                        groupLabelFontFamily: "Arial, sans-serif",
-
-
-
-                        groupColorDecorator: function (opts, props, vars) {
-                            var group = props.group;
-                            if (group.company) {
-                                vars.groupColor = group.company.color;
-                            } else {
-                                vars.groupColor = "#58C3E5";
-                                vars.labelColor = "#000";
-                            }
-                        },
-
-
-                        // Assign colors based on the coverage value
-                        groupColorDecorator: function (opts, params, vars) {
-
-                            var coverage = params.group.pValue;
-                            if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
-                                // Coverage defined. 0% coverage will be yellow,
-                                // 100% coverage will be olive.
-
-                            //min yellow : hsl(52, 98%, 60%)
-                            //max: olive  : hsl (58, 100, 29)
-
-                                vars.groupColor.h = 52 + 6 * (coverage / 0.05 );
-                                vars.groupColor.s = 98 + 2 * (coverage / 0.05 );
-                                vars.groupColor.l = 60 - 31 * (coverage / 0.05 );
-
-                            } else {
-                                // Coverage not defined, draw the group in grey.
-                                vars.groupColor.s = 0;
-                                vars.groupColor.l = 75;
-
-                            }
-                        }
                     }
-
 
                 });
 
-            //Clear the previous model.
-//            foamtree.set("dataObject", null);
+                //              basic  definition
+                foamtree.set({
+                    pixelRatio: window.devicePixelRatio || 1,
+
+                    // Disable animations
+                    rolloutDuration: 0,
+                    pullbackDuration: 0,
+
+                    //Customize borders, fill and strokes
+                    groupBorderWidth: 2,
+                    groupInsetWidth: 4,
+                    groupBorderRadius: 0.1,
+                    groupBorderRadiusCorrection: 1,
+
+                    groupSelectionOutlineWidth: 3.5,
+
+                    groupFillType: "gradient",
+                    groupFillGradientRadius: 3,
+                    groupFillGradientCenterLightnessShift: 20,
+
+                    groupStrokeWidth: 0.33,
+                    groupStrokeType: "plain",
+                    groupStrokePlainLightnessShift: -10,
+
+                    // Allow some more time to draw
+                    finalCompleteDrawMaxDuration: 500,
+                    finalIncrementalDrawMaxDuration: 500,
+
+                    // Make the line spacing and the total height of the
+                    // label smaller than the default to make space for
+                    // the coverage value display
+                    groupLabelLineHeight: 1.0,
 
 
+                    groupSelectionOutlineColor: "#58C3E5",
+                    titleBar: "inscribed",
+                    titleBarFontFamily: "monospace",
+                    //maxLabelSizeForTitleBar: Number.MAX_VALUE,
+                    groupLabelFontFamily: "Arial, sans-serif",
+
+                });
+
+                //hold a polygonal to junp to real reactome page
+                foamtree.set({
+
+                    onGroupHold: function (event) {
+                        event.preventDefault();
+                        window.open(event.group.url);
+
+                    }
+                });
+
+//              Assign colors based on the  Pvalue
+                foamtree.set({
+
+                    groupColorDecorator: function (opts, params, vars) {
+
+                        var coverage = params.group.pValue;
+                        if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
+                            // Coverage defined. 0% coverage will be yellow,
+                            // 100% coverage will be olive.
+
+//                  min yellow : hsl(52, 98%, 60%)
+//                  max: olive  : hsl (58, 100, 29)
+
+                            vars.groupColor.h = 52 + 6 * (coverage / 0.05 );
+                            vars.groupColor.s = 98 + 2 * (coverage / 0.05 );
+                            vars.groupColor.l = 60 - 31 * (coverage / 0.05 );
+
+                        } else {
+                            // Coverage not defined, draw the group in grey.
+                            vars.groupColor.s = 0;
+                            vars.groupColor.l = 75;
+
+                        }
+                    }
+
+                });
+
+//              title bar
                 foamtree.set({
                     maxLabelSizeForTitleBar: Number.MAX_VALUE,
 
@@ -264,7 +258,7 @@
 
             // Load Token data.
         $.ajax({
-                url: "https://dev.reactome.org/AnalysisService/token/MjAxOTAxMjExMjA3MDBfMg%25253D%25253D?pageSize=20&page=1&sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
+                url: "https://dev.reactome.org/AnalysisService/token/MjAxOTAxMjExMjA3MDBfMg%25253D%25253D?sortBy=ENTITIES_PVALUE&order=ASC&resource=UNIPROT",
                 dataType: "json",
                 type: "GET",
                 success: function (json) {
