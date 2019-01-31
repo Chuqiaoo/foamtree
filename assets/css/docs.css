@@ -1,0 +1,463 @@
+/*
+ * Bootstrap Documentation
+ * Special styles for presenting Bootstrap's documentation and code examples.
+ */
+
+
+/*
+ * Scaffolding
+ *
+ * Update the basics of our documents to prep for docs content.
+ */
+
+body {
+  position: relative; /* For scrollyspy */
+  padding-top: 50px; /* Account for fixed navbar */
+  font-family: sans-serif;
+}
+
+/* Keep code small in tables on account of limited space */
+.table code {
+  font-size: 13px;
+  font-weight: normal;
+}
+
+/*
+ * Side navigation
+ *
+ * Scrollspy and affixed enhanced navigation to highlight sections and secondary
+ * sections of docs content.
+ */
+
+/* By default it's not affixed in mobile views, so undo that */
+.bs-sidebar.affix {
+  position: static;
+}
+
+/* First level of nav */
+.bs-sidenav {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-top:    10px;
+  padding-bottom: 10px;
+  text-shadow: 0 1px 0 #fff;
+  background-color: #f7f5fa;
+  border-radius: 5px;
+}
+
+/* All levels of nav */
+.bs-sidebar .nav > li > a {
+  display: block;
+  color: #716b7a;
+  padding: 5px 20px;
+}
+.bs-sidebar .nav > li > a:hover,
+.bs-sidebar .nav > li > a:focus {
+  text-decoration: none;
+  background-color: #e5e3e9;
+  border-right: 1px solid #dbd8e0;
+}
+.bs-sidebar .nav > .active > a,
+.bs-sidebar .nav > .active:hover > a,
+.bs-sidebar .nav > .active:focus > a {
+  font-weight: bold;
+  color: #563d7c;
+  background-color: transparent;
+  border-right: 1px solid #563d7c;
+}
+
+/* Nav: second level (shown on .active) */
+.bs-sidebar .nav .nav {
+  display: none; /* Hide by default, but at >768px, show it */
+  margin-bottom: 8px;
+}
+.bs-sidebar .nav .nav > li > a {
+  padding-top:    3px;
+  padding-bottom: 3px;
+  padding-left: 30px;
+  font-size: 90%;
+}
+
+/* Show and affix the side nav when space allows it */
+@media screen and (min-width: 992px) {
+  .bs-sidebar .nav > .active > ul {
+    display: block;
+  }
+  /* Widen the fixed sidebar */
+  .bs-sidebar.affix,
+  .bs-sidebar.affix-bottom {
+    width: 213px;
+  }
+  .bs-sidebar.affix {
+    position: fixed; /* Undo the static from mobile first approach */
+    top: 80px;
+  }
+  .bs-sidebar.affix-bottom {
+    position: absolute; /* Undo the static from mobile first approach */
+  }
+  .bs-sidebar.affix-bottom .bs-sidenav,
+  .bs-sidebar.affix .bs-sidenav {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+@media screen and (min-width: 1200px) {
+  /* Widen the fixed sidebar again */
+  .bs-sidebar.affix-bottom,
+  .bs-sidebar.affix {
+    width: 263px;
+  }
+}
+
+
+/** FoamTree documentation */
+body {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: #000;
+}
+
+h1, h2 {
+  margin-top: 40px;
+}
+h3 {
+  margin-top: 30px;
+}
+h4 {
+  margin-top: 20px;
+}
+h5 {
+  font-weight: bold;
+}
+
+code {
+  color: #00366e;
+  background-color: #f7faff;
+  border: 1px solid #e9eef5;
+}
+.alert-info code {
+  background-color: #e6efff;
+}
+code[data-deprecation-href] {
+  text-decoration: line-through;
+}
+
+.fullVersion .showInDemoVersion {
+  display: none;
+}
+
+.jumbotron {
+  background-color: white;
+  text-align: center;
+  margin-top: 0;
+}
+
+#search {
+  height: 24px;
+  padding: 2px 5px;
+  display: inline;
+  margin: 3px 0 3px 3px;
+}
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: searchfield-cancel-button;
+}
+span.hl {
+  background-color: #ffe600;
+  border-bottom: 2px solid #ead100;
+}
+
+#toggle-font {
+  font-size: 11px;
+  height: 24px;
+  width: 65px;
+}
+#toggle-font > i {
+  font-size: 1.2em;
+  line-height: .6em;
+  vertical-align: -15%;
+}
+#search { width: 155px; }
+
+@media (min-width: 768px) {
+  .bs-sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 158px;
+  }
+
+  #toggle-font { width: 22px; }
+  #toggle-font > span { display: none; }
+  #search { width: 107px; }
+
+  dl.dl-horizontal.wide dt {
+    width: 200px;
+  }
+  dl.dl-horizontal.wide dd {
+    margin-left: 220px;
+  }
+  dl.dl-horizontal.x-wide dt {
+    width: 230px;
+  }
+  dl.dl-horizontal.x-wide dd {
+    margin-left: 250px;
+  }
+  dl.dl-horizontal.narrow dt {
+    width: 100px;
+  }
+  dl.dl-horizontal.narrow dd {
+    margin-left: 120px;
+  }
+}
+
+@media (min-width: 992px) {
+  .bs-sidebar { width: 213px; }
+  #toggle-font { width: 60px; }
+  #toggle-font > span { display: inline; }
+  #search { width: 124px; }
+}
+
+@media (min-width: 1200px) {
+  .bs-sidebar { width: 253px; }
+  #toggle-font { width: 60px; }
+  #search { width: 165px; }
+}
+
+
+.searchbox {
+  position: fixed;
+  height: 30px;
+  background-color: white;
+  z-index: 1;
+  padding-right: 5px;
+}
+
+.bs-sidenav {
+  margin-top: 32px;
+  background-color: white;
+  padding-top: 0;
+  padding-right: 5px;
+}
+.bs-sidebar .nav .nav {
+  display: block;
+}
+
+.bs-sidebar a {
+  border-color: #ccc !important;
+  border-width: 3px !important;
+}
+.bs-sidebar .nav > li {
+  margin-bottom: 0;
+}
+
+.bs-sidebar .nav > li > a {
+  font-size: 120%;
+  font-weight: bold;
+  padding: 4px 6px;
+  border-radius: 2px;
+  color: #222;
+  margin: 2px 1px;
+}
+.bs-sidebar .nav .nav > li > a,
+.bs-sidebar .nav .nav > li > a:hover {
+  font-size: 100%;
+  font-weight: normal;
+  padding: 0 6px;
+  color: #222;
+  margin-top: 0;
+  margin-left: 1px;
+}
+.bs-sidebar .nav .nav > li > a.api-group {
+  font-weight: bold;
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+.bs-sidebar .nav > li > a:hover,
+.bs-sidebar .nav > li.active:hover > a,
+.bs-sidebar .nav > li.active > a {
+  background-color: #f4f4f4;
+  color: #222;
+}
+
+.navsmall #toc { font-size: 10px; }
+.navnormal #toc { font-size: 12px; }
+.navlarge #toc { font-size: 18px; }
+
+.bs-sidebar {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bs-sidebar::-webkit-scrollbar {
+  width: 12px;
+  height: 16px;
+  background-color: rgba(0,0,0,0);
+}
+
+.bs-sidebar::-webkit-scrollbar:hover {
+  background-color: rgba(0,0,0,0.05);
+}
+
+.bs-sidebar::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 6px;
+  -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,0.07),inset 0 -1px 0 rgba(0,0,0,0.04);
+}
+
+.bs-sidebar::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.bs-sidebar::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+.api > h3 {
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.api > h3 > div {
+  font-size: small;
+  color: #777;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.api {
+  margin-bottom: 50px;
+}
+
+.page-header + .api,
+.page-header + .api-group > h2 + .api {
+  margin-top: 0;
+}
+
+pre, .hljs {
+  background-color: #fefefe;
+  border-color: #f0f0f0;
+  border-left: 20px solid #f8f8f8;
+}
+pre + div.executable-buttons {
+  margin-bottom: 20px;
+}
+
+#example-overlay {
+  position:fixed;
+  height:100%;
+  width:100%;
+  left:0;
+  top:0;
+  z-index: 255 !important;
+  background-color: rgba(255,255,255,.5);
+  cursor: pointer;
+}
+
+#example-overlay-help {
+  position:fixed;
+  width:100%;
+  left:0;
+  top: 10px;
+  text-align: center;
+  pointer-events: none;
+}
+
+#visualization {
+  position: absolute;
+  top: 50px;
+  bottom: 50px;
+  left: 50px;
+  right: 50px;
+  background-color: rgba(255,255,255,0.75);
+  cursor: auto;
+}
+
+#example-overlay {
+  transition: visibility 0s linear 0, opacity 0.35s linear;
+  -webkit-transition: visibility 0s linear 0, opacity 0.35s linear;
+}
+#example-overlay.fadeout {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.35s, opacity 0.35s linear;
+  -webkit-transition: visibility 0s linear 0.35s, opacity 0.35s linear;
+}
+
+ol > li, ul > li, dd {
+  margin-bottom: 0.9ex;
+}
+pre li {
+  margin: 0;
+}
+
+.alert > p {
+  margin-bottom: 10px;
+}
+.alert > pre:last-child,
+.alert > p:last-child,
+.alert > table:last-child,
+.alert div.executable-buttons:last-child {
+  margin-bottom: 0;
+}
+.alert .table thead > tr > th,
+.alert .table tbody > tr > td {
+  border-color: white;
+}
+
+dl.api-changes dt {
+  font-weight: normal;
+}
+
+tr:target {
+  background-color: #ffffdd;
+}
+
+.api:target > .well {
+  /** Copied from .alert-warning */
+  background-image: -webkit-gradient(linear,left 0,left 100%,from(#fcf8e3),to(#f8efc0));
+  background-image: -webkit-linear-gradient(top,#fcf8e3,0%,#f8efc0,100%);
+  background-image: -moz-linear-gradient(top,#fcf8e3 0,#f8efc0 100%);
+  background-image: linear-gradient(to bottom,#fcf8e3 0,#f8efc0 100%);
+  background-repeat: repeat-x;
+  border-color: #f5e79e;
+}
+
+.key {
+  font-size: 70%;
+  vertical-align: 10%;
+  text-transform: uppercase;
+  border: 1px solid #ddd;
+  background-color: #f4f4f4;
+  padding: 1px 4px;
+  border-radius: 3px;
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+img.right.floated {
+  float: right;
+  margin-left: 10px;
+}
+
+a > img {
+  margin-bottom: 10px;
+}
+
+@media print {
+  .executable-buttons {
+    display: none;
+  }
+
+  .pre-scrollable {
+    max-height: 10000px;
+    overflow-y: auto;
+  }
+}
+

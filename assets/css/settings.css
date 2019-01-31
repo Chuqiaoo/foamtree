@@ -1,0 +1,381 @@
+/**
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ *
+ * Copyright 2002-2017, Carrot Search s.c, All Rights Reserved.
+ *
+ *
+ * Styles for the settings panel.
+ *
+ * Please see demos/settings.html for the usage example.
+ */
+#progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+}
+
+.dark .visualization-loading{
+  background-image: -webkit-radial-gradient(50% 50%, circle farthest-corner, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.75) 50%, rgba(0, 0, 0, 1) 100%);
+  background-image: -moz-radial-gradient(50% 50%, circle farthest-corner, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.75) 50%, rgba(0, 0, 0, 1) 100%);
+  background-image: radial-gradient(50% 50%, circle farthest-corner, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.75) 50%, rgba(0, 0, 0, 1) 100%);
+}
+
+.visualization-loading > div {
+  color: black;
+  font-size: 50px;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  margin-top: -25px;
+  text-align: center;
+}
+.dark .visualization-loading > div {
+  color: white;
+}
+
+#container {
+  -webkit-transition: background-color 0.5s;
+}
+
+#container.dark {
+  background-color: #333;
+  border-color: #000;
+}
+
+.form-control {
+  font-size: 12px;
+}
+
+.links > section a {
+  display: block;
+}
+.links > section.full a {
+  display: inline;
+  padding-right: 1em;
+}
+.links h5 {
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 0;
+}
+.links > section {
+  float: left;
+  width: 50%;
+  margin-bottom: 15px;
+}
+.links > section:nth-child(even) {
+  clear: both;
+}
+.links > section.full {
+  width: 100%;
+}
+section.links {
+  overflow: hidden; /** restore margin when all children are floated */
+  margin-bottom: 0;
+}
+
+.tools {
+  position: fixed;
+  background-color: #fff;
+  z-index: 2;
+  width: 400px;
+  margin-bottom: 20px;
+  text-align: right;
+  height: 40px;
+}
+#search {
+  width: 20em;
+  display: inline;
+  margin-right: 10px;
+}
+
+.intro {
+  margin-top: 45px;
+  margin-bottom: 20px;
+}
+
+/** Settings components */
+.slider {
+  top: -6px;
+}
+
+.settings-number-value,
+.settings-range-from,
+.settings-range-to {
+  width: 45px;
+  text-align: center;
+  display: inline;
+}
+.settings-number-value,
+.settings-range-from {
+  margin-right: 10px;
+}
+.settings-range-to {
+  margin-left: 10px;
+}
+.settings-number-slider,
+.settings-range-slider {
+  width: 120px;
+  height: 6px;
+  display: inline-block;
+}
+
+.settings-enum > label {
+  vertical-align: top;
+}
+.settings-enum-options,
+.settings-link-options {
+  display: inline-block;
+  width: 180px;
+  margin-bottom: 10px;
+}
+
+.settings-combo > select {
+  width: 180px;
+  padding: 4px 4px;
+  height: 26px;
+}
+
+.settings-string > input {
+  width: 160px;
+}
+
+.settings-link a {
+  padding-right: 0.7em;
+}
+
+.settings-boolean {
+  margin-bottom: 5px;
+}
+
+.settings-color {
+  margin-bottom: 5px;
+}
+.settings-color > label {
+  vertical-align: middle;
+}
+.settings-color > div {
+  vertical-align: middle;
+  display: inline-block;
+  width: 180px;
+}
+.settings-color .input-group-addon {
+  padding: 4px;
+}
+
+/** Export */
+.export .json {
+  color: #333;
+  border: 1px solid #e4e4e4;
+  background: #f8f8f8;
+  border-radius: 3px;
+  padding: 5px;
+  margin-top: 15px;
+}
+
+.export .select {
+  float: right;
+}
+
+.export .checkbox {
+  margin-right: 0.5em;
+}
+
+/** Data object */
+.export .json,
+.data-json .json {
+  height: 350px;
+  overflow-y: auto;
+  font-family: Consolas, 'Liberation Mono', Courier, monospace;
+}
+
+.data-json .error {
+  color: #b94a48;
+}
+
+/** Data generator */
+.generator dl dt {
+  line-height: 1.5;
+}
+.generator dl dt {
+  text-align: left;
+  width: 140px;
+  font-weight: normal;
+}
+.generator dl dd {
+  margin-left: 150px;
+  text-align: left;
+  font-weight: bold;
+}
+.generator h5:first-child {
+  margin-top: 0;
+}
+.generator section {
+  margin-bottom: 20px;
+}
+.generator .presets  a {
+  display: block;
+}
+
+
+/** Highlighting */
+b.hl {
+  font-weight: normal;
+  background-color: #ffe600;
+  border-bottom: 2px solid #ead100;
+}
+
+/** Doc links */
+.settings label > a {
+  margin-left: 3px;
+  text-decoration: none;
+  visibility: hidden;
+}
+.settings label:hover > a {
+  visibility: visible;
+}
+
+/** Panel-specific Bootstrap tweaks */
+.settings .form-inline {
+  margin-bottom: 5px;
+  clear: both;
+}
+
+.settings input[type="text"] {
+  padding: 3px;
+  height: 26px;
+  vertical-align: bottom;
+}
+
+.settings label {
+  font-weight: normal;
+}
+
+.settings .form-inline > label {
+  width: 200px;
+  padding-left: 1px;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  float: left;
+  padding-top: 4px;
+}
+
+.settings .form-inline div.radio {
+  display: block;
+}
+
+.modal {
+  overflow-y: auto;
+}
+
+.modal-lg {
+  width: 800px;
+}
+
+input[type="checkbox"] {
+  vertical-align: -10%;
+}
+
+.settings input[type="checkbox"] {
+  vertical-align: -40%;
+}
+
+/** Bring back search clearing */
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: searchfield-cancel-button;
+}
+
+
+/** Folding */
+.foldable {
+  margin-bottom: 30px;
+}
+.foldable header {
+  cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: moz-none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.down, .right {
+  font-size: 90%;
+  margin-left: 3px;
+}
+.down {
+  vertical-align: 5%;
+}
+
+section header .right,
+section.folded header .down {
+  display: none;
+}
+section header .down,
+section.folded header .right {
+  display: inline;
+}
+
+section.folded > section,
+section.folded > div {
+  display: none;
+}
+
+/** A lighter scrollbar on Webkit */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fcfcfc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d0d0d0;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b0b0b0;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #909090;
+}
+
+@media (max-width: 1023px) {
+  .tools {
+    display: none;
+  }
+  .intro {
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 440px) {
+  .settings .form-inline > label {
+    width: 160px;
+  }
+}
+
+@media (max-width: 359px) {
+  .settings .form-inline > label {
+    width: 120px;
+  }
+}

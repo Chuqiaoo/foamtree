@@ -1,0 +1,659 @@
+<searchresult>
+   <query>ben and jerry</query>
+   <group id="0" size="46" score="1.0">
+      <title>
+         <phrase>Ice Cream</phrase>
+      </title>
+      <group id="1" size="11" score="1.0">
+         <title>
+            <phrase>Ice Cream Company</phrase>
+         </title>
+         <attribute key="label-scores">
+            <value>
+               <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+                  <list>
+                     <value type="java.lang.Double" value="0.9859270673984007"/>
+                  </list>
+               </wrapper>
+            </value>
+         </attribute>
+         <document refid="1"/>
+         <document refid="4"/>
+         <document refid="8"/>
+         <document refid="25"/>
+         <document refid="35"/>
+         <document refid="45"/>
+         <document refid="48"/>
+         <document refid="67"/>
+         <document refid="71"/>
+         <document refid="95"/>
+         <document refid="101"/>
+      </group>
+      <group id="2" size="11" score="0.9489848709619997">
+         <title>
+            <phrase>Flavor</phrase>
+         </title>
+         <attribute key="label-scores">
+            <value>
+               <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+                  <list>
+                     <value type="java.lang.Double" value="0.8878985922406601"/>
+                  </list>
+               </wrapper>
+            </value>
+         </attribute>
+         <document refid="4"/>
+         <document refid="14"/>
+         <document refid="33"/>
+         <document refid="47"/>
+         <document refid="48"/>
+         <document refid="67"/>
+         <document refid="71"/>
+         <document refid="81"/>
+         <document refid="90"/>
+         <document refid="93"/>
+         <document refid="97"/>
+      </group>
+      <group id="3" size="8" score="0.9461472903644106">
+         <title>
+            <phrase>Vermont</phrase>
+         </title>
+         <attribute key="label-scores">
+            <value>
+               <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+                  <list>
+                     <value type="java.lang.Double" value="0.9831627049608981"/>
+                  </list>
+               </wrapper>
+            </value>
+         </attribute>
+         <document refid="32"/>
+         <document refid="57"/>
+         <document refid="59"/>
+         <document refid="62"/>
+         <document refid="63"/>
+         <document refid="70"/>
+         <document refid="83"/>
+         <document refid="91"/>
+      </group>
+      <group id="4" size="3" score="0.7931709091221426">
+         <title>
+            <phrase>Colbert</phrase>
+         </title>
+         <attribute key="label-scores">
+            <value>
+               <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+                  <list>
+                     <value type="java.lang.Double" value="0.9885141987458685"/>
+                  </list>
+               </wrapper>
+            </value>
+         </attribute>
+         <document refid="47"/>
+         <document refid="67"/>
+         <document refid="90"/>
+      </group>
+      <group id="5" size="2" score="0.7403991918785777">
+         <title>
+            <phrase>Cookie Dough</phrase>
+         </title>
+         <attribute key="label-scores">
+            <value>
+               <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+                  <list>
+                     <value type="java.lang.Double" value="1.0"/>
+                  </list>
+               </wrapper>
+            </value>
+         </attribute>
+         <document refid="78"/>
+         <document refid="96"/>
+      </group>
+      <group id="6" size="2" score="0.7320230080084376">
+         <title>
+            <phrase>Jerry Greenfield</phrase>
+         </title>
+         <attribute key="label-scores">
+            <value>
+               <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+                  <list>
+                     <value type="java.lang.Double" value="0.9775018562770335"/>
+                  </list>
+               </wrapper>
+            </value>
+         </attribute>
+         <document refid="35"/>
+         <document refid="80"/>
+      </group>
+      <group id="7" size="2" score="0.710013110974631">
+         <title>
+            <phrase>New York</phrase>
+         </title>
+         <attribute key="label-scores">
+            <value>
+               <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+                  <list>
+                     <value type="java.lang.Double" value="0.9196040275627662"/>
+                  </list>
+               </wrapper>
+            </value>
+         </attribute>
+         <document refid="58"/>
+         <document refid="80"/>
+      </group>
+      <group id="8" size="2" score="0.7053300475026189">
+         <title>
+            <phrase>Center</phrase>
+         </title>
+         <attribute key="label-scores">
+            <value>
+               <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+                  <list>
+                     <value type="java.lang.Double" value="0.907513091576681"/>
+                  </list>
+               </wrapper>
+            </value>
+         </attribute>
+         <document refid="66"/>
+         <document refid="74"/>
+      </group>
+      <group id="9" size="2" score="0.6924629436460304">
+         <title>
+            <phrase>Blue Bunny</phrase>
+         </title>
+         <attribute key="label-scores">
+            <value>
+               <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+                  <list>
+                     <value type="java.lang.Double" value="0.8747041822912721"/>
+                  </list>
+               </wrapper>
+            </value>
+         </attribute>
+         <document refid="95"/>
+         <document refid="99"/>
+      </group>
+      <group id="10" size="2" score="0.6924629436460304">
+         <title>
+            <phrase>Chunkmail Newsletter</phrase>
+         </title>
+         <attribute key="label-scores">
+            <value>
+               <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+                  <list>
+                     <value type="java.lang.Double" value="0.8747041822912721"/>
+                  </list>
+               </wrapper>
+            </value>
+         </attribute>
+         <document refid="49"/>
+         <document refid="59"/>
+      </group>
+      <group id="11" size="2" score="0.6924629436460304">
+         <title>
+            <phrase>Greek Frozen Yogurt</phrase>
+         </title>
+         <attribute key="label-scores">
+            <value>
+               <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+                  <list>
+                     <value type="java.lang.Double" value="0.8747041822912721"/>
+                  </list>
+               </wrapper>
+            </value>
+         </attribute>
+         <document refid="1"/>
+         <document refid="15"/>
+      </group>
+      <group id="12" size="11" score="0.0">
+         <title>
+            <phrase>Other Topics</phrase>
+         </title>
+         <attribute key="other-topics">
+            <value type="java.lang.Boolean" value="true"/>
+         </attribute>
+         <attribute key="label-scores">
+            <value>
+               <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+                  <list>
+                     <value type="java.lang.Double" value="-1.0"/>
+                  </list>
+               </wrapper>
+            </value>
+         </attribute>
+         <document refid="0"/>
+         <document refid="2"/>
+         <document refid="6"/>
+         <document refid="13"/>
+         <document refid="17"/>
+         <document refid="38"/>
+         <document refid="51"/>
+         <document refid="52"/>
+         <document refid="76"/>
+         <document refid="84"/>
+         <document refid="98"/>
+      </group>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.9770757367573579"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+   </group>
+   <group id="13" size="7" score="0.7621671887058885">
+      <title>
+         <phrase>Ben Cohen</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="1.0"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="25"/>
+      <document refid="30"/>
+      <document refid="35"/>
+      <document refid="39"/>
+      <document refid="60"/>
+      <document refid="65"/>
+      <document refid="80"/>
+   </group>
+   <group id="14" size="7" score="0.7577790362590473">
+      <title>
+         <phrase>Scoop Shop</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.9885182144017726"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="9"/>
+      <document refid="10"/>
+      <document refid="13"/>
+      <document refid="40"/>
+      <document refid="44"/>
+      <document refid="71"/>
+      <document refid="83"/>
+   </group>
+   <group id="15" size="6" score="0.7169886250278311">
+      <title>
+         <phrase>LinkedIn</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.9350864565644672"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="11"/>
+      <document refid="12"/>
+      <document refid="16"/>
+      <document refid="21"/>
+      <document refid="23"/>
+      <document refid="36"/>
+   </group>
+   <group id="16" size="4" score="0.6430483512993279">
+      <title>
+         <phrase>Contact</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.8729341847935049"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="9"/>
+      <document refid="10"/>
+      <document refid="43"/>
+      <document refid="69"/>
+   </group>
+   <group id="17" size="4" score="0.623172784350571">
+      <title>
+         <phrase>News</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.8198062019318969"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="20"/>
+      <document refid="26"/>
+      <document refid="54"/>
+      <document refid="58"/>
+   </group>
+   <group id="18" size="4" score="0.6208991546269866">
+      <title>
+         <phrase>Euphoria</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.8138350313852274"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="7"/>
+      <document refid="10"/>
+      <document refid="22"/>
+      <document refid="28"/>
+   </group>
+   <group id="19" size="3" score="0.6174497586359257">
+      <title>
+         <phrase>Ben Jerry&apos;s Instagram</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.8959896113285211"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="41"/>
+      <document refid="50"/>
+      <document refid="89"/>
+   </group>
+   <group id="20" size="3" score="0.6091147281252501">
+      <title>
+         <phrase>Main Content</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.8719627354993815"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="3"/>
+      <document refid="18"/>
+      <document refid="71"/>
+   </group>
+   <group id="21" size="3" score="0.5995182765924258">
+      <title>
+         <phrase>Guys</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.8447040538498508"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="26"/>
+      <document refid="83"/>
+      <document refid="86"/>
+   </group>
+   <group id="22" size="2" score="0.58450205948385">
+      <title>
+         <phrase>Jerry Seinfeld</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.932160264242387"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="87"/>
+      <document refid="88"/>
+   </group>
+   <group id="23" size="2" score="0.5759253646616495">
+      <title>
+         <phrase>Ben Jerry&apos;s Captureeuphoria</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.9050048497805597"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="7"/>
+      <document refid="89"/>
+   </group>
+   <group id="24" size="2" score="0.5717516467303704">
+      <title>
+         <phrase>Values-led Company</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.8919352805874583"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="37"/>
+      <document refid="56"/>
+   </group>
+   <group id="25" size="2" score="0.5693105269097728">
+      <title>
+         <phrase>Ben E. King</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.8843352226988188"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="72"/>
+      <document refid="100"/>
+   </group>
+   <group id="26" size="2" score="0.5623818841736119">
+      <title>
+         <phrase>Robert</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.86294107122043"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="55"/>
+      <document refid="85"/>
+   </group>
+   <group id="27" size="2" score="0.5611663575448093">
+      <title>
+         <phrase>John</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.8592147979903931"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="75"/>
+      <document refid="76"/>
+   </group>
+   <group id="28" size="2" score="0.5560559207034808">
+      <title>
+         <phrase>Flavor Graveyard</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.84363663988752"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="5"/>
+      <document refid="14"/>
+   </group>
+   <group id="29" size="2" score="0.5496421197106987">
+      <title>
+         <phrase>Häagen-Dazs</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.8242871056744333"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="53"/>
+      <document refid="95"/>
+   </group>
+   <group id="30" size="2" score="0.5472953975275026">
+      <title>
+         <phrase>Impact</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.8172634685828961"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="24"/>
+      <document refid="90"/>
+   </group>
+   <group id="31" size="2" score="0.5345794164022786">
+      <title>
+         <phrase>Eis</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.7797276942252162"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="46"/>
+      <document refid="92"/>
+   </group>
+   <group id="32" size="2" score="0.5334239817516735">
+      <title>
+         <phrase>Television</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.7763607453910384"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="82"/>
+      <document refid="87"/>
+   </group>
+   <group id="33" size="2" score="0.5334239817516735">
+      <title>
+         <phrase>Tourist</phrase>
+      </title>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="0.7763607453910384"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="70"/>
+      <document refid="102"/>
+   </group>
+   <group id="34" size="13" score="0.0">
+      <title>
+         <phrase>Other Topics</phrase>
+      </title>
+      <attribute key="other-topics">
+         <value type="java.lang.Boolean" value="true"/>
+      </attribute>
+      <attribute key="label-scores">
+         <value>
+            <wrapper class="org.carrot2.util.simplexml.ListSimpleXmlWrapper">
+               <list>
+                  <value type="java.lang.Double" value="-1.0"/>
+               </list>
+            </wrapper>
+         </value>
+      </attribute>
+      <document refid="19"/>
+      <document refid="27"/>
+      <document refid="29"/>
+      <document refid="31"/>
+      <document refid="34"/>
+      <document refid="42"/>
+      <document refid="61"/>
+      <document refid="64"/>
+      <document refid="68"/>
+      <document refid="73"/>
+      <document refid="77"/>
+      <document refid="79"/>
+      <document refid="94"/>
+   </group>
+   <attribute key="processing-time-total">
+      <value type="java.lang.Long" value="1289"/>
+   </attribute>
+   <attribute key="processing-time-algorithm">
+      <value type="java.lang.Long" value="786"/>
+   </attribute>
+   <attribute key="results-total">
+      <value type="java.lang.Long" value="103"/>
+   </attribute>
+   <attribute key="SearchEngineBase.compressed">
+      <value type="java.lang.Boolean" value="true"/>
+   </attribute>
+   <attribute key="results">
+      <value value="400"/>
+   </attribute>
+   <attribute key="processing-time-source">
+      <value type="java.lang.Long" value="503"/>
+   </attribute>
+   <attribute key="SearchEngineStats.pageRequests">
+      <value type="java.lang.Integer" value="0"/>
+   </attribute>
+   <attribute key="SearchEngineStats.queries">
+      <value type="java.lang.Integer" value="0"/>
+   </attribute>
+</searchresult>

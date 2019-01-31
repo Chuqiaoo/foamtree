@@ -1,0 +1,152 @@
+parents,parent_name,parent_mass,parents_url,id,label,weight,url
+R-HSA-1640170,Cell Cycle,739,https://reactome.org/PathwayBrowser/#/R-HSA-1640170,R-HSA-1500620,Meiosis,89,https://reactome.org/PathwayBrowser/#/R-HSA-1500620
+R-HSA-1640170,Cell Cycle,739,https://reactome.org/PathwayBrowser/#/R-HSA-1640170,R-HSA-69278,"Cell Cycle, Mitotic",574,https://reactome.org/PathwayBrowser/#/R-HSA-69278
+R-HSA-1640170,Cell Cycle,739,https://reactome.org/PathwayBrowser/#/R-HSA-1640170,R-HSA-69620,Cell Cycle Checkpoints,277,https://reactome.org/PathwayBrowser/#/R-HSA-69620
+R-HSA-1640170,Cell Cycle,739,https://reactome.org/PathwayBrowser/#/R-HSA-1640170,R-HSA-73886,Chromosome Maintenance,90,https://reactome.org/PathwayBrowser/#/R-HSA-73886
+R-HSA-1500931,Cell-Cell communication,139,https://reactome.org/PathwayBrowser/#/R-HSA-1500931,R-HSA-373753,Nephrin family interactions,26,https://reactome.org/PathwayBrowser/#/R-HSA-373753
+R-HSA-1500931,Cell-Cell communication,139,https://reactome.org/PathwayBrowser/#/R-HSA-1500931,R-HSA-391160,Signal regulatory protein family interactions,18,https://reactome.org/PathwayBrowser/#/R-HSA-391160
+R-HSA-1500931,Cell-Cell communication,139,https://reactome.org/PathwayBrowser/#/R-HSA-1500931,R-HSA-446728,Cell junction organization,95,https://reactome.org/PathwayBrowser/#/R-HSA-446728
+R-HSA-8953897,Cellular responses to external stimuli,516,https://reactome.org/PathwayBrowser/#/R-HSA-8953897,R-HSA-1632852,Macroautophagy,73,https://reactome.org/PathwayBrowser/#/R-HSA-1632852
+R-HSA-8953897,Cellular responses to external stimuli,516,https://reactome.org/PathwayBrowser/#/R-HSA-8953897,R-HSA-2262752,Cellular responses to stress,430,https://reactome.org/PathwayBrowser/#/R-HSA-2262752
+R-HSA-8953897,Cellular responses to external stimuli,516,https://reactome.org/PathwayBrowser/#/R-HSA-8953897,R-HSA-5660526,Response to metal ions,18,https://reactome.org/PathwayBrowser/#/R-HSA-5660526
+R-HSA-4839726,Chromatin organization,272,https://reactome.org/PathwayBrowser/#/R-HSA-4839726,R-HSA-3247509,Chromatin modifying enzymes,272,https://reactome.org/PathwayBrowser/#/R-HSA-3247509
+R-HSA-400253,Circadian Clock,93,https://reactome.org/PathwayBrowser/#/R-HSA-400253,R-HSA-1368071,NR1D1 (REV-ERBA) represses gene expression,3,https://reactome.org/PathwayBrowser/#/R-HSA-1368071
+R-HSA-400253,Circadian Clock,93,https://reactome.org/PathwayBrowser/#/R-HSA-400253,R-HSA-1368082,RORA activates gene expression,20,https://reactome.org/PathwayBrowser/#/R-HSA-1368082
+R-HSA-400253,Circadian Clock,93,https://reactome.org/PathwayBrowser/#/R-HSA-400253,R-HSA-1368108,"BMAL1:CLOCK,NPAS2 activates circadian gene expression",30,https://reactome.org/PathwayBrowser/#/R-HSA-1368108
+R-HSA-1266738,Developmental Biology,1300,https://reactome.org/PathwayBrowser/#/R-HSA-1266738,R-HSA-1181150,Signaling by NODAL,23,https://reactome.org/PathwayBrowser/#/R-HSA-1181150
+R-HSA-1266738,Developmental Biology,1300,https://reactome.org/PathwayBrowser/#/R-HSA-1266738,R-HSA-186712,Regulation of beta-cell development,48,https://reactome.org/PathwayBrowser/#/R-HSA-186712
+R-HSA-1266738,Developmental Biology,1300,https://reactome.org/PathwayBrowser/#/R-HSA-1266738,R-HSA-381340,Transcriptional regulation of white adipocyte differentiation,133,https://reactome.org/PathwayBrowser/#/R-HSA-381340
+R-HSA-1266738,Developmental Biology,1300,https://reactome.org/PathwayBrowser/#/R-HSA-1266738,R-HSA-422475,Axon guidance,707,https://reactome.org/PathwayBrowser/#/R-HSA-422475
+R-HSA-1266738,Developmental Biology,1300,https://reactome.org/PathwayBrowser/#/R-HSA-1266738,R-HSA-452723,Transcriptional regulation of pluripotent stem cells,36,https://reactome.org/PathwayBrowser/#/R-HSA-452723
+R-HSA-1266738,Developmental Biology,1300,https://reactome.org/PathwayBrowser/#/R-HSA-1266738,R-HSA-525793,Myogenesis,51,https://reactome.org/PathwayBrowser/#/R-HSA-525793
+R-HSA-1266738,Developmental Biology,1300,https://reactome.org/PathwayBrowser/#/R-HSA-1266738,R-HSA-5619507,Activation of HOX genes during differentiation,91,https://reactome.org/PathwayBrowser/#/R-HSA-5619507
+R-HSA-1266738,Developmental Biology,1300,https://reactome.org/PathwayBrowser/#/R-HSA-1266738,R-HSA-5682910,LGI-ADAM interactions,14,https://reactome.org/PathwayBrowser/#/R-HSA-5682910
+R-HSA-1266738,Developmental Biology,1300,https://reactome.org/PathwayBrowser/#/R-HSA-1266738,R-HSA-6805567,Keratinization,219,https://reactome.org/PathwayBrowser/#/R-HSA-6805567
+R-HSA-8963743,Digestion and absorption,28,https://reactome.org/PathwayBrowser/#/R-HSA-8963743,R-HSA-8935690,Digestion,22,https://reactome.org/PathwayBrowser/#/R-HSA-8935690
+R-HSA-8963743,Digestion and absorption,28,https://reactome.org/PathwayBrowser/#/R-HSA-8963743,R-HSA-8963676,Intestinal absorption,6,https://reactome.org/PathwayBrowser/#/R-HSA-8963676
+R-HSA-1643685,Disease,1251,https://reactome.org/PathwayBrowser/#/R-HSA-1643685,R-HSA-3781865,Diseases of glycosylation,141,https://reactome.org/PathwayBrowser/#/R-HSA-3781865
+R-HSA-1643685,Disease,1251,https://reactome.org/PathwayBrowser/#/R-HSA-1643685,R-HSA-5260271,Diseases of Immune System,26,https://reactome.org/PathwayBrowser/#/R-HSA-5260271
+R-HSA-1643685,Disease,1251,https://reactome.org/PathwayBrowser/#/R-HSA-1643685,R-HSA-5423599,Diseases of Mismatch Repair (MMR),5,https://reactome.org/PathwayBrowser/#/R-HSA-5423599
+R-HSA-1643685,Disease,1251,https://reactome.org/PathwayBrowser/#/R-HSA-1643685,R-HSA-5619115,Disorders of transmembrane transporters,144,https://reactome.org/PathwayBrowser/#/R-HSA-5619115
+R-HSA-1643685,Disease,1251,https://reactome.org/PathwayBrowser/#/R-HSA-1643685,R-HSA-5663202,Diseases of signal transduction,402,https://reactome.org/PathwayBrowser/#/R-HSA-5663202
+R-HSA-1643685,Disease,1251,https://reactome.org/PathwayBrowser/#/R-HSA-1643685,R-HSA-5663205,Infectious disease,528,https://reactome.org/PathwayBrowser/#/R-HSA-5663205
+R-HSA-1643685,Disease,1251,https://reactome.org/PathwayBrowser/#/R-HSA-1643685,R-HSA-5668914,Diseases of metabolism,106,https://reactome.org/PathwayBrowser/#/R-HSA-5668914
+R-HSA-1643685,Disease,1251,https://reactome.org/PathwayBrowser/#/R-HSA-1643685,R-HSA-8863678,Neurodegenerative Diseases,31,https://reactome.org/PathwayBrowser/#/R-HSA-8863678
+R-HSA-1643685,Disease,1251,https://reactome.org/PathwayBrowser/#/R-HSA-1643685,R-HSA-9005895,Pervasive developmental disorders,15,https://reactome.org/PathwayBrowser/#/R-HSA-9005895
+R-HSA-1643685,Disease,1251,https://reactome.org/PathwayBrowser/#/R-HSA-1643685,R-HSA-9605308,Diseases of Base Excision Repair,3,https://reactome.org/PathwayBrowser/#/R-HSA-9605308
+R-HSA-73894,DNA Repair,305,https://reactome.org/PathwayBrowser/#/R-HSA-73894,R-HSA-5358508,Mismatch Repair,24,https://reactome.org/PathwayBrowser/#/R-HSA-5358508
+R-HSA-73894,DNA Repair,305,https://reactome.org/PathwayBrowser/#/R-HSA-73894,R-HSA-5693532,DNA Double-Strand Break Repair,148,https://reactome.org/PathwayBrowser/#/R-HSA-5693532
+R-HSA-73894,DNA Repair,305,https://reactome.org/PathwayBrowser/#/R-HSA-73894,R-HSA-5696398,Nucleotide Excision Repair,110,https://reactome.org/PathwayBrowser/#/R-HSA-5696398
+R-HSA-73894,DNA Repair,305,https://reactome.org/PathwayBrowser/#/R-HSA-73894,R-HSA-6783310,Fanconi Anemia Pathway,38,https://reactome.org/PathwayBrowser/#/R-HSA-6783310
+R-HSA-73894,DNA Repair,305,https://reactome.org/PathwayBrowser/#/R-HSA-73894,R-HSA-73884,Base Excision Repair,39,https://reactome.org/PathwayBrowser/#/R-HSA-73884
+R-HSA-73894,DNA Repair,305,https://reactome.org/PathwayBrowser/#/R-HSA-73894,R-HSA-73893,DNA Damage Bypass,49,https://reactome.org/PathwayBrowser/#/R-HSA-73893
+R-HSA-73894,DNA Repair,305,https://reactome.org/PathwayBrowser/#/R-HSA-73894,R-HSA-73942,DNA Damage Reversal,8,https://reactome.org/PathwayBrowser/#/R-HSA-73942
+R-HSA-69306,DNA Replication,139,https://reactome.org/PathwayBrowser/#/R-HSA-69306,R-HSA-69002,DNA Replication Pre-Initiation,85,https://reactome.org/PathwayBrowser/#/R-HSA-69002
+R-HSA-69306,DNA Replication,139,https://reactome.org/PathwayBrowser/#/R-HSA-69306,R-HSA-69239,Synthesis of DNA,130,https://reactome.org/PathwayBrowser/#/R-HSA-69239
+R-HSA-1474244,Extracellular matrix organization,418,https://reactome.org/PathwayBrowser/#/R-HSA-1474244,R-HSA-1474228,Degradation of the extracellular matrix,188,https://reactome.org/PathwayBrowser/#/R-HSA-1474228
+R-HSA-1474244,Extracellular matrix organization,418,https://reactome.org/PathwayBrowser/#/R-HSA-1474244,R-HSA-1474290,Collagen formation,90,https://reactome.org/PathwayBrowser/#/R-HSA-1474290
+R-HSA-1474244,Extracellular matrix organization,418,https://reactome.org/PathwayBrowser/#/R-HSA-1474244,R-HSA-1566948,Elastic fibre formation,59,https://reactome.org/PathwayBrowser/#/R-HSA-1566948
+R-HSA-1474244,Extracellular matrix organization,418,https://reactome.org/PathwayBrowser/#/R-HSA-1474244,R-HSA-1566977,Fibronectin matrix formation,6,https://reactome.org/PathwayBrowser/#/R-HSA-1566977
+R-HSA-1474244,Extracellular matrix organization,418,https://reactome.org/PathwayBrowser/#/R-HSA-1474244,R-HSA-216083,Integrin cell surface interactions,109,https://reactome.org/PathwayBrowser/#/R-HSA-216083
+R-HSA-1474244,Extracellular matrix organization,418,https://reactome.org/PathwayBrowser/#/R-HSA-1474244,R-HSA-3000157,Laminin interactions,55,https://reactome.org/PathwayBrowser/#/R-HSA-3000157
+R-HSA-1474244,Extracellular matrix organization,418,https://reactome.org/PathwayBrowser/#/R-HSA-1474244,R-HSA-3000171,Non-integrin membrane-ECM interactions,73,https://reactome.org/PathwayBrowser/#/R-HSA-3000171
+R-HSA-1474244,Extracellular matrix organization,418,https://reactome.org/PathwayBrowser/#/R-HSA-1474244,R-HSA-3000178,ECM proteoglycans,90,https://reactome.org/PathwayBrowser/#/R-HSA-3000178
+R-HSA-1474244,Extracellular matrix organization,418,https://reactome.org/PathwayBrowser/#/R-HSA-1474244,R-HSA-8941237,Invadopodia formation,4,https://reactome.org/PathwayBrowser/#/R-HSA-8941237
+R-HSA-74160,Gene expression (Transcription),1738,https://reactome.org/PathwayBrowser/#/R-HSA-74160,R-HSA-211000,Gene Silencing by RNA,120,https://reactome.org/PathwayBrowser/#/R-HSA-211000
+R-HSA-74160,Gene expression (Transcription),1738,https://reactome.org/PathwayBrowser/#/R-HSA-74160,R-HSA-212165,Epigenetic regulation of gene expression,172,https://reactome.org/PathwayBrowser/#/R-HSA-212165
+R-HSA-74160,Gene expression (Transcription),1738,https://reactome.org/PathwayBrowser/#/R-HSA-74160,R-HSA-73857,RNA Polymerase II Transcription,1531,https://reactome.org/PathwayBrowser/#/R-HSA-73857
+R-HSA-74160,Gene expression (Transcription),1738,https://reactome.org/PathwayBrowser/#/R-HSA-74160,R-HSA-73864,RNA Polymerase I Transcription,99,https://reactome.org/PathwayBrowser/#/R-HSA-73864
+R-HSA-74160,Gene expression (Transcription),1738,https://reactome.org/PathwayBrowser/#/R-HSA-74160,R-HSA-74158,RNA Polymerase III Transcription,77,https://reactome.org/PathwayBrowser/#/R-HSA-74158
+R-HSA-74160,Gene expression (Transcription),1738,https://reactome.org/PathwayBrowser/#/R-HSA-74160,R-HSA-75944,Transcription from mitochondrial promoters,4,https://reactome.org/PathwayBrowser/#/R-HSA-75944
+R-HSA-109582,Hemostasis,784,https://reactome.org/PathwayBrowser/#/R-HSA-109582,R-HSA-140877,Formation of Fibrin Clot (Clotting Cascade),39,https://reactome.org/PathwayBrowser/#/R-HSA-140877
+R-HSA-109582,Hemostasis,784,https://reactome.org/PathwayBrowser/#/R-HSA-109582,R-HSA-202733,Cell surface interactions at the vascular wall,247,https://reactome.org/PathwayBrowser/#/R-HSA-202733
+R-HSA-109582,Hemostasis,784,https://reactome.org/PathwayBrowser/#/R-HSA-109582,R-HSA-418346,Platelet homeostasis,112,https://reactome.org/PathwayBrowser/#/R-HSA-418346
+R-HSA-109582,Hemostasis,784,https://reactome.org/PathwayBrowser/#/R-HSA-109582,R-HSA-75205,Dissolution of Fibrin Clot,13,https://reactome.org/PathwayBrowser/#/R-HSA-75205
+R-HSA-109582,Hemostasis,784,https://reactome.org/PathwayBrowser/#/R-HSA-109582,R-HSA-75892,Platelet Adhesion to exposed collagen,17,https://reactome.org/PathwayBrowser/#/R-HSA-75892
+R-HSA-109582,Hemostasis,784,https://reactome.org/PathwayBrowser/#/R-HSA-109582,R-HSA-76002,"Platelet activation, signaling and aggregation",296,https://reactome.org/PathwayBrowser/#/R-HSA-76002
+R-HSA-109582,Hemostasis,784,https://reactome.org/PathwayBrowser/#/R-HSA-109582,R-HSA-983231,Factors involved in megakaryocyte development and platelet production,175,https://reactome.org/PathwayBrowser/#/R-HSA-983231
+R-HSA-168256,Immune System,2685,https://reactome.org/PathwayBrowser/#/R-HSA-168256,R-HSA-1280215,Cytokine Signaling in Immune system,864,https://reactome.org/PathwayBrowser/#/R-HSA-1280215
+R-HSA-168256,Immune System,2685,https://reactome.org/PathwayBrowser/#/R-HSA-168256,R-HSA-1280218,Adaptive Immune System,1187,https://reactome.org/PathwayBrowser/#/R-HSA-1280218
+R-HSA-168256,Immune System,2685,https://reactome.org/PathwayBrowser/#/R-HSA-168256,R-HSA-168249,Innate Immune System,1390,https://reactome.org/PathwayBrowser/#/R-HSA-168249
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-1362409,Mitochondrial iron-sulfur cluster biogenesis,13,https://reactome.org/PathwayBrowser/#/R-HSA-1362409
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-1428517,The citric acid (TCA) cycle and respiratory electron transport,179,https://reactome.org/PathwayBrowser/#/R-HSA-1428517
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-1475029,Reversible hydration of carbon dioxide,12,https://reactome.org/PathwayBrowser/#/R-HSA-1475029
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-1483249,Inositol phosphate metabolism,48,https://reactome.org/PathwayBrowser/#/R-HSA-1483249
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-15869,Metabolism of nucleotides,103,https://reactome.org/PathwayBrowser/#/R-HSA-15869
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-163685,Integration of energy metabolism,164,https://reactome.org/PathwayBrowser/#/R-HSA-163685
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-189445,Metabolism of porphyrins,17,https://reactome.org/PathwayBrowser/#/R-HSA-189445
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-196854,Metabolism of vitamins and cofactors,200,https://reactome.org/PathwayBrowser/#/R-HSA-196854
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-202131,Metabolism of nitric oxide,15,https://reactome.org/PathwayBrowser/#/R-HSA-202131
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-211859,Biological oxidations,223,https://reactome.org/PathwayBrowser/#/R-HSA-211859
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-2161522,Abacavir transport and metabolism,10,https://reactome.org/PathwayBrowser/#/R-HSA-2161522
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-2564830,Cytosolic iron-sulfur cluster assembly,13,https://reactome.org/PathwayBrowser/#/R-HSA-2564830
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-556833,Metabolism of lipids,788,https://reactome.org/PathwayBrowser/#/R-HSA-556833
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-71291,Metabolism of amino acids and derivatives,381,https://reactome.org/PathwayBrowser/#/R-HSA-71291
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-71387,Metabolism of carbohydrates,298,https://reactome.org/PathwayBrowser/#/R-HSA-71387
+R-HSA-1430728,Metabolism,2264,https://reactome.org/PathwayBrowser/#/R-HSA-1430728,R-HSA-71737,Pyrophosphate hydrolysis,2,https://reactome.org/PathwayBrowser/#/R-HSA-71737
+R-HSA-392499,Metabolism of proteins,2328,https://reactome.org/PathwayBrowser/#/R-HSA-392499,R-HSA-2980736,Peptide hormone metabolism,98,https://reactome.org/PathwayBrowser/#/R-HSA-2980736
+R-HSA-392499,Metabolism of proteins,2328,https://reactome.org/PathwayBrowser/#/R-HSA-392499,R-HSA-381119,Unfolded Protein Response (UPR),99,https://reactome.org/PathwayBrowser/#/R-HSA-381119
+R-HSA-392499,Metabolism of proteins,2328,https://reactome.org/PathwayBrowser/#/R-HSA-392499,R-HSA-381426,Regulation of Insulin-like Growth Factor (IGF) transport and uptake by Insulin-like Growth Factor Binding Proteins (IGFBPs),124,https://reactome.org/PathwayBrowser/#/R-HSA-381426
+R-HSA-392499,Metabolism of proteins,2328,https://reactome.org/PathwayBrowser/#/R-HSA-392499,R-HSA-391251,Protein folding,111,https://reactome.org/PathwayBrowser/#/R-HSA-391251
+R-HSA-392499,Metabolism of proteins,2328,https://reactome.org/PathwayBrowser/#/R-HSA-392499,R-HSA-5676934,Protein repair,6,https://reactome.org/PathwayBrowser/#/R-HSA-5676934
+R-HSA-392499,Metabolism of proteins,2328,https://reactome.org/PathwayBrowser/#/R-HSA-392499,R-HSA-5683826,Surfactant metabolism,30,https://reactome.org/PathwayBrowser/#/R-HSA-5683826
+R-HSA-392499,Metabolism of proteins,2328,https://reactome.org/PathwayBrowser/#/R-HSA-392499,R-HSA-597592,Post-translational protein modification,1503,https://reactome.org/PathwayBrowser/#/R-HSA-597592
+R-HSA-392499,Metabolism of proteins,2328,https://reactome.org/PathwayBrowser/#/R-HSA-392499,R-HSA-72766,Translation,479,https://reactome.org/PathwayBrowser/#/R-HSA-72766
+R-HSA-392499,Metabolism of proteins,2328,https://reactome.org/PathwayBrowser/#/R-HSA-392499,R-HSA-977225,Amyloid fiber formation,80,https://reactome.org/PathwayBrowser/#/R-HSA-977225
+R-HSA-8953854,Metabolism of RNA,735,https://reactome.org/PathwayBrowser/#/R-HSA-8953854,R-HSA-194441,Metabolism of non-coding RNA,55,https://reactome.org/PathwayBrowser/#/R-HSA-194441
+R-HSA-8953854,Metabolism of RNA,735,https://reactome.org/PathwayBrowser/#/R-HSA-8953854,R-HSA-428359,Insulin-like Growth Factor-2 mRNA Binding Proteins (IGF2BPs/IMPs/VICKZs) bind RNA,3,https://reactome.org/PathwayBrowser/#/R-HSA-428359
+R-HSA-8953854,Metabolism of RNA,735,https://reactome.org/PathwayBrowser/#/R-HSA-8953854,R-HSA-429914,Deadenylation-dependent mRNA decay,64,https://reactome.org/PathwayBrowser/#/R-HSA-429914
+R-HSA-8953854,Metabolism of RNA,735,https://reactome.org/PathwayBrowser/#/R-HSA-8953854,R-HSA-450531,Regulation of mRNA stability by proteins that bind AU-rich elements,89,https://reactome.org/PathwayBrowser/#/R-HSA-450531
+R-HSA-8953854,Metabolism of RNA,735,https://reactome.org/PathwayBrowser/#/R-HSA-8953854,R-HSA-72086,mRNA Capping,29,https://reactome.org/PathwayBrowser/#/R-HSA-72086
+R-HSA-8953854,Metabolism of RNA,735,https://reactome.org/PathwayBrowser/#/R-HSA-8953854,R-HSA-72203,Processing of Capped Intron-Containing Pre-mRNA,243,https://reactome.org/PathwayBrowser/#/R-HSA-72203
+R-HSA-8953854,Metabolism of RNA,735,https://reactome.org/PathwayBrowser/#/R-HSA-8953854,R-HSA-72306,tRNA processing,114,https://reactome.org/PathwayBrowser/#/R-HSA-72306
+R-HSA-8953854,Metabolism of RNA,735,https://reactome.org/PathwayBrowser/#/R-HSA-8953854,R-HSA-72312,rRNA processing,251,https://reactome.org/PathwayBrowser/#/R-HSA-72312
+R-HSA-8953854,Metabolism of RNA,735,https://reactome.org/PathwayBrowser/#/R-HSA-8953854,R-HSA-75067,Processing of Capped Intronless Pre-mRNA,28,https://reactome.org/PathwayBrowser/#/R-HSA-75067
+R-HSA-8953854,Metabolism of RNA,735,https://reactome.org/PathwayBrowser/#/R-HSA-8953854,R-HSA-75072,mRNA Editing,10,https://reactome.org/PathwayBrowser/#/R-HSA-75072
+R-HSA-8953854,Metabolism of RNA,735,https://reactome.org/PathwayBrowser/#/R-HSA-8953854,R-HSA-927802,Nonsense-Mediated Decay (NMD),117,https://reactome.org/PathwayBrowser/#/R-HSA-927802
+R-HSA-5205647,Mitophagy,29,https://reactome.org/PathwayBrowser/#/R-HSA-5205647,R-HSA-5205685,Pink/Parkin Mediated Mitophagy,22,https://reactome.org/PathwayBrowser/#/R-HSA-5205685
+R-HSA-5205647,Mitophagy,29,https://reactome.org/PathwayBrowser/#/R-HSA-5205647,R-HSA-8934903,Receptor Mediated Mitophagy,11,https://reactome.org/PathwayBrowser/#/R-HSA-8934903
+R-HSA-397014,Muscle contraction,214,https://reactome.org/PathwayBrowser/#/R-HSA-397014,R-HSA-390522,Striated Muscle Contraction,36,https://reactome.org/PathwayBrowser/#/R-HSA-390522
+R-HSA-397014,Muscle contraction,214,https://reactome.org/PathwayBrowser/#/R-HSA-397014,R-HSA-445355,Smooth Muscle Contraction,39,https://reactome.org/PathwayBrowser/#/R-HSA-445355
+R-HSA-397014,Muscle contraction,214,https://reactome.org/PathwayBrowser/#/R-HSA-397014,R-HSA-5576891,Cardiac conduction,145,https://reactome.org/PathwayBrowser/#/R-HSA-5576891
+R-HSA-112316,Neuronal System,450,https://reactome.org/PathwayBrowser/#/R-HSA-112316,R-HSA-112307,Transmission across Electrical Synapses ,5,https://reactome.org/PathwayBrowser/#/R-HSA-112307
+R-HSA-112316,Neuronal System,450,https://reactome.org/PathwayBrowser/#/R-HSA-112316,R-HSA-112315,Transmission across Chemical Synapses,274,https://reactome.org/PathwayBrowser/#/R-HSA-112315
+R-HSA-112316,Neuronal System,450,https://reactome.org/PathwayBrowser/#/R-HSA-112316,R-HSA-1296071,Potassium Channels,99,https://reactome.org/PathwayBrowser/#/R-HSA-1296071
+R-HSA-112316,Neuronal System,450,https://reactome.org/PathwayBrowser/#/R-HSA-112316,R-HSA-6794362,Protein-protein interactions at synapses,123,https://reactome.org/PathwayBrowser/#/R-HSA-6794362
+R-HSA-1852241,Organelle biogenesis and maintenance,329,https://reactome.org/PathwayBrowser/#/R-HSA-1852241,R-HSA-1592230,Mitochondrial biogenesis,102,https://reactome.org/PathwayBrowser/#/R-HSA-1592230
+R-HSA-1852241,Organelle biogenesis and maintenance,329,https://reactome.org/PathwayBrowser/#/R-HSA-1852241,R-HSA-5617833,Cilium Assembly,227,https://reactome.org/PathwayBrowser/#/R-HSA-5617833
+R-HSA-5357801,Programmed Cell Death,185,https://reactome.org/PathwayBrowser/#/R-HSA-5357801,R-HSA-109581,Apoptosis,176,https://reactome.org/PathwayBrowser/#/R-HSA-109581
+R-HSA-5357801,Programmed Cell Death,185,https://reactome.org/PathwayBrowser/#/R-HSA-5357801,R-HSA-5218859,Regulated Necrosis,23,https://reactome.org/PathwayBrowser/#/R-HSA-5218859
+R-HSA-9609507,Protein localization,208,https://reactome.org/PathwayBrowser/#/R-HSA-9609507,R-HSA-1268020,Mitochondrial protein import,83,https://reactome.org/PathwayBrowser/#/R-HSA-1268020
+R-HSA-9609507,Protein localization,208,https://reactome.org/PathwayBrowser/#/R-HSA-9609507,R-HSA-9033241,Peroxisomal protein import,125,https://reactome.org/PathwayBrowser/#/R-HSA-9033241
+R-HSA-1474165,Reproduction,115,https://reactome.org/PathwayBrowser/#/R-HSA-1474165,R-HSA-1187000,Fertilization,26,https://reactome.org/PathwayBrowser/#/R-HSA-1187000
+R-HSA-1474165,Reproduction,115,https://reactome.org/PathwayBrowser/#/R-HSA-1474165,R-HSA-1500620,Meiosis,89,https://reactome.org/PathwayBrowser/#/R-HSA-1500620
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-157118,Signaling by NOTCH,249,https://reactome.org/PathwayBrowser/#/R-HSA-157118
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-165159,mTOR signalling,40,https://reactome.org/PathwayBrowser/#/R-HSA-165159
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-194315,Signaling by Rho GTPases,477,https://reactome.org/PathwayBrowser/#/R-HSA-194315
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-195721,Signaling by WNT,413,https://reactome.org/PathwayBrowser/#/R-HSA-195721
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-2028269,Signaling by Hippo,20,https://reactome.org/PathwayBrowser/#/R-HSA-2028269
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-2586552,Signaling by Leptin,13,https://reactome.org/PathwayBrowser/#/R-HSA-2586552
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-372790,Signaling by GPCR,1280,https://reactome.org/PathwayBrowser/#/R-HSA-372790
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-5358351,Signaling by Hedgehog,226,https://reactome.org/PathwayBrowser/#/R-HSA-5358351
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-5683057,MAPK family signaling cascades,305,https://reactome.org/PathwayBrowser/#/R-HSA-5683057
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-73887,Death Receptor Signalling,155,https://reactome.org/PathwayBrowser/#/R-HSA-73887
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-9006335,Signaling by Erythropoietin,41,https://reactome.org/PathwayBrowser/#/R-HSA-9006335
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-9006921,Integrin signaling,28,https://reactome.org/PathwayBrowser/#/R-HSA-9006921
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-9006925,Intracellular signaling by second messengers,349,https://reactome.org/PathwayBrowser/#/R-HSA-9006925
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-9006927,Signaling by Non-Receptor Tyrosine Kinases,58,https://reactome.org/PathwayBrowser/#/R-HSA-9006927
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-9006931,Signaling by Nuclear Receptors,169,https://reactome.org/PathwayBrowser/#/R-HSA-9006931
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-9006934,Signaling by Receptor Tyrosine Kinases,565,https://reactome.org/PathwayBrowser/#/R-HSA-9006934
+R-HSA-162582,Signal Transduction,3298,https://reactome.org/PathwayBrowser/#/R-HSA-162582,R-HSA-9006936,Signaling by TGF-beta family members,136,https://reactome.org/PathwayBrowser/#/R-HSA-9006936
+R-HSA-382551,Transport of small molecules,738,https://reactome.org/PathwayBrowser/#/R-HSA-382551,R-HSA-1480926,O2/CO2 exchange in erythrocytes,12,https://reactome.org/PathwayBrowser/#/R-HSA-1480926
+R-HSA-382551,Transport of small molecules,738,https://reactome.org/PathwayBrowser/#/R-HSA-382551,R-HSA-174824,"Plasma lipoprotein assembly, remodeling, and clearance",80,https://reactome.org/PathwayBrowser/#/R-HSA-174824
+R-HSA-382551,Transport of small molecules,738,https://reactome.org/PathwayBrowser/#/R-HSA-382551,R-HSA-382556,ABC-family proteins mediated transport,103,https://reactome.org/PathwayBrowser/#/R-HSA-382556
+R-HSA-382551,Transport of small molecules,738,https://reactome.org/PathwayBrowser/#/R-HSA-382551,R-HSA-425407,SLC-mediated transmembrane transport,246,https://reactome.org/PathwayBrowser/#/R-HSA-425407
+R-HSA-382551,Transport of small molecules,738,https://reactome.org/PathwayBrowser/#/R-HSA-382551,R-HSA-445717,Aquaporin-mediated transport,53,https://reactome.org/PathwayBrowser/#/R-HSA-445717
+R-HSA-382551,Transport of small molecules,738,https://reactome.org/PathwayBrowser/#/R-HSA-382551,R-HSA-5223345,Miscellaneous transport and binding events,26,https://reactome.org/PathwayBrowser/#/R-HSA-5223345
+R-HSA-382551,Transport of small molecules,738,https://reactome.org/PathwayBrowser/#/R-HSA-382551,R-HSA-8949215,Mitochondrial calcium ion transport,23,https://reactome.org/PathwayBrowser/#/R-HSA-8949215
+R-HSA-382551,Transport of small molecules,738,https://reactome.org/PathwayBrowser/#/R-HSA-382551,R-HSA-8981607,Intracellular oxygen transport,3,https://reactome.org/PathwayBrowser/#/R-HSA-8981607
+R-HSA-382551,Transport of small molecules,738,https://reactome.org/PathwayBrowser/#/R-HSA-382551,R-HSA-917937,Iron uptake and transport,60,https://reactome.org/PathwayBrowser/#/R-HSA-917937
+R-HSA-382551,Transport of small molecules,738,https://reactome.org/PathwayBrowser/#/R-HSA-382551,R-HSA-983712,Ion channel transport,184,https://reactome.org/PathwayBrowser/#/R-HSA-983712
+R-HSA-5653656,Vesicle-mediated transport,822,https://reactome.org/PathwayBrowser/#/R-HSA-5653656,R-HSA-199991,Membrane Trafficking,680,https://reactome.org/PathwayBrowser/#/R-HSA-199991
+R-HSA-5653656,Vesicle-mediated transport,822,https://reactome.org/PathwayBrowser/#/R-HSA-5653656,R-HSA-2173782,Binding and Uptake of Ligands by Scavenger Receptors,143,https://reactome.org/PathwayBrowser/#/R-HSA-2173782

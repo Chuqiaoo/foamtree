@@ -1,0 +1,62 @@
+{
+  "groups": [
+    {
+      "label": "Group 1",
+      "weight": 10,
+      "groups": [
+        {
+          "label": "Group 1.1",
+          "weight": 2,
+          "groups": []
+        },
+        {
+          "label": "Group 1.2",
+          "weight": 4,
+          "groups": []
+        }
+      ]
+    },
+    {
+      "label": "Group 2",
+      "weight": 1,
+      "groups": []
+    },
+    {
+      "label": "Group 3",
+      "weight": 5,
+      "groups": [
+        {
+          "label": "Group 3.1",
+          "weight": 1,
+          "groups": []
+        },
+        {
+          "label": "Group 3.2",
+          "weight": 4,
+          "groups": []
+        },
+        {
+          "label": "Group 3.3",
+          "weight": 0.5,
+          "groups": []
+        }
+      ]
+    },
+    {
+      "label": "Group 4",
+      "weight": 4,
+      "groups": [
+        {
+          "label": "Group 4.1",
+          "weight": 2,
+          "groups": []
+        },
+        {
+          "label": "Group 4.2",
+          "weight": 1.5,
+          "groups": []
+        }
+      ]
+    }
+  ]
+}
