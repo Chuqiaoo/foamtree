@@ -27,78 +27,6 @@
     </style>
 
 
-    <!-- The CSS for this demo -->
-    <style type="text/css">
-        body { overflow-x: hidden }
-        #progress { position: absolute; top: 0; left: 0; right: 0; height: 5px; }
-
-        #details {
-            background-color: rgba(255, 255, 255, 0.95);
-            transition: right 0.5s ease, left 0.5s ease, opacity 0.5s;
-            opacity: 0;
-        }
-        #details.showing { opacity: 1; }
-        #details .forks { position: relative; left: 5px; }
-        #details .watchers { position: relative; top: -2px; }
-        #details .stats span { padding-right: 2em; }
-        #details .stats span:last-of-type { padding-right: 0; }
-
-        .newer, .older { font-weight: normal; padding: 2px 5px; border-radius: 2px; }
-        .newer { background-color: hsla(50, 80%, 85%, 1.0); }
-        .older { background-color: hsla(339, 80%, 40%, 1.0); color: white; }
-
-        .examples { margin-top: 10px; color: #aaa }
-
-        @media (min-width: 1024px) {
-            input[name='query'] { width: 12em; }
-            select[name='results'] { width: 4em; padding-left: 0; padding-right: 0 }
-            select[name='sort'] { width: 7em; padding-left: 0; padding-right: 0 }
-
-            #details {
-                position: absolute;
-                top: 10px;
-                bottom: 10px;
-                width: 440px;
-                right: -440px;
-                padding-top: 25px;
-                padding-left: 10px;
-                overflow-y: auto;
-                overflow-x: hidden;
-                -webkit-overflow-scrolling: touch;
-            }
-            #details.showing { right: 10px; opacity: 1; }
-            #details { text-align: center; }
-            #details .avatar { width: 256px; height: 256px; border-radius: 4px; }
-            #details .description { margin: 30px auto; width: 60%; }
-            #details .close { position: absolute; top: 0; right: 10px; font-size: 50px; }
-        }
-        @media (max-width: 1023px) {
-            #side { position: relative; }
-
-            #details {
-                position: absolute;
-                top: 70%;
-                min-height: 100%;
-                left: 100%; right: -100%;
-                opacity: 0;
-                padding: 10px;
-            }
-            #details.showing { right: 0; left: 0; opacity: 1; }
-            #details { text-align: left; }
-            #details .avatar { position: absolute; left: 2%; width: 20%; border-radius: 4px;}
-            #details .info { margin-left: 24%; }
-            #details h2 { margin-top: 0; }
-            #details .close { position: absolute; top: 0; right: 10px; font-size: 50px; }
-            #details .description { margin: 20px auto;}
-        }
-    </style>
-
-    <!-- HTML template for the slide-in details panel -->
-    <script id="details-template" type="text/template">
-
-        <div class="close">&times;</div>
-    </script>
-
     <!-- Include the default style for the interaction hints and guide -->
     <link href="../assets/css/carrotsearch.foamtree.util.hints.css" rel="stylesheet"/>
 
@@ -116,7 +44,16 @@
 </div>
 
 <div id="side">
-    View: <a href="#hierarchical">hierarchical</a> | <a href="#flattened">flattened</a>
+
+    View: <a href="#hierarchical">hierarchical</a> | <a href="#flattened">flattened</a> <br>
+
+    <p>
+
+        UniProt example list data analysis result at : <a target="_blank" class = "undo" href= "https://dev.reactome.org/PathwayBrowser/#/DTAB=AN&ANALYSIS=MjAxOTAxMjExMjA3MDBfMg%253D%253D&RESOURCE=UNIPROT">Reactomee</a>  <br>
+
+    </p>
+
+
 </div>
 
 
@@ -143,176 +80,239 @@
 
     window.addEventListener("load", function() {
 
-        var foamtree = new CarrotSearchFoamTree({
-            id: "visualization",
-            pixelRatio: window.devicePixelRatio || 1,
+        var newMapping = [];
+
+        function extractDataFromToken(response) {
+
+//      read external Token data and save to key=>value pair R-HSA-5653656 =>1.1102230246251565e-16
+            var newResponse = {};
+            $.each(response.pathways, function (key, val) {
+
+                newResponse[val.stId] = val.entities.pValue;
+            });
 
 
-//          hold a polygonal to junp to real reactome page
-            onGroupHold: function (event) {
-                event.preventDefault();
-                window.open(event.group.url);
+            $.ajax({
+                url: "../clean_data.json",
+                //force to handle it as text
+                dataType: "json",
+                //async: false,
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
 
-            },
+//             (data[i].id) => R-HSA-5653656
+//             newResponse[(data[i].id)] = 1.1102230246251565e-16
 
+//              get the pvalue of assigned id, if the id doesn't exists, return undefined
+                        if (newResponse[data[i].id]) {
 
-            // Disable animations
-            rolloutDuration: 0,
-            pullbackDuration: 0,
+                            newMapping.push({
+                                id: data[i].id,
+                                label: data[i].label,
+                                pValue: newResponse[data[i].id],
+                                weight: data[i].weight,
+                                groups: data[i].groups
+                            });
+                        } else {
+                            newMapping.push({
+                                id: data[i].id,
+                                label: data[i].label,
+                                pValue: undefined,
+                                weight: data[i].weight,
+                                groups: data[i].groups
 
-            //Customize borders, fill and strokes
-            groupBorderWidth: 2,
-            groupInsetWidth: 4,
-            groupBorderRadius: 0.1,
-            groupBorderRadiusCorrection: 1,
+                            });
+                        }
+                    }
 
-            groupSelectionOutlineWidth: 3.5,
+//         get the pvalue of assigned id in a sub groups, if the id doesn't exists, return undefined
+                    for (var j = 0; j < newMapping.length; j++) {
 
-            groupFillType: "gradient",
-            groupFillGradientRadius: 3,
-            groupFillGradientCenterLightnessShift: 20,
+                        for (var n = 0; n < newMapping[j].groups.length; n++) {
 
-            groupStrokeWidth: 0.33,
-            groupStrokeType: "plain",
-            groupStrokePlainLightnessShift: -10,
+                            if (newResponse[newMapping[j].groups[n].id]) {
 
-            // Allow some more time to draw
-            finalCompleteDrawMaxDuration: 500,
-            finalIncrementalDrawMaxDuration: 500,
+                                newMapping[j].groups[n] = Object.assign({'pValue': newResponse[newMapping[j].groups[n].id]}, newMapping[j].groups[n]);
+                            } else {
 
-            // Make the line spacing and the total height of the
-            // label smaller than the default to make space for
-            // the coverage value display
-            groupLabelLineHeight: 1.0,
+                                newMapping[j].groups[n] = Object.assign({'pValue': undefined}, newMapping[j].groups[n]);
+                            }
 
+                        }
 
-
-            groupSelectionOutlineColor: "#58C3E5",
-            titleBar: "inscribed",
-            titleBarFontFamily: "monospace",
-            //maxLabelSizeForTitleBar: Number.MAX_VALUE,
-            groupLabelFontFamily: "Arial, sans-serif",
-
-
-
-            //sector title
-//            stacking: "flattened",
-//            descriptionGroupSize: 0.10,
-//            descriptionGroupMinHeight: 30,
-
-
-            groupColorDecorator: function (opts, props, vars) {
-                var group = props.group;
-                if (group.company) {
-                    vars.groupColor = group.company.color;
-                } else {
-                    vars.groupColor = "#58C3E5";
-                    vars.labelColor = "#000";
+                    }
                 }
-            },
+            });
+
+            setTimeout(foamtreeStarts, 500);
 
 
-            // Assign colors based on the coverage value
-            groupColorDecorator: function (opts, params, vars) {
+            function convert(groups) {
+                return groups.map(function(cluster) {
+                    return {
 
-                var coverage = params.group.pValue;
-                if (coverage !== undefined && coverage >= 0 && coverage <= 0.05)  {
-                    // Coverage defined. 0% coverage will be yellow,
-                    // 100% coverage will be olive.
+                        id:     cluster.id,
+                        label:  cluster.label,
+                        weight: cluster.weight,
+                        url:    cluster.url,
+                        pValue: cluster.pValue != null ? cluster.pValue : undefined,
+                        groups: cluster.groups ? convert(cluster.groups) : []
+                    }
+                });
+            };
+
+            function foamtreeStarts (){
+
+                var foamtree = new CarrotSearchFoamTree({
+                    id: "visualization",
+                    dataObject: {
+                        groups:  convert(newMapping),
+
+                    }
+
+                });
+
+                //basic  definition
+                foamtree.set({
+                    pixelRatio: window.devicePixelRatio || 1,
+
+                    // Disable animations
+                    rolloutDuration: 0,
+                    pullbackDuration: 0,
+
+                    //Customize borders, fill and strokes
+                    groupBorderWidth: 2,
+                    groupInsetWidth: 4,
+                    groupBorderRadius: 0.1,
+                    groupBorderRadiusCorrection: 1,
+
+                    groupSelectionOutlineWidth: 3.5,
+
+                    groupFillType: "gradient",
+                    groupFillGradientRadius: 3,
+                    groupFillGradientCenterLightnessShift: 20,
+
+                    groupStrokeWidth: 0.33,
+                    groupStrokeType: "plain",
+                    groupStrokePlainLightnessShift: -10,
+
+                    // Allow some more time to draw
+                    finalCompleteDrawMaxDuration: 500,
+                    finalIncrementalDrawMaxDuration: 500,
+
+                    // Make the line spacing and the total height of the
+                    // label smaller than the default to make space for
+                    // the coverage value display
+                    groupLabelLineHeight: 1.0,
+
+
+                    groupSelectionOutlineColor: "#58C3E5",
+                    titleBar: "inscribed",
+                    titleBarFontFamily: "monospace",
+                    //maxLabelSizeForTitleBar: Number.MAX_VALUE,
+                    groupLabelFontFamily: "Arial, sans-serif",
+
+                });
+
+                //hold a polygonal to junp to real reactome page
+                foamtree.set({
+
+                    onGroupHold: function (event) {
+                        event.preventDefault();
+                        window.open(event.group.url);
+
+                    }
+                });
+
+                //Assign colors based on the  Pvalue
+                foamtree.set({
+
+                    groupColorDecorator: function (opts, params, vars) {
+
+                        var coverage = params.group.pValue;
+                        if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
+                            // Coverage defined. 0% coverage will be yellow,
+                            // 100% coverage will be olive.
 
 //                  min yellow : hsl(52, 98%, 60%)
 //                  max: olive  : hsl (58, 100, 29)
 
-                    vars.groupColor.h = 52 + 6 * (coverage/0.05 );
-                    vars.groupColor.s = 98 + 2  * (coverage/0.05 );
-                    vars.groupColor.l = 60 - 31 * (coverage/0.05 );
+                            vars.groupColor.h = 52 + 6 * (coverage / 0.05 );
+                            vars.groupColor.s = 98 + 2 * (coverage / 0.05 );
+                            vars.groupColor.l = 60 - 31 * (coverage / 0.05 );
 
-                } else {
-                    // Coverage not defined, draw the group in grey.
-                    vars.groupColor.s = 0;
-                    vars.groupColor.l = 75;
+                        } else {
+                            // Coverage not defined, draw the group in grey.
+                            vars.groupColor.s = 0;
+                            vars.groupColor.l = 75;
 
-                }
-            }
-        });
+                        }
+                    }
 
-        console.log(foamtree)
+                });
 
-        // Convert clusters to groups from Carrot2/Lingo3G JSON format.
-        function convert(groups) {
-            return groups.map(function(cluster) {
-                return {
-
-                    id:     cluster.id,
-                    label:  cluster.label,
-                    weight: cluster.weight,
-                    url:    cluster.url,
-                    pValue: cluster.pValue != null ? cluster.pValue : undefined,
-                    groups: cluster.groups ? convert(cluster.groups) : []
-                }
-            });
-        };
-
-        // Clear the previous model.
-        foamtree.set("dataObject", null);
-
-
-        foamtree.set({
-            maxLabelSizeForTitleBar: Number.MAX_VALUE,
-
-            titleBarDecorator: function(options, parameters, variables) {
-                variables.titleBarText = "More details about " + parameters.group.label;
-            }
-        });
-
-        CarrotSearchFoamTree.hints(foamtree);
-
-
-
-        // Handle customization links
-        document.addEventListener("click", function (e) {
-            if (!e.target.href) {
-                return;
-            }
-
-            e.preventDefault();
-            var href = e.target.href.substring(e.target.href.indexOf("#"));
-            switch (href) {
-                case "#flattened":
-                    foamtree.set({
-                        stacking: "flattened"
-                    });
-                    break;
-
-                case "#hierarchical":
-                    foamtree.set({
-                        stacking: "hierarchical"
-                    });
-                    break;
-
-            }
-            foamtree.set("dataObject", foamtree.get("dataObject"));
-        });
-
-        // Load Foamtree JSON data.
-        $.ajax({
-            url: "../clean_data_token.json",
-            dataType: "json",
-            success: function(data) {
-
+                //title bar
                 foamtree.set({
-                    dataObject: {
-                        groups: convert(data)
+                    maxLabelSizeForTitleBar: Number.MAX_VALUE,
 
-
+                    titleBarDecorator: function (options, parameters, variables) {
+                        variables.titleBarText = "More details about " + parameters.group.label;
                     }
                 });
-            } ,
-            error: function(){
-                alert("json not found");
-            }
 
-        });
+                CarrotSearchFoamTree.hints(foamtree);
+
+
+                // Handle customization links
+                document.addEventListener("click", function (e) {
+                    if (!e.target.href) {
+                        return;
+                    }
+
+                    e.preventDefault();
+                    var href = e.target.href.substring(e.target.href.indexOf("#"));
+                    switch (href) {
+                        case "#flattened":
+                            foamtree.set({
+                                stacking: "flattened"
+                            });
+                            break;
+
+                        case "#hierarchical":
+                            foamtree.set({
+                                stacking: "hierarchical"
+                            });
+                            break;
+
+                    }
+                    foamtree.set("dataObject", foamtree.get("dataObject"));
+                });
+
+                //custom by chuqiao to stop click preventDefault()
+                $('.undo').click(function(e){
+                    var targetLink = $(this).attr('href');
+                    window.open(targetLink, '_blank');
+                });
+
+
+            };
+
+        }
+
+            // Load Token data.
+        $.ajax({
+                url: "https://dev.reactome.org/AnalysisService/token/MjAxOTAxMjExMjA3MDBfMg%25253D%25253D?sortBy=ENTITIES_PVALUE&order=ASC&resource=UNIPROT",
+                dataType: "json",
+                type: "GET",
+                success: function (json) {
+
+                    extractDataFromToken(json)
+
+                },
+                error: function () {
+                    alert("json not found");
+                }
+            });
 
     });
 
