@@ -175,14 +175,6 @@
             pixelRatio: window.devicePixelRatio || 1,
 
 
-            //custom by chuqiao
-            onGroupHold: function (event) {
-                event.preventDefault();
-                window.open(event.group.url);
-            },
-
-
-
             // Disable animations
             rolloutDuration: 0,
             pullbackDuration: 0,
@@ -218,24 +210,11 @@
             groupSelectionOutlineColor: "#58C3E5",
             titleBar: "inscribed",
             titleBarFontFamily: "monospace",
-//            maxLabelSizeForTitleBar: Number.MAX_VALUE,
             groupLabelFontFamily: "Arial, sans-serif",
-
-
-            groupColorDecorator: function (opts, props, vars) {
-                var group = props.group;
-                if (group.company) {
-                    vars.groupColor = group.company.color;
-                } else {
-                    vars.groupColor = "#58C3E5";
-                    vars.labelColor = "#000";
-                }
-            }
 
         });
 
-
-        // Convert clusters to groups from Carrot2/Lingo3G JSON format.
+        // Convert data to groups from Reactome JSON format.
         function convert(groups) {
             return groups.map(function(cluster) {
                 return {
@@ -256,19 +235,38 @@
         // Clear the previous model.
         foamtree.set("dataObject", null);
 
-
+        //title bar
         foamtree.set({
             maxLabelSizeForTitleBar: Number.MAX_VALUE,
 
             titleBarDecorator: function(options, parameters, variables) {
                 variables.titleBarText = "More details about " + parameters.group.label;
-//                variables.titleBarText = c;
             }
         });
 
+
+        //hold a polygonal to junp to real reactome page
+        foamtree.set({
+
+            onGroupHold: function (event) {
+                event.preventDefault();
+                window.open(event.group.url);
+
+            }
+        });
+
+        //customization colors
+        foamtree.set({
+            groupColorDecorator: function (opts, props, vars) {
+                    vars.groupColor = "#58C3E5";
+                    vars.labelColor = "#000";
+            }
+        });
+
+        //load hints
         CarrotSearchFoamTree.hints(foamtree);
 
-        // Load Carrot2 JSON clusters.
+        // Load Reactome JSON data.
         $.ajax({
 //            url: "../demos/assets/data/carrot2/ben-and-jerry.json",
             url: "clean_data.json",
@@ -315,8 +313,7 @@
         });
 
 
-
-        //custom by chuqiao to stop click preventDefault()
+        //stop click preventDefault() with the link with id undo
         $('.undo').click(function(e){
             var targetLink = $(this).attr('href');
             window.open(targetLink, '_blank');

@@ -100,10 +100,10 @@
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
 
-//             (data[i].id) => R-HSA-5653656
-//             newResponse[(data[i].id)] = 1.1102230246251565e-16
+//                       (data[i].id) => R-HSA-5653656
+//                       newResponse[(data[i].id)] = 1.1102230246251565e-16
 
-//              get the pvalue of assigned id, if the id doesn't exists, return undefined
+                        //get the pvalue of assigned id, if the id doesn't exists, return undefined
                         if (newResponse[data[i].id]) {
 
                             newMapping.push({
@@ -125,7 +125,7 @@
                         }
                     }
 
-//         get the pvalue of assigned id in a sub groups, if the id doesn't exists, return undefined
+                    //get the pvalue of assigned id in a sub groups, if the id doesn't exists, return undefined
                     for (var j = 0; j < newMapping.length; j++) {
 
                         for (var n = 0; n < newMapping[j].groups.length; n++) {
@@ -288,7 +288,7 @@
                     foamtree.set("dataObject", foamtree.get("dataObject"));
                 });
 
-                //custom by chuqiao to stop click preventDefault()
+                //stop click preventDefault() with the link with id undo
                 $('.undo').click(function(e){
                     var targetLink = $(this).attr('href');
                     window.open(targetLink, '_blank');
@@ -296,10 +296,9 @@
 
 
             };
-
         }
 
-            // Load Token data.
+        // Load Token data.
         $.ajax({
                 url: "https://dev.reactome.org/AnalysisService/token/MjAxOTAxMjExMjA3MDBfMg%25253D%25253D?sortBy=ENTITIES_PVALUE&order=ASC&resource=UNIPROT",
                 dataType: "json",
@@ -313,7 +312,6 @@
                     alert("json not found");
                 }
             });
-
     });
 
 </script>
