@@ -93,7 +93,7 @@
 
 
             $.ajax({
-                url: "../clean_data.json",
+                url: "../clean_data_3_level.json",
                 //force to handle it as text
                 dataType: "json",
                 //async: false,
@@ -141,6 +141,29 @@
                         }
 
                     }
+
+                    //                    loopn throught the third hierarchy
+                    for (var c = 0; c < newMapping.length; c++) {
+
+                        for (var q = 0; q < newMapping[c].groups.length; q++) {
+
+                            for (var g = 0; g < newMapping[c].groups[q].groups.length; g++) {
+
+                                if (newResponse[newMapping[c].groups[q].groups[g].id]) {
+
+                                    newMapping[c].groups[q].groups[g] = Object.assign({'pValue': newResponse[newMapping[c].groups[q].groups[g].id]}, newMapping[c].groups[q].groups[g]);
+                                } else {
+
+                                    newMapping[c].groups[q].groups[g] = Object.assign({'pValue': undefined}, newMapping[c].groups[q].groups[g]);
+                                }
+                            }
+
+                        }
+
+                    }
+
+
+
                 }
             });
 
