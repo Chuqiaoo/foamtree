@@ -125,83 +125,46 @@
                         }
                     }
 
+                    //get the pvalue of assigned id in a sub groups, if the id doesn't exists, return undefined
+                    for (var j = 0; j < newMapping.length; j++) {
 
+                        for (var n = 0; n < newMapping[j].groups.length; n++) {
 
+                            if (newResponse[newMapping[j].groups[n].id]) {
 
+                                newMapping[j].groups[n] = Object.assign({'pValue': newResponse[newMapping[j].groups[n].id]}, newMapping[j].groups[n]);
+                            } else {
 
-            function traverse(item) {
-                if (item.groups != ''){
+                                newMapping[j].groups[n] = Object.assign({'pValue': undefined}, newMapping[j].groups[n]);
+                            }
 
-                    for (var index in item.groups){
-                         data = item.groups[index];
-
-                         if (newResponse[data.id]) {
-
-                             item.groups[index] = Object.assign({'pValue': newResponse[item.groups[index].id]}, item.groups[index]);
-
-                              } else {
-
-                             item.groups[index] = Object.assign({'pValue': undefined}, item.groups[index]);
-                          }
-                    }
-                 }
-             }
-
-//          mapping with second hierarchy
-            for (var n in newMapping){
-                 item_2 = newMapping[n];
-                  traverse(item_2)
-
-            }
-
-//          mapping with third hierarchy
-            for (var n in newMapping){
-                 for (var m in newMapping[n].groups){
-                      item_3 = newMapping[n].groups[m];
-                      traverse(item_3)
-                  }
-            }
-
-//          mapping with fourth hierarchy
-            for (var n in newMapping) {
-                 for (var m in newMapping[n].groups) {
-                      for (var y in newMapping[n].groups[m].groups) {
-                           item_4 = newMapping[n].groups[m].groups[y];
-                                traverse(item_4)
-                       }
-                  }
-
-            }
-
-//          mapping with fifth hierarchy
-            for (var n in newMapping) {
-                for (var m in newMapping[n].groups) {
-                    for (var k in newMapping[n].groups[m].groups) {
-                        for (var v in newMapping[n].groups[m].groups[k].groups) {
-                            item_5 = newMapping[n].groups[m].groups[k].groups[v];
-                            traverse(item_5)
                         }
+
                     }
-                }
-             }
 
-//          mapping with sixth hierarchy
-            for (var n in newMapping) {
-                 for (var m in newMapping[n].groups) {
-                      for (var k in newMapping[n].groups[m].groups) {
-                          for (var v in newMapping[n].groups[m].groups[k].groups) {
-                               for (var p in newMapping[n].groups[m].groups[k].groups[v]) {
-                                    item_6 = newMapping[n].groups[m].groups[k].groups[v].groups[p];
+                    //                    loopn throught the third hierarchy
+                    for (var c = 0; c < newMapping.length; c++) {
 
-                                        traverse(item_6)
-                                    }
+                        for (var q = 0; q < newMapping[c].groups.length; q++) {
+
+                            for (var g = 0; g < newMapping[c].groups[q].groups.length; g++) {
+
+                                if (newResponse[newMapping[c].groups[q].groups[g].id]) {
+
+                                    newMapping[c].groups[q].groups[g] = Object.assign({'pValue': newResponse[newMapping[c].groups[q].groups[g].id]}, newMapping[c].groups[q].groups[g]);
+                                } else {
+
+                                    newMapping[c].groups[q].groups[g] = Object.assign({'pValue': undefined}, newMapping[c].groups[q].groups[g]);
                                 }
                             }
+
                         }
+
                     }
 
 
-                  }
+
+                }
             });
 
             setTimeout(foamtreeStarts, 500);
