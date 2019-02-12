@@ -135,7 +135,7 @@
 <script src="../carrotsearch.foamtree.js"></script>
 <script src="../carrotsearch.foamtree.util.loading.js"></script>
 <script src="../carrotsearch.foamtree.util.relaxationprogress.js"></script>
-<script src="../demos/assets/js/tooltip.min.js"></script>
+<script src="../assets/js/tooltip.min.js"></script>
 
 <!-- Include the interaction hints utility -->
 <script src="../carrotsearch.foamtree.util.hints.js"></script>
@@ -256,11 +256,9 @@
                         for (var m in newMapping[n].groups) {
                             for (var k in newMapping[n].groups[m].groups) {
                                 for (var v in newMapping[n].groups[m].groups[k].groups) {
-                                    for (var p in newMapping[n].groups[m].groups[k].groups[v]) {
-//                                console.log (newMapping[n].groups[m].groups[k].groups[v]);
+                                    for (var p in newMapping[n].groups[m].groups[k].groups[v].groups) {
 
                                         item_6 = newMapping[n].groups[m].groups[k].groups[v].groups[p];
-
                                         traverse(item_6)
                                     }
                                 }
