@@ -159,10 +159,11 @@
 <script>
 
     window.addEventListener("load", function(){
-        foamtreeStarts ();
+        foamtreeLoading ();
     });
 
-    function foamtreeStarts (){
+
+    function foamtreeLoading (){
         var foamtree = new CarrotSearchFoamTree({
             id: "visualization",
             pixelRatio: window.devicePixelRatio || 1,
@@ -593,7 +594,7 @@
         $("#visualization").empty();
         document.getElementById("visualization").removeAttribute("data-foamtree");
 
-        foamtreeStarts ();
+        foamtreeLoading ();
     });
 
 </script>
