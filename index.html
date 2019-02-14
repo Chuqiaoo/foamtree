@@ -161,8 +161,7 @@
     window.addEventListener("load", function(){
         foamtreeLoading ();
     });
-
-
+//    loading default data to visualize
     function foamtreeLoading (){
         var foamtree = new CarrotSearchFoamTree({
             id: "visualization",
@@ -300,6 +299,7 @@
         });
     }
 
+//    data analysis and redraw foamtree
     var submit = document.getElementById("submit");
     submit.onclick = function () {
 
@@ -574,7 +574,6 @@
 
 //            Load Token data.
         $.ajax({
-//                url: "https://dev.reactome.org/AnalysisService/token/MjAxOTAxMjExMjA3MDBfMg%25253D%25253D?sortBy=ENTITIES_PVALUE&order=ASC&resource=UNIPROT",
             url: "https://dev.reactome.org/AnalysisService/token/" + tokenUrl.value + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
             dataType: "json",
             type: "GET",
@@ -587,7 +586,7 @@
             }
         });
     };
-
+// back to default data when click overview
     var overview = document.getElementById("overview");
     overview.addEventListener("click", function(){
 
