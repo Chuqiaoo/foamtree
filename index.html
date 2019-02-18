@@ -161,60 +161,97 @@
     window.addEventListener("load", function(){
         foamtreeLoading ();
     });
-//    loading default data to visualize
+
+    // Convert data to groups from Reactome JSON format.
+    function convert(groups) {
+        return groups.map(function(cluster) {
+            return {
+
+                id:     cluster.id,
+                label:  cluster.label,
+                weight: cluster.weight,
+                url:    cluster.url,
+                groups: cluster.groups ? convert(cluster.groups) : []
+            }
+        });
+    };
+
+    //  loading default data
     function foamtreeLoading (){
+
+
         var foamtree = new CarrotSearchFoamTree({
             id: "visualization",
             pixelRatio: window.devicePixelRatio || 1,
+            stacking: "flattened",
 
-            // Disable animations
+            // Use a simple fading animation. Animated rollouts are very expensive for large hierarchies.
             rolloutDuration: 0,
             pullbackDuration: 0,
 
-            // Customize borders, fill and strokes
-            groupBorderWidth: 2,
-            groupInsetWidth: 4,
-            groupBorderRadius: 0.1,
-            groupBorderRadiusCorrection: 1,
+            // Make relaxation visible, so that the user sees the progress of computation of the top-level diagram.
+            relaxationVisible: true,
 
-            groupSelectionOutlineWidth: 3.5,
+            // Remove restriction on the minimum group diameter, so that
+            // we can render as many diagram levels as possible.
+            groupMinDiameter: 0,
 
-            groupFillType: "gradient",
-            groupFillGradientRadius: 3,
-            groupFillGradientCenterLightnessShift: 20,
+            // Lower the minimum label font size a bit to show more labels.
+            groupLabelMinFontSize: 3,
 
-            groupStrokeWidth: 0.33,
-            groupStrokeType: "plain",
-            groupStrokePlainLightnessShift: -10,
+            // Lower the border radius a bit to fit more groups.
+            groupBorderWidth: 2.5,
+            groupInsetWidth: 5,
+            groupSelectionOutlineWidth: 1.5,
 
-            // Allow some more time to draw
-            finalCompleteDrawMaxDuration: 500,
-            finalIncrementalDrawMaxDuration: 500,
-
-            // Make the line spacing and the total height of the
-            // label smaller than the default to make space for
-            // the coverage value display
-            groupLabelLineHeight: 1.0,
+            // Don't use gradients and rounded cornrs for faster rendering.
+            groupFillType: "plain",
+//            groupBorderRadius: 0,
 
             groupSelectionOutlineColor: "#58C3E5",
-            titleBar: "inscribed",
-            titleBarFontFamily: "monospace",
-            groupLabelFontFamily: "Arial, sans-serif"
+
+//          Attach and draw a maximum of 8 levels of groups.
+//          Increase, if needed.
+            maxGroupLevelsAttached: 8,
+            maxGroupLevelsDrawn: 8,
+            maxGroupLabelLevelsDrawn: 8,
+
+            finalCompleteDrawMaxDuration: 70000,
+            finalIncrementalDrawMaxDuration: 70000,
+            wireframeDrawMaxDuration: 7000,
+
+//           show labels during relaxation
+            wireframeLabelDrawing: "always",
+//            Replacing the costly "expose" animation on double click
+//            with a simple zoom, which is faster to execute.
+            onModelChanging: function addParent(group, parent) {
+                if (!group) { return; }
+                group.parent = parent;
+                if (group.groups) {
+                    group.groups.forEach(function(g) {
+                        addParent(g, group);
+                    });
+                }
+            },
+            onGroupDoubleClick: function(e) {
+                e.preventDefault();
+                var group = e.secondary ? e.bottommostOpenGroup : e.topmostClosedGroup;
+                var toZoom;
+                if (group) {
+                    // Open on left-click, close on right-click
+                    this.open({
+                        groups: group,
+                        open: !e.secondary
+                    });
+                    toZoom = e.secondary ? group.parent : group;
+                } else {
+                    toZoom = this.get("dataObject");
+                }
+                this.zoom(toZoom);
+            }
+
         });
 
-        // Convert data to groups from Reactome JSON format.
-        function convert(groups) {
-            return groups.map(function(cluster) {
-                return {
-
-                    id:     cluster.id,
-                    label:  cluster.label,
-                    weight: cluster.weight,
-                    url:    cluster.url,
-                    groups: cluster.groups ? convert(cluster.groups) : []
-                }
-            });
-        };
 
         // Clear the previous model.
         foamtree.set("dataObject", null);
@@ -224,7 +261,7 @@
             maxLabelSizeForTitleBar: Number.MAX_VALUE,
 
             titleBarDecorator: function(options, parameters, variables) {
-                variables.titleBarText = parameters.group.label;
+                variables.titleBarText = "More details about " + parameters.group.label;
             }
         });
 
@@ -235,6 +272,7 @@
             onGroupHold: function (event) {
                 event.preventDefault();
                 window.open(event.group.url);
+
             }
         });
 
@@ -251,6 +289,7 @@
 
         // Load Reactome JSON data.
         $.ajax({
+//            url: "../demos/assets/data/carrot2/ben-and-jerry.json",
             url: "clean_data_all_level.json",
             dataType: "json",
             success: function(data) {
@@ -258,12 +297,14 @@
                 foamtree.set({
                     dataObject: {
                         groups: convert(data)
+
                     }
                 });
             } ,
             error: function(){
                 alert("json not found");
             }
+
         });
 
 
@@ -275,11 +316,16 @@
 
             e.preventDefault();
             var href = e.target.href.substring(e.target.href.indexOf("#"));
+
+
             switch (href) {
                 case "#flattened":
-                    foamtree.set({
-                        stacking: "flattened"
+
+                        foamtree.set({
+                            stacking: "flattened"
+
                     });
+
                     break;
 
                 case "#hierarchical":
@@ -297,9 +343,10 @@
             var targetLink = $(this).attr('href');
             window.open(targetLink, '_blank');
         });
+
     }
 
-//    data analysis and redraw foamtree
+    //  data analysis and redraw foamtree
     var submit = document.getElementById("submit");
     submit.onclick = function () {
 
@@ -395,6 +442,7 @@
                                 traverse(item_4)
                             }
                         }
+
                     }
 
 //          mapping with fifth hierarchy
@@ -415,6 +463,7 @@
                             for (var k in newMapping[n].groups[m].groups) {
                                 for (var v in newMapping[n].groups[m].groups[k].groups) {
                                     for (var p in newMapping[n].groups[m].groups[k].groups[v].groups) {
+
                                         item_6 = newMapping[n].groups[m].groups[k].groups[v].groups[p];
                                         traverse(item_6)
                                     }
@@ -423,6 +472,7 @@
                         }
                     }
                 }
+
             });
 
             setTimeout(foamtreeStarts, 500);
@@ -439,7 +489,7 @@
                         groups: cluster.groups ? convert(cluster.groups) : []
                     }
                 });
-            }
+            };
 
             function foamtreeStarts() {
 
@@ -448,6 +498,7 @@
                     dataObject: {
                         groups: convert(newMapping)
                     }
+
                 });
 
 //              basic  definition
@@ -490,6 +541,7 @@
                     //maxLabelSizeForTitleBar: Number.MAX_VALUE,
                     groupLabelFontFamily: "Arial, sans-serif"
 
+
                 });
 
                 //hold a polygonal to junp to real reactome page
@@ -498,6 +550,7 @@
                     onGroupHold: function (event) {
                         event.preventDefault();
                         window.open(event.group.url);
+
                     }
                 });
 
@@ -525,6 +578,7 @@
 
                         }
                     }
+
                 });
 
 //              title bar
@@ -569,7 +623,7 @@
                     var targetLink = $(this).attr('href');
                     window.open(targetLink, '_blank');
                 });
-            }
+            };
         }
 
 //            Load Token data.
@@ -580,13 +634,15 @@
             success: function (json) {
 
                 extractDataFromToken(json)
+
             },
             error: function () {
                 alert("json not found");
             }
         });
     };
-// back to default data when click overview
+
+    //  back to default data when click overview
     var overview = document.getElementById("overview");
     overview.addEventListener("click", function(){
 
@@ -595,6 +651,7 @@
 
         foamtreeLoading ();
     });
+
 
 </script>
 </body>
