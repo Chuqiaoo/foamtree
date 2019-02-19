@@ -11,7 +11,6 @@
     <link href="assets/css/common.css" rel="stylesheet"/>
     <link href="assets/css/tooltip.css" rel="stylesheet" />
 
-
     <!-- The CSS for the loading indicator container-->
     <link href="assets/css/carrotsearch.foamtree.util.loading.css" rel="stylesheet" />
     <style>
@@ -28,57 +27,12 @@
 
     <!-- The CSS for this demo -->
     <style type="text/css">
-
         .set-width {
             width: 250px;
         }
-
         body { overflow-x: hidden }
-        #progress { position: absolute; top: 0; left: 0; right: 0; height: 5px; }
-
-        #details {
-            background-color: rgba(255, 255, 255, 0.95);
-            transition: right 0.5s ease, left 0.5s ease, opacity 0.5s;
-            opacity: 0;
-        }
-        #details.showing { opacity: 1; }
-        #details .forks { position: relative; left: 5px; }
-        #details .watchers { position: relative; top: -2px; }
-        #details .stats span { padding-right: 2em; }
-        #details .stats span:last-of-type { padding-right: 0; }
-
-        .newer, .older { font-weight: normal; padding: 2px 5px; border-radius: 2px; }
-        .newer { background-color: hsla(50, 80%, 85%, 1.0); }
-        .older { background-color: hsla(339, 80%, 40%, 1.0); color: white; }
-
-        .examples { margin-top: 10px; color: #aaa }
-
-        @media (min-width: 1024px) {
-            input[name='query'] { width: 12em; }
-            select[name='results'] { width: 4em; padding-left: 0; padding-right: 0 }
-            select[name='sort'] { width: 7em; padding-left: 0; padding-right: 0 }
-
-            #details {
-                position: absolute;
-                top: 10px;
-                bottom: 10px;
-                width: 440px;
-                right: -440px;
-                padding-top: 25px;
-                padding-left: 10px;
-                overflow-y: auto;
-                overflow-x: hidden;
-                -webkit-overflow-scrolling: touch;
-            }
-            #details.showing { right: 10px; opacity: 1; }
-            #details { text-align: center; }
-            #details .avatar { width: 256px; height: 256px; border-radius: 4px; }
-            #details .description { margin: 30px auto; width: 60%; }
-            #details .close { position: absolute; top: 0; right: 10px; font-size: 50px; }
-        }
         @media (max-width: 1023px) {
             #side { position: relative; }
-
             #details {
                 position: absolute;
                 top: 70%;
@@ -87,20 +41,8 @@
                 opacity: 0;
                 padding: 10px;
             }
-            #details.showing { right: 0; left: 0; opacity: 1; }
-            #details { text-align: left; }
-            #details .avatar { position: absolute; left: 2%; width: 20%; border-radius: 4px;}
-            #details .info { margin-left: 24%; }
-            #details h2 { margin-top: 0; }
-            #details .close { position: absolute; top: 0; right: 10px; font-size: 50px; }
-            #details .description { margin: 20px auto;}
         }
     </style>
-
-    <!-- HTML template for the slide-in details panel -->
-    <script id="details-template" type="text/template">
-
-    </script>
 
     <!-- Include the default style for the interaction hints and guide -->
     <link href="assets/css/carrotsearch.foamtree.util.hints.css" rel="stylesheet"/>
@@ -137,7 +79,6 @@
 
 </div>
 
-<div id="details"></div>
 <script src="assets/js/jquery-2.0.3.min.js"></script>
 
 <!-- Include Hammer.js for mobile interactions. Not required for desktop-only apps. -->
@@ -156,74 +97,80 @@
 <script src="assets/js/jquery-2.0.3.min.js"></script>
 <script src="assets/js/moment.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
-<script>
 
+<!-- A number of custom utilities we'll need -->
+<script src="foamtreeMapping.js"></script>
+
+
+<script>
     window.addEventListener("load", function(){
         foamtreeLoading ();
     });
-
-    // Convert data to groups from Reactome JSON format.
+    //Convert data to groups from Reactome JSON format.
     function convert(groups) {
-        return groups.map(function(cluster) {
+        return groups.map(function(group) {
             return {
-
-                id:     cluster.id,
-                label:  cluster.label,
-                weight: cluster.weight,
-                url:    cluster.url,
-                groups: cluster.groups ? convert(cluster.groups) : []
+                id:     group.id,
+                label:  group.label,
+                // "Flatten" weight distribution to make the very small groups
+                // a bit larger, so that their child groups fit on the screen.
+                weight: Math.pow(group.weight, 0.5),
+                url:    group.url,
+                groups: group.groups ? convert(group.groups) : []
             }
         });
-    };
+    }
 
-    //  loading default data
+    //loading default data
     function foamtreeLoading (){
-
-
         var foamtree = new CarrotSearchFoamTree({
             id: "visualization",
             pixelRatio: window.devicePixelRatio || 1,
-            stacking: "flattened",
 
             // Use a simple fading animation. Animated rollouts are very expensive for large hierarchies.
             rolloutDuration: 0,
             pullbackDuration: 0,
 
-            // Make relaxation visible, so that the user sees the progress of computation of the top-level diagram.
-            relaxationVisible: true,
-
-            // Remove restriction on the minimum group diameter, so that
-            // we can render as many diagram levels as possible.
+            // Lower groupMinDiameter to fit as many groups as possible
             groupMinDiameter: 0,
 
             // Lower the minimum label font size a bit to show more labels.
             groupLabelMinFontSize: 3,
 
             // Lower the border radius a bit to fit more groups.
-            groupBorderWidth: 2.5,
-            groupInsetWidth: 5,
-            groupSelectionOutlineWidth: 1.5,
+            groupBorderWidth: 2,
+            groupInsetWidth: 4,
+
+
+            groupSelectionOutlineWidth: 3,
+
+            // Tune the border options to make them more visible
+            groupBorderWidthScaling: 0.5,
+
+            // Make the description group (in flattened view) smaller to make more space for child groups.
+            descriptionGroupMaxHeight: 0.35,
+
 
             // Don't use gradients and rounded cornrs for faster rendering.
             groupFillType: "plain",
-//            groupBorderRadius: 0,
 
             groupSelectionOutlineColor: "#58C3E5",
 
-//          Attach and draw a maximum of 8 levels of groups.
-//          Increase, if needed.
+            //Attach and draw a maximum of 8 levels of groups.
+            //Increase, if needed.
             maxGroupLevelsAttached: 8,
             maxGroupLevelsDrawn: 8,
             maxGroupLabelLevelsDrawn: 8,
+            finalCompleteDrawMaxDuration: 50000,
+            finalIncrementalDrawMaxDuration: 50000,
+            wireframeDrawMaxDuration: 5000,
 
-            finalCompleteDrawMaxDuration: 70000,
-            finalIncrementalDrawMaxDuration: 70000,
-            wireframeDrawMaxDuration: 7000,
-
-//           show labels during relaxation
+            //show labels during relaxation
             wireframeLabelDrawing: "always",
-//            Replacing the costly "expose" animation on double click
-//            with a simple zoom, which is faster to execute.
+
+            //Replacing the costly "expose" animation on double click
+            //with a simple zoom, which is faster to execute.
+            //Store references to parent groups
             onModelChanging: function addParent(group, parent) {
                 if (!group) { return; }
                 group.parent = parent;
@@ -248,39 +195,56 @@
                     toZoom = this.get("dataObject");
                 }
                 this.zoom(toZoom);
+            },
+
+            // Show the largest nesting level for debugging.
+            groupLabelDecorator: function (opts, props, vars) {
+                vars.labelText = vars.labelText + " [" + props.group.maxLevel + "]";
             }
+
+            // Draw description group label in bold font.
+//            groupLabelLayoutDecorator: function (opts, params, vars) {
+//                if (params.description) {
+//                    vars.fontWeight = "bold";
+//                }
+//            }
 
         });
 
-
         // Clear the previous model.
-        foamtree.set("dataObject", null);
+        //foamtree.set("dataObject", null);
 
         //title bar
         foamtree.set({
+
+            // Setting the option to Number.MAX_VALUE will cause the title bar to appear for all groups.
             maxLabelSizeForTitleBar: Number.MAX_VALUE,
-
             titleBarDecorator: function(options, parameters, variables) {
-                variables.titleBarText = "More details about " + parameters.group.label;
+                variables.titleBarText = parameters.group.label;
             }
         });
 
-
-        //hold a polygonal to junp to real reactome page
+        //hold a polygonal to jump to Reactome pathway page
         foamtree.set({
-
-            onGroupHold: function (event) {
-                event.preventDefault();
-                window.open(event.group.url);
-
+            onGroupHold: function (e) {
+                e.preventDefault();
+                window.open(e.group.url);
             }
         });
+
 
         //customization colors
         foamtree.set({
             groupColorDecorator: function (opts, props, vars) {
-                vars.groupColor = "#58C3E5";
-                vars.labelColor = "#000";
+                // If child groups of some group don't have enough space to
+                // render, draw the parent group in red.
+                if (props.hasChildren && props.browseable === false) {
+                    vars.groupColor = "#E86365";
+                    vars.labelColor = "#000";
+                } else {
+                    vars.groupColor = "#58C3E5";
+                    vars.labelColor = "#000";
+                }
             }
         });
 
@@ -289,59 +253,56 @@
 
         // Load Reactome JSON data.
         $.ajax({
-//            url: "../demos/assets/data/carrot2/ben-and-jerry.json",
             url: "clean_data_all_level.json",
             dataType: "json",
             success: function(data) {
 
+//              caculate the maxLevel of a group
+                var groups = convert(data);
+                groups.forEach(setMaxLevel);
+                function setMaxLevel(group) {
+                    if (group.groups && group.groups.length > 0) {
+                        group.groups.forEach(setMaxLevel);
+                        group.maxLevel = group.groups.reduce(function (max, group) {
+                            return Math.max(max, group.maxLevel);
+                        }, 0) + 1;
+                    } else {
+                        group.maxLevel = 1;
+                    }
+                }
                 foamtree.set({
                     dataObject: {
-                        groups: convert(data)
+                        groups: groups
 
                     }
                 });
-            } ,
+            },
+
             error: function(){
                 alert("json not found");
             }
-
         });
-
 
         // Handle customization links
         document.addEventListener("click", function (e) {
             if (!e.target.href) {
                 return;
             }
-
             e.preventDefault();
             var href = e.target.href.substring(e.target.href.indexOf("#"));
-
-
             switch (href) {
                 case "#flattened":
-
-                        foamtree.set({
-                            stacking: "flattened"
-
+                    foamtree.set({
+                        stacking: "flattened"
                     });
-
                     break;
-
                 case "#hierarchical":
                     foamtree.set({
                         stacking: "hierarchical"
                     });
                     break;
-
             }
             foamtree.set("dataObject", foamtree.get("dataObject"));
-        });
-
-        //stop click preventDefault() with the link with id undo
-        $('.undo').click(function(e){
-            var targetLink = $(this).attr('href');
-            window.open(targetLink, '_blank');
         });
 
     }
@@ -349,292 +310,19 @@
     //  data analysis and redraw foamtree
     var submit = document.getElementById("submit");
     submit.onclick = function () {
-
         var tokenUrl = document.getElementById("token");
 
+        //remove previous embed foamtree
         $("#visualization").empty();
         document.getElementById("visualization").removeAttribute("data-foamtree");
 
-        var newMapping = [];
-
-        function extractDataFromToken(response) {
-
-//      read external Token data and save to key=>value pair R-HSA-5653656 =>1.1102230246251565e-16
-            var newResponse = {};
-            var analysisType = response.type;
-
-            $.each(response.pathways, function (key, val) {
-
-                newResponse[val.stId] = val.entities.pValue;
-            });
-
-            $.ajax({
-                url: "clean_data_all_level.json",
-                //force to handle it as text
-                dataType: "json",
-                //async: false,
-                success: function (data) {
-                    for (var i = 0; i < data.length; i++) {
-
-//             (data[i].id) => R-HSA-5653656
-//             newResponse[(data[i].id)] = 1.1102230246251565e-16
-
-//              get the pvalue of assigned id, if the id doesn't exists, return undefined
-                        if (newResponse[data[i].id]) {
-
-                            newMapping.push({
-                                id: data[i].id,
-                                label: data[i].label,
-                                pValue: newResponse[data[i].id],
-                                weight: data[i].weight,
-                                groups: data[i].groups
-                            });
-                        } else {
-                            newMapping.push({
-                                id: data[i].id,
-                                label: data[i].label,
-                                pValue: undefined,
-                                weight: data[i].weight,
-                                groups: data[i].groups
-
-                            });
-                        }
-                    }
-
-                    function traverse(item) {
-                        if (item.groups != '') {
-
-                            for (var index in item.groups) {
-                                data = item.groups[index];
-
-                                if (newResponse[data.id]) {
-
-                                    item.groups[index] = Object.assign({'pValue': newResponse[item.groups[index].id]}, item.groups[index]);
-
-                                } else {
-
-                                    item.groups[index] = Object.assign({'pValue': undefined}, item.groups[index]);
-                                }
-                            }
-                        }
-                    }
-
-//          mapping with second hierarchy
-                    for (var n in newMapping) {
-                        item_2 = newMapping[n];
-                        traverse(item_2)
-
-                    }
-
-//          mapping with third hierarchy
-                    for (var n in newMapping) {
-                        for (var m in newMapping[n].groups) {
-                            item_3 = newMapping[n].groups[m];
-                            traverse(item_3)
-                        }
-                    }
-
-//          mapping with fourth hierarchy
-                    for (var n in newMapping) {
-                        for (var m in newMapping[n].groups) {
-                            for (var y in newMapping[n].groups[m].groups) {
-                                item_4 = newMapping[n].groups[m].groups[y];
-                                traverse(item_4)
-                            }
-                        }
-
-                    }
-
-//          mapping with fifth hierarchy
-                    for (var n in newMapping) {
-                        for (var m in newMapping[n].groups) {
-                            for (var k in newMapping[n].groups[m].groups) {
-                                for (var v in newMapping[n].groups[m].groups[k].groups) {
-                                    item_5 = newMapping[n].groups[m].groups[k].groups[v];
-                                    traverse(item_5)
-                                }
-                            }
-                        }
-                    }
-
-//          mapping with sixth hierarchy
-                    for (var n in newMapping) {
-                        for (var m in newMapping[n].groups) {
-                            for (var k in newMapping[n].groups[m].groups) {
-                                for (var v in newMapping[n].groups[m].groups[k].groups) {
-                                    for (var p in newMapping[n].groups[m].groups[k].groups[v].groups) {
-
-                                        item_6 = newMapping[n].groups[m].groups[k].groups[v].groups[p];
-                                        traverse(item_6)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-            });
-
-            setTimeout(foamtreeStarts, 500);
-
-            function convert(groups) {
-                return groups.map(function (cluster) {
-                    return {
-
-                        id: cluster.id,
-                        label: cluster.label,
-                        weight: cluster.weight,
-                        url: cluster.url,
-                        pValue: cluster.pValue != null ? cluster.pValue : undefined,
-                        groups: cluster.groups ? convert(cluster.groups) : []
-                    }
-                });
-            };
-
-            function foamtreeStarts() {
-
-                var foamtree = new CarrotSearchFoamTree({
-                    id: "visualization",
-                    dataObject: {
-                        groups: convert(newMapping)
-                    }
-
-                });
-
-//              basic  definition
-                foamtree.set({
-                    pixelRatio: window.devicePixelRatio || 1,
-
-                    // Disable animations
-                    rolloutDuration: 0,
-                    pullbackDuration: 0,
-
-                    //Customize borders, fill and strokes
-                    groupBorderWidth: 2,
-                    groupInsetWidth: 4,
-                    groupBorderRadius: 0.1,
-                    groupBorderRadiusCorrection: 1,
-
-                    groupSelectionOutlineWidth: 3.5,
-
-                    groupFillType: "gradient",
-                    groupFillGradientRadius: 3,
-                    groupFillGradientCenterLightnessShift: 20,
-
-                    groupStrokeWidth: 0.33,
-                    groupStrokeType: "plain",
-                    groupStrokePlainLightnessShift: -10,
-
-                    // Allow some more time to draw
-                    finalCompleteDrawMaxDuration: 500,
-                    finalIncrementalDrawMaxDuration: 500,
-
-                    // Make the line spacing and the total height of the
-                    // label smaller than the default to make space for
-                    // the coverage value display
-                    groupLabelLineHeight: 1.0,
-
-
-                    groupSelectionOutlineColor: "#58C3E5",
-                    titleBar: "inscribed",
-                    titleBarFontFamily: "monospace",
-                    //maxLabelSizeForTitleBar: Number.MAX_VALUE,
-                    groupLabelFontFamily: "Arial, sans-serif"
-
-
-                });
-
-                //hold a polygonal to junp to real reactome page
-                foamtree.set({
-
-                    onGroupHold: function (event) {
-                        event.preventDefault();
-                        window.open(event.group.url);
-
-                    }
-                });
-
-//              Assign colors based on the  Pvalue
-                foamtree.set({
-
-                    groupColorDecorator: function (opts, params, vars) {
-
-                        var coverage = params.group.pValue;
-                        if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
-                            // Coverage defined. 0% coverage will be yellow,
-                            // 100% coverage will be olive.
-
-                            // min yellow : hsl(52, 98%, 60%)
-                            //max: olive  : hsl (58, 100, 29)
-
-                            vars.groupColor.h = 52 + 6 * (coverage / 0.05 );
-                            vars.groupColor.s = 98 + 2 * (coverage / 0.05 );
-                            vars.groupColor.l = 60 - 31 * (coverage / 0.05 );
-
-                        } else {
-                            // Coverage not defined, draw the group in grey.
-                            vars.groupColor.s = 0;
-                            vars.groupColor.l = 75;
-
-                        }
-                    }
-
-                });
-
-//              title bar
-                foamtree.set({
-                    maxLabelSizeForTitleBar: Number.MAX_VALUE,
-
-                    titleBarDecorator: function (options, parameters, variables) {
-                        variables.titleBarText = parameters.group.label;
-                    }
-                });
-
-                CarrotSearchFoamTree.hints(foamtree);
-
-
-                // Handle customization links
-                document.addEventListener("click", function (e) {
-                    if (!e.target.href) {
-                        return;
-                    }
-
-                    e.preventDefault();
-                    var href = e.target.href.substring(e.target.href.indexOf("#"));
-                    switch (href) {
-                        case "#flattened":
-                            foamtree.set({
-                                stacking: "flattened"
-                            });
-                            break;
-
-                        case "#hierarchical":
-                            foamtree.set({
-                                stacking: "hierarchical"
-                            });
-                            break;
-
-                    }
-                    foamtree.set("dataObject", foamtree.get("dataObject"));
-                });
-
-                //custom by chuqiao to stop click preventDefault()
-                $('.undo').click(function (e) {
-                    var targetLink = $(this).attr('href');
-                    window.open(targetLink, '_blank');
-                });
-            };
-        }
-
-//            Load Token data.
+        //Load Token data.
         $.ajax({
             url: "https://dev.reactome.org/AnalysisService/token/" + tokenUrl.value + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
             dataType: "json",
             type: "GET",
             success: function (json) {
-
                 extractDataFromToken(json)
-
             },
             error: function () {
                 alert("json not found");
@@ -642,16 +330,13 @@
         });
     };
 
-    //  back to default data when click overview
+    //back to default data when click overview
     var overview = document.getElementById("overview");
     overview.addEventListener("click", function(){
-
         $("#visualization").empty();
         document.getElementById("visualization").removeAttribute("data-foamtree");
-
         foamtreeLoading ();
     });
-
 
 </script>
 </body>
