@@ -106,6 +106,7 @@
     window.addEventListener("load", function(){
         foamtreeLoading ();
     });
+
     //Convert data to groups from Reactome JSON format.
     function convert(groups) {
         return groups.map(function(group) {
@@ -310,19 +311,341 @@
     //  data analysis and redraw foamtree
     var submit = document.getElementById("submit");
     submit.onclick = function () {
+
         var tokenUrl = document.getElementById("token");
 
-        //remove previous embed foamtree
         $("#visualization").empty();
         document.getElementById("visualization").removeAttribute("data-foamtree");
 
-        //Load Token data.
+        var newMapping = [];
+
+        function extractDataFromToken(response) {
+//      read external Token data and save to key=>value pair R-HSA-5653656 =>1.1102230246251565e-16
+            var newResponse = {};
+
+            $.each(response.pathways, function (key, val) {
+                newResponse[val.stId] = val.entities.pValue;
+            });
+            $.ajax({
+                url: "clean_data_all_level.json",
+                dataType: "json",
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        //(data[i].id) => R-HSA-5653656
+                        //newResponse[(data[i].id)] = 1.1102230246251565e-16
+                        //get the pvalue of assigned id, if the id doesn't exists, return undefined
+                        if (newResponse[data[i].id]) {
+                            newMapping.push({
+                                id: data[i].id,
+                                label: data[i].label,
+                                pValue: newResponse[data[i].id],
+                                weight: data[i].weight,
+                                groups: data[i].groups
+                            });
+                        } else {
+                            newMapping.push({
+                                id: data[i].id,
+                                label: data[i].label,
+                                pValue: undefined,
+                                weight: data[i].weight,
+                                groups: data[i].groups
+                            });
+                        }
+                    }
+                    function traverse(item) {
+                        if (item.groups != '') {
+                            for (var index in item.groups) {
+                                data = item.groups[index];
+                                if (newResponse[data.id]) {
+                                    item.groups[index] = Object.assign({'pValue': newResponse[item.groups[index].id]}, item.groups[index]);
+                                } else {
+                                    item.groups[index] = Object.assign({'pValue': undefined}, item.groups[index]);
+                                }
+                            }
+                        }
+                    }
+                    // mapping with second level
+                    for (var n in newMapping) {
+                        item_2 = newMapping[n];
+                        traverse(item_2)
+                    }
+                    //mapping with third level
+                    for (var n in newMapping) {
+                        for (var m in newMapping[n].groups) {
+                            item_3 = newMapping[n].groups[m];
+                            traverse(item_3)
+                        }
+                    }
+                    //mapping with fourth level
+                    for (var n in newMapping) {
+                        for (var m in newMapping[n].groups) {
+                            for (var y in newMapping[n].groups[m].groups) {
+                                item_4 = newMapping[n].groups[m].groups[y];
+                                traverse(item_4)
+                            }
+                        }
+                    }
+                    //mapping with fifth level
+                    for (var n in newMapping) {
+                        for (var m in newMapping[n].groups) {
+                            for (var k in newMapping[n].groups[m].groups) {
+                                for (var v in newMapping[n].groups[m].groups[k].groups) {
+                                    item_5 = newMapping[n].groups[m].groups[k].groups[v];
+                                    traverse(item_5)
+                                }
+                            }
+                        }
+                    }
+                    // mapping with sixth level
+                    for (var n in newMapping) {
+                        for (var m in newMapping[n].groups) {
+                            for (var k in newMapping[n].groups[m].groups) {
+                                for (var v in newMapping[n].groups[m].groups[k].groups) {
+                                    for (var p in newMapping[n].groups[m].groups[k].groups[v].groups) {
+                                        item_6 = newMapping[n].groups[m].groups[k].groups[v].groups[p];
+                                        traverse(item_6)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // mapping with seventh level
+                    for (var n in newMapping) {
+                        for (var m in newMapping[n].groups) {
+                            for (var k in newMapping[n].groups[m].groups) {
+                                for (var v in newMapping[n].groups[m].groups[k].groups) {
+                                    for (var p in newMapping[n].groups[m].groups[k].groups[v].groups) {
+                                        for (var q in newMapping[n].groups[m].groups[k].groups[v].groups[p].groups) {
+                                            item_7 = newMapping[n].groups[m].groups[k].groups[v].groups[p].groups[q];
+                                            traverse(item_7)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // mapping with eighth level
+                    for (var n in newMapping) {
+                        for (var m in newMapping[n].groups) {
+                            for (var k in newMapping[n].groups[m].groups) {
+                                for (var v in newMapping[n].groups[m].groups[k].groups) {
+                                    for (var p in newMapping[n].groups[m].groups[k].groups[v].groups) {
+                                        for (var q in newMapping[n].groups[m].groups[k].groups[v].groups[p].groups) {
+                                            for (var l in newMapping[n].groups[m].groups[k].groups[v].groups[p].groups[q].groups) {
+                                                item_8 = newMapping[n].groups[m].groups[k].groups[v].groups[p].groups[q].groups[l];
+                                                traverse(item_8)
+                                            }
+
+
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            setTimeout(foamtreeStarts, 500);
+
+            function convert(groups) {
+                return groups.map(function (group) {
+                    return {
+                        id: group.id,
+                        label: group.label,
+                        weight: Math.pow(group.weight, 0.5),
+                        url: group.url,
+                        pValue: group.pValue != null ? group.pValue : undefined,
+                        groups: group.groups ? convert(group.groups) : []
+                    }
+                });
+            }
+            console.log(newMapping);
+
+            function foamtreeStarts() {
+
+
+                //caculate the maxLevel of a group
+                var groups = convert(newMapping);
+                groups.forEach(setMaxLevel);
+                function setMaxLevel(group) {
+                    if (group.groups && group.groups.length > 0) {
+                        group.groups.forEach(setMaxLevel);
+                        group.maxLevel = group.groups.reduce(function (max, group) {
+                            return Math.max(max, group.maxLevel);
+                        }, 0) + 1;
+                    } else {
+                        group.maxLevel = 1;
+                    }
+                }
+
+
+                var foamtree = new CarrotSearchFoamTree({
+                    id: "visualization",
+                    dataObject: {
+                        groups: groups
+                    }
+                });
+
+                //basic  definition
+                foamtree.set({
+                    pixelRatio: window.devicePixelRatio || 1,
+
+                    // Use a simple fading animation. Animated rollouts are very expensive for large hierarchies.
+                    rolloutDuration: 0,
+                    pullbackDuration: 0,
+
+                    // Lower groupMinDiameter to fit as many groups as possible
+                    groupMinDiameter: 0,
+
+                    // Lower the minimum label font size a bit to show more labels.
+                    groupLabelMinFontSize: 3,
+
+                    // Lower the border radius a bit to fit more groups.
+                    groupBorderWidth: 2,
+                    groupInsetWidth: 4,
+
+
+                    groupSelectionOutlineWidth: 3,
+
+                    // Tune the border options to make them more visible
+                    groupBorderWidthScaling: 0.5,
+
+                    // Make the description group (in flattened view) smaller to make more space for child groups.
+                    descriptionGroupMaxHeight: 0.35,
+
+
+                    // Don't use gradients and rounded cornrs for faster rendering.
+                    groupFillType: "plain",
+
+                    groupSelectionOutlineColor: "#58C3E5",
+
+                    //Attach and draw a maximum of 8 levels of groups.
+                    //Increase, if needed.
+                    maxGroupLevelsAttached: 8,
+                    maxGroupLevelsDrawn: 8,
+                    maxGroupLabelLevelsDrawn: 8,
+                    finalCompleteDrawMaxDuration: 50000,
+                    finalIncrementalDrawMaxDuration: 50000,
+                    wireframeDrawMaxDuration: 5000,
+
+                    //show labels during relaxation
+                    wireframeLabelDrawing: "always",
+
+
+                    //Replacing the costly "expose" animation on double click
+                    //with a simple zoom, which is faster to execute.
+                    //Store references to parent groups
+//                    onModelChanging: function addParent(group, parent) {
+//                        if (!group) { return; }
+//                        group.parent = parent;
+//                        if (group.groups) {
+//                            group.groups.forEach(function(g) {
+//                                addParent(g, group);
+//                            });
+//                        }
+//                    },
+//
+//                    onGroupDoubleClick: function(e) {
+//                        e.preventDefault();
+//                        var group = e.secondary ? e.bottommostOpenGroup : e.topmostClosedGroup;
+//                        var toZoom;
+//                        if (group) {
+//                            // Open on left-click, close on right-click
+//                            this.open({
+//                                groups: group,
+//                                open: !e.secondary
+//                            });
+//                            toZoom = e.secondary ? group.parent : group;
+//                        } else {
+//                            toZoom = this.get("dataObject");
+//                        }
+//                        this.zoom(toZoom);
+//                    },
+
+                    // Show the largest nesting level for debugging.
+                    groupLabelDecorator: function (opts, props, vars) {
+                        vars.labelText = vars.labelText + " [" + props.group.maxLevel + "]";
+                    }
+
+                    // Draw description group label in bold font.
+//                    groupLabelLayoutDecorator: function (opts, params, vars) {
+//                        if (params.description) {
+//                            vars.fontWeight = "bold";
+//                        }
+//                    }
+
+
+
+                });
+                //hold a polygonal to junp to real reactome page
+                foamtree.set({
+                    onGroupHold: function (event) {
+                        event.preventDefault();
+                        window.open(event.group.url);
+                    }
+                });
+//              Assign colors based on the  Pvalue
+                foamtree.set({
+                    groupColorDecorator: function (opts, params, vars) {
+                        var coverage = params.group.pValue;
+                        if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
+                            // Coverage defined. 0% coverage will be yellow,
+                            // 100% coverage will be olive.
+                            // min yellow : hsl(52, 98%, 60%)
+                            //max: olive  : hsl (58, 100, 29)
+                            vars.groupColor.h = 52 + 6 * (coverage / 0.05 );
+                            vars.groupColor.s = 98 + 2 * (coverage / 0.05 );
+                            vars.groupColor.l = 60 - 31 * (coverage / 0.05 );
+                        } else {
+                            // Coverage not defined, draw the group in grey.
+                            vars.groupColor.s = 0;
+                            vars.groupColor.l = 75;
+                        }
+                    }
+                });
+//              title bar
+                foamtree.set({
+                    maxLabelSizeForTitleBar: Number.MAX_VALUE,
+                    titleBarDecorator: function (options, parameters, variables) {
+                        variables.titleBarText = parameters.group.label;
+                    }
+                });
+                CarrotSearchFoamTree.hints(foamtree);
+                // Handle customization links
+                document.addEventListener("click", function (e) {
+                    if (!e.target.href) {
+                        return;
+                    }
+                    e.preventDefault();
+                    var href = e.target.href.substring(e.target.href.indexOf("#"));
+                    switch (href) {
+                        case "#flattened":
+                            foamtree.set({
+                                stacking: "flattened"
+                            });
+                            break;
+                        case "#hierarchical":
+                            foamtree.set({
+                                stacking: "hierarchical"
+                            });
+                            break;
+                    }
+                    foamtree.set("dataObject", foamtree.get("dataObject"));
+                });
+
+            };
+        }
+
+//            Load Token data.
         $.ajax({
+//                url: "https://dev.reactome.org/AnalysisService/token/MjAxOTAxMjExMjA3MDBfMg%25253D%25253D?sortBy=ENTITIES_PVALUE&order=ASC&resource=UNIPROT",
             url: "https://dev.reactome.org/AnalysisService/token/" + tokenUrl.value + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
             dataType: "json",
             type: "GET",
             success: function (json) {
+
                 extractDataFromToken(json)
+
             },
             error: function () {
                 alert("json not found");
@@ -330,13 +653,16 @@
         });
     };
 
-    //back to default data when click overview
+    //  back to default data when click overview
     var overview = document.getElementById("overview");
     overview.addEventListener("click", function(){
+
         $("#visualization").empty();
         document.getElementById("visualization").removeAttribute("data-foamtree");
+
         foamtreeLoading ();
     });
+
 
 </script>
 </body>
