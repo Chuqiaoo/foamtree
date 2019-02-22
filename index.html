@@ -453,7 +453,7 @@
                         id: group.id,
                         label: group.label,
                         weight: Math.pow(group.weight, 0.5),
-                        url: group.url,
+                        url: group.url+ "&DTAB=AN&ANALYSIS=" + tokenUrl.value,
                         pValue: group.pValue != null ? group.pValue : undefined,
                         groups: group.groups ? convert(group.groups) : []
                     }
