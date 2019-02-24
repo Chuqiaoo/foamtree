@@ -352,97 +352,6 @@
                             });
                         }
                     }
-                    function traverse(item) {
-                        if (item.groups != '') {
-                            for (var index in item.groups) {
-                                data = item.groups[index];
-                                if (newResponse[data.id]) {
-                                    item.groups[index] = Object.assign({'pValue': newResponse[item.groups[index].id]}, item.groups[index]);
-                                } else {
-                                    item.groups[index] = Object.assign({'pValue': undefined}, item.groups[index]);
-                                }
-                            }
-                        }
-                    }
-                    // mapping with second level
-                    for (var n in newMapping) {
-                        item_2 = newMapping[n];
-                        traverse(item_2)
-                    }
-                    //mapping with third level
-                    for (var n in newMapping) {
-                        for (var m in newMapping[n].groups) {
-                            item_3 = newMapping[n].groups[m];
-                            traverse(item_3)
-                        }
-                    }
-                    //mapping with fourth level
-                    for (var n in newMapping) {
-                        for (var m in newMapping[n].groups) {
-                            for (var y in newMapping[n].groups[m].groups) {
-                                item_4 = newMapping[n].groups[m].groups[y];
-                                traverse(item_4)
-                            }
-                        }
-                    }
-                    //mapping with fifth level
-                    for (var n in newMapping) {
-                        for (var m in newMapping[n].groups) {
-                            for (var k in newMapping[n].groups[m].groups) {
-                                for (var v in newMapping[n].groups[m].groups[k].groups) {
-                                    item_5 = newMapping[n].groups[m].groups[k].groups[v];
-                                    traverse(item_5)
-                                }
-                            }
-                        }
-                    }
-                    // mapping with sixth level
-                    for (var n in newMapping) {
-                        for (var m in newMapping[n].groups) {
-                            for (var k in newMapping[n].groups[m].groups) {
-                                for (var v in newMapping[n].groups[m].groups[k].groups) {
-                                    for (var p in newMapping[n].groups[m].groups[k].groups[v].groups) {
-                                        item_6 = newMapping[n].groups[m].groups[k].groups[v].groups[p];
-                                        traverse(item_6)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    // mapping with seventh level
-                    for (var n in newMapping) {
-                        for (var m in newMapping[n].groups) {
-                            for (var k in newMapping[n].groups[m].groups) {
-                                for (var v in newMapping[n].groups[m].groups[k].groups) {
-                                    for (var p in newMapping[n].groups[m].groups[k].groups[v].groups) {
-                                        for (var q in newMapping[n].groups[m].groups[k].groups[v].groups[p].groups) {
-                                            item_7 = newMapping[n].groups[m].groups[k].groups[v].groups[p].groups[q];
-                                            traverse(item_7)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    // mapping with eighth level
-                    for (var n in newMapping) {
-                        for (var m in newMapping[n].groups) {
-                            for (var k in newMapping[n].groups[m].groups) {
-                                for (var v in newMapping[n].groups[m].groups[k].groups) {
-                                    for (var p in newMapping[n].groups[m].groups[k].groups[v].groups) {
-                                        for (var q in newMapping[n].groups[m].groups[k].groups[v].groups[p].groups) {
-                                            for (var l in newMapping[n].groups[m].groups[k].groups[v].groups[p].groups[q].groups) {
-                                                item_8 = newMapping[n].groups[m].groups[k].groups[v].groups[p].groups[q].groups[l];
-                                                traverse(item_8)
-                                            }
-
-
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
             });
             setTimeout(foamtreeStarts, 500);
@@ -477,7 +386,27 @@
                         group.maxLevel = 1;
                     }
                 }
+                //add pvalue to each item in group
+                groups.forEach(addPvalue);
 
+                function addPvalue(group) {
+                    if (group.groups && group.groups.length > 0) {
+
+                        group.groups.forEach(addPvalue);
+
+                        for (var i =0; i < group.groups.length; i++){
+
+                            if (newResponse[group.groups[i].id]) {
+
+                                group.groups[i] = Object.assign( group.groups[i],{'pValue': newResponse[group.groups[i].id]});
+
+                            } else {
+
+                                group.groups[i] = Object.assign(group.groups[i],{'pValue': undefined });
+                            }
+                        }
+                    }
+                }
 
                 var foamtree = new CarrotSearchFoamTree({
                     id: "visualization",
