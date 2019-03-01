@@ -339,6 +339,7 @@
                                 id: data[i].id,
                                 label: data[i].label,
                                 pValue: newResponse[data[i].id],
+                                url: data[i].url,
                                 weight: data[i].weight,
                                 groups: data[i].groups
                             });
@@ -347,6 +348,7 @@
                                 id: data[i].id,
                                 label: data[i].label,
                                 pValue: undefined,
+                                url: data[i].url,
                                 weight: data[i].weight,
                                 groups: data[i].groups
                             });
@@ -368,13 +370,14 @@
                     }
                 });
             }
-            console.log(newMapping);
+
 
             function foamtreeStarts() {
 
-
                 //caculate the maxLevel of a group
                 var groups = convert(newMapping);
+
+                console.log(groups);
                 groups.forEach(setMaxLevel);
                 function setMaxLevel(group) {
                     if (group.groups && group.groups.length > 0) {
@@ -386,9 +389,9 @@
                         group.maxLevel = 1;
                     }
                 }
+
                 //add pvalue to each item in group
                 groups.forEach(addPvalue);
-
                 function addPvalue(group) {
                     if (group.groups && group.groups.length > 0) {
 
@@ -407,6 +410,25 @@
                         }
                     }
                 }
+
+                //add analysis url
+                groups.forEach(addAnalysisUrl);
+                function addAnalysisUrl(group) {
+                    if (group.groups && group.groups.length > 0) {
+
+                        group.groups.forEach(addAnalysisUrl);
+
+                        for (var i =0; i < group.groups.length; i++){
+
+                            if (newResponse[group.groups[i].id]) {
+
+                                group.groups[i] = Object.assign( group.groups[i],{'url': group.groups[i].url + "&DTAB=AN&ANALYSIS=" + tokenUrl.value});
+
+                            }
+                        }
+                    }
+                }
+
 
                 var foamtree = new CarrotSearchFoamTree({
                     id: "visualization",
@@ -461,35 +483,6 @@
                     wireframeLabelDrawing: "always",
 
 
-                    //Replacing the costly "expose" animation on double click
-                    //with a simple zoom, which is faster to execute.
-                    //Store references to parent groups
-//                    onModelChanging: function addParent(group, parent) {
-//                        if (!group) { return; }
-//                        group.parent = parent;
-//                        if (group.groups) {
-//                            group.groups.forEach(function(g) {
-//                                addParent(g, group);
-//                            });
-//                        }
-//                    },
-//
-//                    onGroupDoubleClick: function(e) {
-//                        e.preventDefault();
-//                        var group = e.secondary ? e.bottommostOpenGroup : e.topmostClosedGroup;
-//                        var toZoom;
-//                        if (group) {
-//                            // Open on left-click, close on right-click
-//                            this.open({
-//                                groups: group,
-//                                open: !e.secondary
-//                            });
-//                            toZoom = e.secondary ? group.parent : group;
-//                        } else {
-//                            toZoom = this.get("dataObject");
-//                        }
-//                        this.zoom(toZoom);
-//                    },
 
                     // Show the largest nesting level for debugging.
                     groupLabelDecorator: function (opts, props, vars) {
@@ -502,7 +495,6 @@
 //                            vars.fontWeight = "bold";
 //                        }
 //                    }
-
 
 
                 });
