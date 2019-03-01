@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+    <meta property="og:image" content="//get.carrotsearch.com/foamtree/latest/demos/assets/img/main-thumbnail.jpg"/>
+
+    <meta charset="utf-8"/>
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../assets/css/common.css" rel="stylesheet"/>
+    <link href="../assets/css/tooltip.css" rel="stylesheet" />
+
+
+    <!-- The CSS for the loading indicator container-->
+    <link href="../assets/css/carrotsearch.foamtree.util.loading.css" rel="stylesheet" />
+    <style>
+        .visualization-loading > div {
+            font-size: 36px;
+            position: absolute;
+            width: 100%;
+            top: 50%;
+            margin-top: -40px;
+            text-align: center;
+            line-height: 1.05;
+        }
+    </style>
+
+
+    <!-- The CSS for this demo -->
+    <style type="text/css">
+
+        .set-width {
+            width: 250px;
+        }
+
+        body { overflow-x: hidden }
+
+        @media (max-width: 1023px) {
+            #side { position: relative; }
+
+
+        }
+    </style>
+
+    <!-- HTML template for the slide-in details panel -->
+    <script id="details-template" type="text/template">
+
+    </script>
+
+    <!-- Include the default style for the interaction hints and guide -->
+    <link href="../assets/css/carrotsearch.foamtree.util.hints.css" rel="stylesheet"/>
+
+
+</head>
+<body>
+
+<!--<div id="visualization" style="width: 80%; height: 600px;"></div>-->
+
+<div id="container">
+    <div id="visualization"></div>
+
+    <div id="test"></div>
+
+    <!-- The element to use as the relaxation progress indicator -->
+    <div id="progress"></div>
+</div>
+
+<div id="side">
+
+    View: <a href="#hierarchical">hierarchical</a> | <a href="#flattened">flattened</a> <br>
+
+    <!--<p>-->
+    <!--UniProt example list data analysis result at : <a target="_blank" class = "undo" href= "https://dev.reactome.org/PathwayBrowser/#/DTAB=AN&ANALYSIS=MjAxOTAxMjExMjA3MDBfMg%253D%253D&RESOURCE=UNIPROT">Reactomee</a>  <br>-->
+    <!--</p>-->
+    <br>
+    <p>Data Analysis </p>
+
+    <div  align="left" style="float:left">
+        Enter Token:
+        <input type="text" name="token" id ="token" class="set-width">
+    </div>
+
+    <div align="right">
+        <button id = "submit">Submit</button>
+    </div>
+
+    <br>
+    <div>
+        <button id = "overview">Overview</button>
+    </div>
+
+</div>
+
+<div id="details"></div>
+<script src="../assets/js/jquery-2.0.3.min.js"></script>
+
+<!-- Include Hammer.js for mobile interactions. Not required for desktop-only apps. -->
+<script src="../assets/js/hammer.min.js"></script>
+<script src="../carrotsearch.foamtree.js"></script>
+<script src="../carrotsearch.foamtree.util.loading.js"></script>
+<script src="../carrotsearch.foamtree.util.relaxationprogress.js"></script>
+<script src="../assets/js/tooltip.min.js"></script>
+
+<!-- Include the interaction hints utility -->
+<script src="../carrotsearch.foamtree.util.hints.js"></script>
+
+<!-- A number of utilities we'll need -->
+<script src="../assets/js/carrotsearch.jsonp.js"></script>
+<script src="../assets/js/carrotsearch.template.js"></script>
+<script src="../assets/js/jquery-2.0.3.min.js"></script>
+<script src="../assets/js/moment.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+
+
+<script src="../getData.js"></script>
+
+<script>
+
+    window.addEventListener("load", function() {
+            loading();
+
+    });
+
+
+    var dataFoamtree;
+
+    $.ajax({
+        url: "https://reactome.org/download/current/fireworks/Homo_sapiens.json",
+        dataType: "json",
+        async: false,
+        success: function(data) {
+
+            dataFoamtree = getData(data);
+
+        } ,
+        error: function(){
+            alert("json not found");
+        }
+
+    });
+
+
+    function loading(){
+
+
+        var foamtree = new CarrotSearchFoamTree({
+            id: "visualization",
+            pixelRatio: window.devicePixelRatio || 1,
+
+            // Use a simple fading animation. Animated rollouts are very expensive for large hierarchies.
+            rolloutDuration: 0,
+            pullbackDuration: 0,
+
+            // Lower groupMinDiameter to fit as many groups as possible
+            groupMinDiameter: 0,
+
+            // Lower the minimum label font size a bit to show more labels.
+            groupLabelMinFontSize: 3,
+
+            // Lower the border radius a bit to fit more groups.
+            groupBorderWidth: 2,
+            groupInsetWidth: 4,
+
+
+            groupSelectionOutlineWidth: 3,
+
+            // Tune the border options to make them more visible
+            groupBorderWidthScaling: 0.5,
+
+            // Make the description group (in flattened view) smaller to make more space for child groups.
+            descriptionGroupMaxHeight: 0.35,
+
+
+            // Don't use gradients and rounded cornrs for faster rendering.
+            groupFillType: "plain",
+
+            groupSelectionOutlineColor: "#58C3E5",
+
+            //Attach and draw a maximum of 8 levels of groups.
+            //Increase, if needed.
+            maxGroupLevelsAttached: 8,
+            maxGroupLevelsDrawn: 8,
+            maxGroupLabelLevelsDrawn: 8,
+            finalCompleteDrawMaxDuration: 50000,
+            finalIncrementalDrawMaxDuration: 50000,
+            wireframeDrawMaxDuration: 5000,
+
+            //show labels during relaxation
+            wireframeLabelDrawing: "always",
+
+
+
+            groupColorDecorator: function (opts, props, vars) {
+                vars.groupColor = "#58C3E5";
+                vars.labelColor = "#000";
+            }
+
+        });
+
+            foamtree.set({
+                dataObject: {
+                    groups: dataFoamtree
+                }
+
+            });
+    }
+
+
+</script>
+</body>
+</html>
