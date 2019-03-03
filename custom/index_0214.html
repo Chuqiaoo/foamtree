@@ -7,12 +7,12 @@
     <meta property="og:image" content="//get.carrotsearch.com/foamtree/latest/demos/assets/img/main-thumbnail.jpg"/>
 
     <meta charset="utf-8"/>
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="assets/css/common.css" rel="stylesheet"/>
-    <link href="assets/css/tooltip.css" rel="stylesheet" />
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../assets/css/common.css" rel="stylesheet"/>
+    <link href="../assets/css/tooltip.css" rel="stylesheet" />
 
     <!-- The CSS for the loading indicator container-->
-    <link href="assets/css/carrotsearch.foamtree.util.loading.css" rel="stylesheet" />
+    <link href="../assets/css/carrotsearch.foamtree.util.loading.css" rel="stylesheet" />
     <style>
         .visualization-loading > div {
             font-size: 36px;
@@ -45,7 +45,7 @@
     </style>
 
     <!-- Include the default style for the interaction hints and guide -->
-    <link href="assets/css/carrotsearch.foamtree.util.hints.css" rel="stylesheet"/>
+    <link href="../assets/css/carrotsearch.foamtree.util.hints.css" rel="stylesheet"/>
 
 </head>
 <body>
@@ -79,23 +79,23 @@
 
 </div>
 
-<script src="assets/js/jquery-2.0.3.min.js"></script>
+<script src="../assets/js/jquery-2.0.3.min.js"></script>
 
 <!-- Include Hammer.js for mobile interactions. Not required for desktop-only apps. -->
-<script src="assets/js/hammer.min.js"></script>
-<script src="carrotsearch.foamtree.js"></script>
-<script src="carrotsearch.foamtree.util.loading.js"></script>
-<script src="carrotsearch.foamtree.util.relaxationprogress.js"></script>
-<script src="assets/js/tooltip.min.js"></script>
+<script src="../assets/js/hammer.min.js"></script>
+<script src="../carrotsearch.foamtree.js"></script>
+<script src="../carrotsearch.foamtree.util.loading.js"></script>
+<script src="../carrotsearch.foamtree.util.relaxationprogress.js"></script>
+<script src="../assets/js/tooltip.min.js"></script>
 
 <!-- Include the interaction hints utility -->
-<script src="carrotsearch.foamtree.util.hints.js"></script>
+<script src="../carrotsearch.foamtree.util.hints.js"></script>
 
 <!-- A number of utilities we'll need -->
-<script src="assets/js/carrotsearch.jsonp.js"></script>
-<script src="assets/js/carrotsearch.template.js"></script>
-<script src="assets/js/jquery-2.0.3.min.js"></script>
-<script src="assets/js/moment.min.js"></script>
+<script src="../assets/js/carrotsearch.jsonp.js"></script>
+<script src="../assets/js/carrotsearch.template.js"></script>
+<script src="../assets/js/jquery-2.0.3.min.js"></script>
+<script src="../assets/js/moment.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
 
 <!-- A number of custom utilities we'll need -->
@@ -254,7 +254,7 @@
 
         // Load Reactome JSON data.
         $.ajax({
-            url: "clean_data_all_level.json",
+            url: "../clean_data_all_level.json",
             dataType: "json",
             success: function(data) {
 
@@ -327,7 +327,7 @@
                 newResponse[val.stId] = val.entities.pValue;
             });
             $.ajax({
-                url: "clean_data_all_level.json",
+                url: "../clean_data_all_level.json",
                 dataType: "json",
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {

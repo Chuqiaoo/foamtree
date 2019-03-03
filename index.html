@@ -103,6 +103,7 @@
 
 
 <script>
+
     window.addEventListener("load", function() {
         foamtreeLoading();
 
@@ -123,7 +124,6 @@
 
     });
 
-
     var groupsData = getData(foamtreeData);
 
     function foamtreeLoading(){
@@ -135,7 +135,7 @@
 
 
             // Use a simple fading animation. Animated rollouts are very expensive for large hierarchies.
-            rolloutDuration: 0,
+            rolloutDuration: 0.5,
             pullbackDuration: 0,
 
             // Lower groupMinDiameter to fit as many groups as possible
@@ -164,19 +164,14 @@
             groupSelectionOutlineColor: "#58C3E5",
 
 
-            //show labels during relaxation
-            wireframeLabelDrawing: "always",
-
             finalCompleteDrawMaxDuration: 50000,
             finalIncrementalDrawMaxDuration: 50000,
             wireframeDrawMaxDuration: 5000,
 
 
+            //show labels during relaxation
+            wireframeLabelDrawing: "always",
 
-            // Show the largest nesting level for debugging.
-            groupLabelDecorator: function (opts, props, vars) {
-                vars.labelText = vars.labelText + " [" + props.group.maxLevel + "]";
-            }
 
         });
 
@@ -252,6 +247,10 @@
                         maxGroupLevelsDrawn: 8,
                         maxGroupLabelLevelsDrawn: 8,
 
+                        finalCompleteDrawMaxDuration: 50000,
+                        finalIncrementalDrawMaxDuration: 50000,
+                        wireframeDrawMaxDuration: 5000,
+
                         onModelChanging: function addParent(group, parent) {
                             if (!group) { return; }
                             group.parent = parent;
@@ -261,6 +260,7 @@
                                 });
                             }
                         },
+
                         onGroupDoubleClick: function(e) {
                             e.preventDefault();
                             var group = e.secondary ? e.bottommostOpenGroup : e.topmostClosedGroup;
@@ -277,6 +277,7 @@
                             }
                             this.zoom(toZoom);
                         }
+//
 
                     });
                     break;
@@ -416,7 +417,7 @@
                     pixelRatio: window.devicePixelRatio || 1,
 
                     // Use a simple fading animation. Animated rollouts are very expensive for large hierarchies.
-                    rolloutDuration: 0,
+                    rolloutDuration: 0.5,
                     pullbackDuration: 0,
 
                     // Lower groupMinDiameter to fit as many groups as possible
@@ -435,7 +436,7 @@
                     groupBorderWidthScaling: 0.5,
 
                     // Make the description group (in flattened view) smaller to make more space for child groups.
-                    descriptionGroupMaxHeight: 0.35,
+                    descriptionGroupMaxHeight: 0.25,
 
 
                     // Don't use gradients and rounded cornrs for faster rendering.
@@ -453,11 +454,6 @@
                     //show labels during relaxation
                     wireframeLabelDrawing: "always",
 
-
-                    // Show the largest nesting level for debugging.
-                    groupLabelDecorator: function (opts, props, vars) {
-                        vars.labelText = vars.labelText + " [" + props.group.maxLevel + "]";
-                    }
 
                 });
 
@@ -513,10 +509,41 @@
                         case "#flattened":
                             foamtree.set({
                                 stacking: "flattened",
+
                                 maxGroupLevelsAttached: 8,
                                 maxGroupLevelsDrawn: 8,
-                                maxGroupLabelLevelsDrawn: 8
+                                maxGroupLabelLevelsDrawn: 8,
 
+                                finalCompleteDrawMaxDuration: 50000,
+                                finalIncrementalDrawMaxDuration: 50000,
+                                wireframeDrawMaxDuration: 5000,
+
+                                onModelChanging: function addParent(group, parent) {
+                                    if (!group) { return; }
+                                    group.parent = parent;
+                                    if (group.groups) {
+                                        group.groups.forEach(function(g) {
+                                            addParent(g, group);
+                                        });
+                                    }
+                                },
+
+                                onGroupDoubleClick: function(e) {
+                                    e.preventDefault();
+                                    var group = e.secondary ? e.bottommostOpenGroup : e.topmostClosedGroup;
+                                    var toZoom;
+                                    if (group) {
+                                        // Open on left-click, close on right-click
+                                        this.open({
+                                            groups: group,
+                                            open: !e.secondary
+                                        });
+                                        toZoom = e.secondary ? group.parent : group;
+                                    } else {
+                                        toZoom = this.get("dataObject");
+                                    }
+                                    this.zoom(toZoom);
+                                }
 
                             });
                             break;
@@ -558,7 +585,7 @@
         foamtreeLoading ();
     });
 
-
+    
 </script>
 </body>
 </html>
