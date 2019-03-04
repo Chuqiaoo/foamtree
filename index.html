@@ -128,7 +128,6 @@
 
     function foamtreeLoading(){
 
-
         var foamtree = new CarrotSearchFoamTree({
             id: "visualization",
             pixelRatio: window.devicePixelRatio || 1,
@@ -297,8 +296,14 @@
 
         var tokenUrl = document.getElementById("token");
 
-        $("#visualization").empty();
-        document.getElementById("visualization").removeAttribute("data-foamtree");
+//        remove div and recreate to clear previous embedded foamtree
+        $("#visualization").remove();
+        var container = document.getElementById("container");
+        var div = document.createElement('div');
+        div.id = 'visualization';
+
+        container.prepend(div);
+
 
         var newMapping = [];
 
@@ -314,6 +319,7 @@
             setTimeout(foamtreeStarts, 500);
 
             var data = groupsData;
+
             for (var i = 0; i < data.length; i++) {
                 //(data[i].id) => R-HSA-5653656
                 //newResponse[(data[i].id)] = 1.1102230246251565e-16
@@ -452,7 +458,7 @@
                     wireframeDrawMaxDuration: 5000,
 
                     //show labels during relaxation
-                    wireframeLabelDrawing: "always",
+                    wireframeLabelDrawing: "always"
 
 
                 });
@@ -464,7 +470,8 @@
                     }
                 });
 
-                //hold a polygonal to junp to real reactome page
+
+//                hold a polygonal to jump to real reactome page
                 foamtree.set({
                     onGroupHold: function (event) {
                         event.preventDefault();
@@ -579,13 +586,19 @@
     var overview = document.getElementById("overview");
     overview.addEventListener("click", function(){
 
-        $("#visualization").empty();
-        document.getElementById("visualization").removeAttribute("data-foamtree");
+
+//      remove div and recreate to clear previous embedded foamtree
+        $("#visualization").remove();
+
+        var container = document.getElementById("container");
+        var div = document.createElement('div');
+        div.id = 'visualization';
+        container.prepend(div);
 
         foamtreeLoading ();
     });
 
-    
+
 </script>
 </body>
 </html>
