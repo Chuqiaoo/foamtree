@@ -160,7 +160,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
 
   var hintsHtml =
     '<div class="visualization-hint">\
-      <span> Click to zoom in, hold for details, double click to zoom out</Span>\
+      <span> Left double lick to zoom in, hold for details, right double click to zoom out</Span>\
       <a href="#" class="slidable dont-show"> : Don\'t show again: </a>\
       <span class="slidable help">Help</span><span class="info">i</span>\
     </div>';
@@ -258,7 +258,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
           return hasChildren;
         },
         //text: "To zoom in to sub-groups, double click the parent group"
-          text: "Click to zoom in, hold for details, double click to zoom out"
+          text: "Left double click to zoom in, hold for details, right double click to zoom out"
       },
 
       {
@@ -269,7 +269,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
         },
         //text: "To zoom out to parent group, double click with right mouse button"
 
-          text: "Click to zoom in, hold for details, double click to zoom out"
+          text: "Left double click to zoom in, hold for details, right double click to zoom out"
       },
       {
         for: "open",
@@ -278,7 +278,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
           return hasChildren;
         },
         //text: "To access subgroups, click and hold"
-          text: "Click to zoom in, hold for details, double click to zoom out"
+          text: "Left double click to zoom in, hold for details, right double click to zoom out"
       },
       {
         for: "close",
@@ -287,7 +287,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
           return parent && parentState.open;
         },
         //text: "To access parent group, click and hold right mouse button"
-          text: "Click to zoom in, hold for details, double click to zoom out"
+          text: "Left double click to zoom in, hold for details, right double click to zoom out"
       },
       {
         for: "reset",
@@ -296,7 +296,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
           return foamtree.get("exposure").length > 0;
         },
         //text: "To zoom out and close all groups, press Esc"
-          text: "Click to zoom in, hold for details, double click to zoom out"
+          text: "Left double lick to zoom in, hold for details, right double click to zoom out"
       },
       {
         for: "mousewheel",
@@ -305,7 +305,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
           return true;
         },
         //text: "Use mouse wheel to zoom in and out"
-          text: "Click to zoom in, hold for details, double click to zoom out"
+          text: "Left double click to zoom in, hold for details, right double click to zoom out"
 
       }
     ];
