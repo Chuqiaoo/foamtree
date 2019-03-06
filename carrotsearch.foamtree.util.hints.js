@@ -160,7 +160,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
 
   var hintsHtml =
     '<div class="visualization-hint">\
-      <span> Left double lick to zoom in, hold for details, right double click to zoom out</Span>\
+      <span> Left double click to zoom in, hold for details, right double click to zoom out</Span>\
       <a href="#" class="slidable dont-show"> : Don\'t show again: </a>\
       <span class="slidable help">Help</span><span class="info">i</span>\
     </div>';
@@ -296,7 +296,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
           return foamtree.get("exposure").length > 0;
         },
         //text: "To zoom out and close all groups, press Esc"
-          text: "Left double lick to zoom in, hold for details, right double click to zoom out"
+          text: "Left double click to zoom in, hold for details, right double click to zoom out"
       },
       {
         for: "mousewheel",
