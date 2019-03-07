@@ -203,13 +203,6 @@
                 vars.labelText = vars.labelText + " [" + props.group.maxLevel + "]";
             }
 
-            // Draw description group label in bold font.
-//            groupLabelLayoutDecorator: function (opts, params, vars) {
-//                if (params.description) {
-//                    vars.fontWeight = "bold";
-//                }
-//            }
-
         });
 
         // Clear the previous model.
@@ -254,7 +247,7 @@
 
         // Load Reactome JSON data.
         $.ajax({
-            url: "../clean_data_all_level.json",
+            url: "../clean_data_from_js.json",
             dataType: "json",
             success: function(data) {
 
@@ -327,7 +320,7 @@
                 newResponse[val.stId] = val.entities.pValue;
             });
             $.ajax({
-                url: "../clean_data_all_level.json",
+                url: "../clean_data_from_js.json",
                 dataType: "json",
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
@@ -429,7 +422,6 @@
                     }
                 }
 
-
                 var foamtree = new CarrotSearchFoamTree({
                     id: "visualization",
                     dataObject: {
@@ -488,14 +480,6 @@
                     groupLabelDecorator: function (opts, props, vars) {
                         vars.labelText = vars.labelText + " [" + props.group.maxLevel + "]";
                     }
-
-                    // Draw description group label in bold font.
-//                    groupLabelLayoutDecorator: function (opts, params, vars) {
-//                        if (params.description) {
-//                            vars.fontWeight = "bold";
-//                        }
-//                    }
-
 
                 });
                 //hold a polygonal to junp to real reactome page
