@@ -41,7 +41,6 @@ function getData(data) {
         // create a new object to store the result
         var out = [];
 
-        // for each item in a
         for (var i = 0; i < arr.length; i++) {
 
             // find all children of parentId
@@ -86,10 +85,19 @@ function getData(data) {
                     var each = addAllNestedToParent(data.edges, item.dbId);
                     groups.push(each);
                 });
+//                         for ( var j=0; j< topData.length; j++) {
+//                              var each = {};
+//                              each[j] = addAllNestedToParent(data.edges, topData[j].dbId);
+//                              groups.push(each[j]);
+//
+//                         }
             }
         });
         return groups
     };
+
+    //create a dedicated copy for each parent group tp remove shared references
+    groups = JSON.parse(JSON.stringify(groups));
 
     addValue(groups);
     function addValue(groups) {
@@ -156,6 +164,7 @@ function getData(data) {
 
         }
     }
+
 
     return groups
 };
