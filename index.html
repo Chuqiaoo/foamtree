@@ -59,7 +59,7 @@
 
 <div id="side">
 
-    View: <a href="#hierarchical">hierarchical</a> | <a href="#flattened">flattened</a> <br>
+    View: <a href="#flattened">flattened</a> | <a href="#hierarchical">hierarchical</a> <br>
 
     <br>
     <p>Data Analysis </p>
@@ -98,8 +98,11 @@
 <script src="assets/js/moment.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
 
-<!-- A number of custom utilities we'll need -->
+
+<!--custom js by Chuqiao-->
 <script src="getData.js"></script>
+<script src="foamtreeLoading.js"></script>
+<script src="foamtreeAnalysis.js"></script>
 
 
 <script>
@@ -111,6 +114,7 @@
 
     var foamtreeData;
 
+    //load human data
     $.ajax({
         url: "https://reactome.org/download/current/fireworks/Homo_sapiens.json",
         dataType: "json",
@@ -124,188 +128,19 @@
 
     });
 
-    var groupsData = getData(foamtreeData);
 
-    function foamtreeLoading(){
-
-        var foamtree = new CarrotSearchFoamTree({
-            id: "visualization",
-            pixelRatio: window.devicePixelRatio || 1,
-
-
-            // Use a simple fading animation. Animated rollouts are very expensive for large hierarchies.
-            rolloutDuration: 0.5,
-            pullbackDuration: 0,
-
-            // Lower groupMinDiameter to fit as many groups as possible
-            groupMinDiameter: 0,
-
-            // Lower the minimum label font size a bit to show more labels.
-            groupLabelMinFontSize: 3,
-
-            // Lower the border radius a bit to fit more groups.
-            groupBorderWidth: 2,
-            groupInsetWidth: 4,
-
-
-            groupSelectionOutlineWidth: 3,
-
-            // Tune the border options to make them more visible
-            groupBorderWidthScaling: 0.5,
-
-            // Make the description group (in flattened view) smaller to make more space for child groups.
-            descriptionGroupMaxHeight: 0.35,
-
-
-            // Don't use gradients and rounded cornrs for faster rendering.
-            groupFillType: "plain",
-
-            groupSelectionOutlineColor: "#58C3E5",
-
-
-            finalCompleteDrawMaxDuration: 50000,
-            finalIncrementalDrawMaxDuration: 50000,
-            wireframeDrawMaxDuration: 5000,
-
-
-            //show labels during relaxation
-            wireframeLabelDrawing: "always",
-
-
-        });
-
-
-        groupsData.forEach(setMaxLevel);
-
-        function setMaxLevel(group) {
-            if (group.groups && group.groups.length > 0) {
-                group.groups.forEach(setMaxLevel);
-                group.maxLevel = group.groups.reduce(function (max, group) {
-                    return Math.max(max, group.maxLevel);
-                }, 0) + 1;
-            } else {
-                group.maxLevel = 1;
-            }
-        }
-
-        foamtree.set({
-            dataObject: {
-                groups: groupsData
-            }
-        });
-
-        //title bar
-        foamtree.set({
-
-            // Setting the option to Number.MAX_VALUE will cause the title bar to appear for all groups.
-            maxLabelSizeForTitleBar: Number.MAX_VALUE,
-            titleBarDecorator: function(options, parameters, variables) {
-                variables.titleBarText = parameters.group.label;
-            }
-        });
-
-        //hold a polygonal to jump to Reactome pathway page
-        foamtree.set({
-            onGroupHold: function (e) {
-                e.preventDefault();
-                window.open(e.group.url);
-            }
-        });
-
-        //customization colors
-        foamtree.set({
-            groupColorDecorator: function (opts, props, vars) {
-                // If child groups of some group don't have enough space to
-                // render, draw the parent group in red.
-                if (props.hasChildren && props.browseable === false) {
-                    vars.groupColor = "#E86365";
-                    vars.labelColor = "#000";
-                } else {
-                    vars.groupColor = "#58C3E5";
-                    vars.labelColor = "#000";
-                }
-            }
-        });
-
-        //load hints
-        CarrotSearchFoamTree.hints(foamtree);
-
-        // Handle customization links
-        document.addEventListener("click", function (e) {
-            if (!e.target.href) {
-                return;
-            }
-            e.preventDefault();
-            var href = e.target.href.substring(e.target.href.indexOf("#"));
-            switch (href) {
-                case "#flattened":
-                    foamtree.set({
-                        stacking: "flattened",
-
-                        maxGroupLevelsAttached: 8,
-                        maxGroupLevelsDrawn: 8,
-                        maxGroupLabelLevelsDrawn: 8,
-
-                        finalCompleteDrawMaxDuration: 50000,
-                        finalIncrementalDrawMaxDuration: 50000,
-                        wireframeDrawMaxDuration: 5000,
-
-                        onModelChanging: function addParent(group, parent) {
-                            if (!group) { return; }
-                            group.parent = parent;
-                            if (group.groups) {
-                                group.groups.forEach(function(g) {
-                                    addParent(g, group);
-                                });
-                            }
-                        },
-
-                        onGroupDoubleClick: function(e) {
-                            e.preventDefault();
-                            var group = e.secondary ? e.bottommostOpenGroup : e.topmostClosedGroup;
-                            var toZoom;
-                            if (group) {
-                                // Open on left-click, close on right-click
-                                this.open({
-                                    groups: group,
-                                    open: !e.secondary
-                                });
-                                toZoom = e.secondary ? group.parent : group;
-                            } else {
-                                toZoom = this.get("dataObject");
-                            }
-                            this.zoom(toZoom);
-                        }
-//
-
-                    });
-                    break;
-                case "#hierarchical":
-                    foamtree.set({
-                        stacking: "hierarchical"
-                    });
-                    break;
-            }
-            foamtree.set("dataObject", foamtree.get("dataObject"));
-        });
-    }
-
-    //  data analysis and redraw foamtree
+    //data analysis and redraw foamtree
     var submit = document.getElementById("submit");
     submit.onclick = function () {
 
         var tokenUrl = document.getElementById("token");
 
-//        remove div and recreate to clear previous embedded foamtree
+        //remove div and recreate to clear previous embedded foamtree
         $("#visualization").remove();
         var container = document.getElementById("container");
         var div = document.createElement('div');
         div.id = 'visualization';
-
         container.prepend(div);
-
-
-        var newMapping = [];
 
         function extractDataFromToken(response) {
 
@@ -316,255 +151,7 @@
                 newResponse[val.stId] = val.entities.pValue;
             });
 
-            setTimeout(foamtreeStarts, 500);
-
-            var data = groupsData;
-
-            for (var i = 0; i < data.length; i++) {
-                //(data[i].id) => R-HSA-5653656
-                //newResponse[(data[i].id)] = 1.1102230246251565e-16
-                //get the pvalue of assigned id, if the id doesn't exists, return undefined
-                if (newResponse[data[i].stId]) {
-                    newMapping.push({
-                        stId: data[i].stId,
-                        label: data[i].label,
-                        url: data[i].url,
-                        pValue: newResponse[data[i].stId],
-                        weight: data[i].weight,
-                        groups: data[i].groups
-                    });
-                } else {
-                    newMapping.push({
-                        stId: data[i].stId,
-                        label: data[i].label,
-                        url: data[i].url,
-                        pValue: undefined,
-                        weight: data[i].weight,
-                        groups: data[i].groups
-                    });
-                }
-            }
-
-            function convert(groups) {
-                return groups.map(function (group) {
-                    return {
-                        stId: group.stId,
-                        label: group.label,
-                        weight: group.weight,
-//                        weight: Math.pow(group.weight, 0.5),
-                        url: group.url+ "&DTAB=AN&ANALYSIS=" + tokenUrl.value,
-                        pValue: group.pValue != null ? group.pValue : undefined,
-                        groups: group.groups ? convert(group.groups) : []
-                    }
-                });
-            }
-
-
-            function foamtreeStarts() {
-
-                //caculate the maxLevel of a group
-                var foamtreeMapping = convert(newMapping);
-
-                //set Max Level for debugging
-                foamtreeMapping.forEach(setMaxLevel);
-                function setMaxLevel(group) {
-                    if (group.groups && group.groups.length > 0) {
-                        group.groups.forEach(setMaxLevel);
-                        group.maxLevel = group.groups.reduce(function (max, group) {
-                            return Math.max(max, group.maxLevel);
-                        }, 0) + 1;
-                    } else {
-                        group.maxLevel = 1;
-                    }
-                }
-
-                //add Pvalue to child groups
-                foamtreeMapping.forEach(addPvalue);
-                function addPvalue(group) {
-                    if (group.groups && group.groups.length > 0) {
-
-                        group.groups.forEach(addPvalue);
-
-                        for (var i =0; i < group.groups.length; i++){
-
-                            if (newResponse[group.groups[i].stId]) {
-
-                                group.groups[i] = Object.assign( group.groups[i],{'pValue': newResponse[group.groups[i].stId]});
-
-                            } else {
-
-                                group.groups[i] = Object.assign(group.groups[i],{'pValue': undefined });
-                            }
-                        }
-                    }
-                }
-
-                //add analysis result url to child groups
-                foamtreeMapping.forEach(addAnalysisUrl);
-                function addAnalysisUrl(group) {
-                    if (group.groups && group.groups.length > 0) {
-
-                        group.groups.forEach(addAnalysisUrl);
-
-                        for (var i =0; i < group.groups.length; i++){
-
-                            if (newResponse[group.groups[i].stId]) {
-
-                                group.groups[i] = Object.assign( group.groups[i],{'url': group.groups[i].url + "&DTAB=AN&ANALYSIS=" + tokenUrl.value});
-
-                            }
-                        }
-                    }
-                }
-
-                //basic  definition
-                var foamtree = new CarrotSearchFoamTree({
-                    id: "visualization",
-                    pixelRatio: window.devicePixelRatio || 1,
-
-                    // Use a simple fading animation. Animated rollouts are very expensive for large hierarchies.
-                    rolloutDuration: 0.5,
-                    pullbackDuration: 0,
-
-                    // Lower groupMinDiameter to fit as many groups as possible
-                    groupMinDiameter: 0,
-
-                    // Lower the minimum label font size a bit to show more labels.
-                    groupLabelMinFontSize: 3,
-
-                    // Lower the border radius a bit to fit more groups.
-                    groupBorderWidth: 2,
-                    groupInsetWidth: 4,
-
-                    groupSelectionOutlineWidth: 3,
-
-                    // Tune the border options to make them more visible
-                    groupBorderWidthScaling: 0.5,
-
-                    // Make the description group (in flattened view) smaller to make more space for child groups.
-                    descriptionGroupMaxHeight: 0.25,
-
-
-                    // Don't use gradients and rounded cornrs for faster rendering.
-                    groupFillType: "plain",
-
-                    groupSelectionOutlineColor: "#58C3E5",
-
-                    //Attach and draw a maximum of 8 levels of groups.
-                    //Increase, if needed.
-
-                    finalCompleteDrawMaxDuration: 50000,
-                    finalIncrementalDrawMaxDuration: 50000,
-                    wireframeDrawMaxDuration: 5000,
-
-                    //show labels during relaxation
-                    wireframeLabelDrawing: "always"
-
-
-                });
-
-
-                foamtree.set({
-                    dataObject: {
-                        groups: foamtreeMapping
-                    }
-                });
-
-
-//                hold a polygonal to jump to real reactome page
-                foamtree.set({
-                    onGroupHold: function (event) {
-                        event.preventDefault();
-                        window.open(event.group.url);
-                    }
-                });
-//              Assign colors based on the  Pvalue
-                foamtree.set({
-                    groupColorDecorator: function (opts, params, vars) {
-                        var coverage = params.group.pValue;
-                        if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
-                            // Coverage defined. 0% coverage will be yellow,
-                            // 100% coverage will be olive.
-                            // min yellow : hsl(52, 98%, 60%)
-                            //max: olive  : hsl (58, 100, 29)
-                            vars.groupColor.h = 52 + 6 * (coverage / 0.05 );
-                            vars.groupColor.s = 98 + 2 * (coverage / 0.05 );
-                            vars.groupColor.l = 60 - 31 * (coverage / 0.05 );
-                        } else {
-                            // Coverage not defined, draw the group in grey.
-                            vars.groupColor.s = 0;
-                            vars.groupColor.l = 75;
-                        }
-                    }
-                });
-//              title bar
-                foamtree.set({
-                    maxLabelSizeForTitleBar: Number.MAX_VALUE,
-                    titleBarDecorator: function (options, parameters, variables) {
-                        variables.titleBarText = parameters.group.label;
-                    }
-                });
-                CarrotSearchFoamTree.hints(foamtree);
-                // Handle customization links
-                document.addEventListener("click", function (e) {
-                    if (!e.target.href) {
-                        return;
-                    }
-                    e.preventDefault();
-                    var href = e.target.href.substring(e.target.href.indexOf("#"));
-                    switch (href) {
-                        case "#flattened":
-                            foamtree.set({
-                                stacking: "flattened",
-
-                                maxGroupLevelsAttached: 8,
-                                maxGroupLevelsDrawn: 8,
-                                maxGroupLabelLevelsDrawn: 8,
-
-                                finalCompleteDrawMaxDuration: 50000,
-                                finalIncrementalDrawMaxDuration: 50000,
-                                wireframeDrawMaxDuration: 5000,
-
-                                onModelChanging: function addParent(group, parent) {
-                                    if (!group) { return; }
-                                    group.parent = parent;
-                                    if (group.groups) {
-                                        group.groups.forEach(function(g) {
-                                            addParent(g, group);
-                                        });
-                                    }
-                                },
-
-                                onGroupDoubleClick: function(e) {
-                                    e.preventDefault();
-                                    var group = e.secondary ? e.bottommostOpenGroup : e.topmostClosedGroup;
-                                    var toZoom;
-                                    if (group) {
-                                        // Open on left-click, close on right-click
-                                        this.open({
-                                            groups: group,
-                                            open: !e.secondary
-                                        });
-                                        toZoom = e.secondary ? group.parent : group;
-                                    } else {
-                                        toZoom = this.get("dataObject");
-                                    }
-                                    this.zoom(toZoom);
-                                }
-
-                            });
-                            break;
-                        case "#hierarchical":
-                            foamtree.set({
-                                stacking: "hierarchical"
-                            });
-                            break;
-                    }
-                    foamtree.set("dataObject", foamtree.get("dataObject"));
-                });
-
-            };
-
+            foamtreeStarts(newResponse, tokenUrl);
         }
 
         //Load Token data.
@@ -586,7 +173,6 @@
     var overview = document.getElementById("overview");
     overview.addEventListener("click", function(){
 
-
 //      remove div and recreate to clear previous embedded foamtree
         $("#visualization").remove();
 
@@ -598,7 +184,7 @@
         foamtreeLoading ();
     });
 
-
+    
 </script>
 </body>
 </html>
