@@ -120,13 +120,8 @@ function foamtreeStarts(newResponse, tokenUrl) {
 
 
         //show labels during relaxation
-        wireframeLabelDrawing: "always",
-
-        // Show the largest nesting level for debugging.
-        groupLabelDecorator: function (opts, props, vars) {
-            vars.labelText = vars.labelText + " [" + props.group.maxLevel + "]";
-        }
-
+        wireframeLabelDrawing: "always"
+        
 
     });
 
