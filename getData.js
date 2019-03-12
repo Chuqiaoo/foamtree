@@ -85,12 +85,6 @@ function getData(data) {
                     var each = addAllNestedToParent(data.edges, item.dbId);
                     groups.push(each);
                 });
-//                         for ( var j=0; j< topData.length; j++) {
-//                              var each = {};
-//                              each[j] = addAllNestedToParent(data.edges, topData[j].dbId);
-//                              groups.push(each[j]);
-//
-//                         }
             }
         });
         return groups
