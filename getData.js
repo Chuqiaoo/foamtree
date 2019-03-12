@@ -158,7 +158,5 @@ function getData(data) {
 
         }
     }
-
-
     return groups
 };

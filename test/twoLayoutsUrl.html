@@ -132,6 +132,8 @@
         success: function(data) {
 
             dataFoamtree = getData(data);
+            dataFoamtree=JSON.parse(JSON.stringify(dataFoamtree));
+
 
         } ,
         error: function(){
