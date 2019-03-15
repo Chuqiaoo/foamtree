@@ -11,41 +11,25 @@
     <link href="assets/css/common.css" rel="stylesheet"/>
     <link href="assets/css/tooltip.css" rel="stylesheet" />
 
-    <!-- The CSS for the loading indicator container-->
-    <link href="assets/css/carrotsearch.foamtree.util.loading.css" rel="stylesheet" />
-    <style>
-        .visualization-loading > div {
-            font-size: 36px;
-            position: absolute;
-            width: 100%;
-            top: 50%;
-            margin-top: -40px;
-            text-align: center;
-            line-height: 1.05;
-        }
-    </style>
-
     <!-- The CSS for this demo -->
     <style type="text/css">
+
         .set-width {
             width: 250px;
         }
+
         body { overflow-x: hidden }
+
         @media (max-width: 1023px) {
             #side { position: relative; }
-            #details {
-                position: absolute;
-                top: 70%;
-                min-height: 100%;
-                left: 100%; right: -100%;
-                opacity: 0;
-                padding: 10px;
-            }
+
+
         }
     </style>
 
     <!-- Include the default style for the interaction hints and guide -->
     <link href="assets/css/carrotsearch.foamtree.util.hints.css" rel="stylesheet"/>
+
 
 </head>
 <body>
@@ -59,12 +43,24 @@
 
 <div id="side">
 
-    View: <a href="#flattened">flattened</a> | <a href="#hierarchical">hierarchical</a> <br>
-
+    View:
+    <a href="#flattened">flattened</a> | <a href="#hierarchical">hierarchical</a> <br>
     <br>
-    <p>Data Analysis </p>
+
+    <div>
+        <label for="colorSelector">Color</label>
+        <select id = "colorSelector">
+            <option value="COOPER">Copper</option>
+            <option value="COOPER_PLUS">Cooper plus</option>
+            <option value="BARIUM_LITHIUM">Barium Lithium</option>
+            <option value="CALCIUM_SALTS">Calcium Salts</option>
+        </select>
+
+    </div><br>
+
+    <h5>Data Analysis </h5>
     <div  align="left" style="float:left">
-        Enter Token:
+        <label>Enter Token</label>
         <input type="text" name="token" id ="token" class="set-width">
     </div>
 
@@ -78,7 +74,6 @@
     </div>
 
 </div>
-
 <script src="assets/js/jquery-2.0.3.min.js"></script>
 
 <!-- Include Hammer.js for mobile interactions. Not required for desktop-only apps. -->
@@ -104,32 +99,46 @@
 <script src="foamtreeLoading.js"></script>
 <script src="foamtreeAnalysis.js"></script>
 
-
 <script>
 
     window.addEventListener("load", function() {
+        //default overview
         foamtreeLoading();
-
     });
 
     var foamtreeData;
 
-    //load human data
+    // Following same color profile from current Fireworks implementation. Note: For better look and feel we changed calcium salts hits (FFB2B2)
+    var ColorProfileEnum = {
+        COOPER: 1,
+        COOPER_PLUS: 2,
+        BARIUM_LITHIUM: 3,
+        CALCIUM_SALTS: 4,
+        properties: {
+            1: {group: "#58C3E5", label: "#000", fadeout: "#E6E6E6", hit: "#C2C2C2", min: "#FDE233", max: "#959000", min_h: 52, min_s: 98,  min_l: 60, max_h: 58, max_s: 100, max_l: 29},
+            2: {group: "#58C3E5", label: "#000", fadeout: "#E6E6E6", hit: "#C2C2C2", min: "#FDE233", max: "#959000", min_h: 52, min_s: 98,  min_l: 60, max_h: 58, max_s: 100, max_l: 29},
+            3: {group: "#FF9999", label: "#000", fadeout: "#F8F8F8", hit: "#E0E0E0", min: "#A0A0A0", max: "#000000", min_h: 0,  min_s: 0,   min_l: 63, max_h: 0,  max_s: 0,   max_l: 0},
+            4: {group: "#FF9999", label: "#000", fadeout: "#FFE4E1", hit: "#FFCCCC", min: "#934A00", max: "#FFAD33", min_h: 30, min_s: 100, min_l: 29, max_h: 36, max_s: 100, max_l: 60}
+        }
+    };
+
+    //load homo sapiens data TODO a ajax call here
     $.ajax({
-        url: "https://reactome.org/download/current/fireworks/Homo_sapiens.json",
+//        url: "https://reactome.org/download/current/fireworks/Homo_sapiens.json",
+        url: "dataset/Homo_sapiens.json",
         dataType: "json",
         async: false,
         success: function(data) {
+
             foamtreeData = data;
         } ,
         error: function(){
-            alert("json not found");
+            alert("data not found");
         }
 
     });
 
-
-    //data analysis and redraw foamtree
+    //  data analysis and redraw foamtree
     var submit = document.getElementById("submit");
     submit.onclick = function () {
 
@@ -142,6 +151,7 @@
         div.id = 'visualization';
         container.prepend(div);
 
+
         function extractDataFromToken(response) {
 
             //read external Token data and save to key=>value pair R-HSA-5653656 =>1.1102230246251565e-16
@@ -151,10 +161,12 @@
                 newResponse[val.stId] = val.entities.pValue;
             });
 
+
             foamtreeStarts(newResponse, tokenUrl);
+
         }
 
-        //Load Token data.
+        //Load Token data. TODO a ajax call here
         $.ajax({
             url: "https://dev.reactome.org/AnalysisService/token/" + tokenUrl.value + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
             dataType: "json",
@@ -164,18 +176,17 @@
 
             },
             error: function () {
-                alert("json not found");
+                alert("data not found");
             }
         });
     };
 
-    //  back to default data when click overview
+    //back to default view when click overview
     var overview = document.getElementById("overview");
     overview.addEventListener("click", function(){
 
-//      remove div and recreate to clear previous embedded foamtree
+        //remove div and recreate to clear previous embedded foamtree
         $("#visualization").remove();
-
         var container = document.getElementById("container");
         var div = document.createElement('div');
         div.id = 'visualization';
@@ -183,7 +194,6 @@
 
         foamtreeLoading ();
     });
-
 
 </script>
 </body>
