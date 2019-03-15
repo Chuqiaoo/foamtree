@@ -4,10 +4,10 @@
 
 function getData(data) {
 
-    //  json object container
+    //json object container
     var groups = [];
 
-    // save data as key => value pair, use dbId as key for per pairs
+    //save data as key => value pair, use dbId as key for per pairs
     var humanDataStId = {};
     $.each(data.nodes, function (key, val) {
         humanDataStId[val.dbId] = val.stId;
@@ -58,7 +58,7 @@ function getData(data) {
         return out
     }
 
-    // add all Nested children to level 1 parent
+    //add all Nested children to level 1 parent
     function addAllNestedToParent(arr, parentID) {
 
         var allNestedChild = getNestedChildren(arr, parentID);
@@ -70,14 +70,15 @@ function getData(data) {
         return parent
     }
 
+    //TODO a ajax call here
     getFullLeveldbId();
-
     function getFullLeveldbId() {
         $.ajax({
-            //warning here
+            // TODO warning here
             async: false,
             //human sapiens top data
-            url: "https://dev.reactome.org/ContentService/data/pathways/top/9606",
+            //url: "https://dev.reactome.org/ContentService/data/pathways/top/9606",
+            url: "dataset/top.json",
             dataType: "json",
             success: function (topData) {
 
@@ -158,5 +159,6 @@ function getData(data) {
 
         }
     }
+
     return groups
 };
