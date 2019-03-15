@@ -123,7 +123,7 @@ function foamtreeStarts(newResponse, tokenUrl) {
 
     });
 
-    //Loading data set
+    //loading data set
     foamtree.set({
         dataObject: {
             groups: foamtreeMapping
@@ -138,7 +138,7 @@ function foamtreeStarts(newResponse, tokenUrl) {
         }
     });
 
-    //Assign colors based on the Pvalue, use COPPER as default color profile
+    //assign colors based on the Pvalue, use COPPER as default color profile
     foamtree.set({
         groupColorDecorator: function (opts, params, vars) {
             var coverage = params.group.pValue;
@@ -226,10 +226,10 @@ function foamtreeStarts(newResponse, tokenUrl) {
         foamtree.set("dataObject", foamtree.get("dataObject"));
     });
 
-    // Resize FoamTree on orientation change
+    // resize FoamTree on orientation change
     window.addEventListener("orientationchange", foamtree.resize);
 
-    // Resize on window size changes
+    // resize on window size changes
     window.addEventListener("resize", (function() {
         var timeout;
         return function() {

@@ -30,7 +30,6 @@
     <!-- Include the default style for the interaction hints and guide -->
     <link href="assets/css/carrotsearch.foamtree.util.hints.css" rel="stylesheet"/>
 
-
 </head>
 <body>
 
@@ -93,7 +92,6 @@
 <script src="assets/js/moment.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
 
-
 <!--custom js by Chuqiao-->
 <script src="getData.js"></script>
 <script src="foamtreeLoading.js"></script>
@@ -108,7 +106,7 @@
 
     var foamtreeData;
 
-    // Following same color profile from current Fireworks implementation. Note: For better look and feel we changed calcium salts hits (FFB2B2)
+    //Following same color profile from current Fireworks implementation. Note: For better look and feel we changed calcium salts hits (FFB2B2)
     var ColorProfileEnum = {
         COOPER: 1,
         COOPER_PLUS: 2,
@@ -124,7 +122,7 @@
 
     //load homo sapiens data TODO a ajax call here
     $.ajax({
-//        url: "https://reactome.org/download/current/fireworks/Homo_sapiens.json",
+        //url: "https://reactome.org/download/current/fireworks/Homo_sapiens.json",
         url: "dataset/Homo_sapiens.json",
         dataType: "json",
         async: false,
@@ -138,7 +136,7 @@
 
     });
 
-    //  data analysis and redraw foamtree
+    //data analysis and redraw foamtree
     var submit = document.getElementById("submit");
     submit.onclick = function () {
 
@@ -150,7 +148,6 @@
         var div = document.createElement('div');
         div.id = 'visualization';
         container.prepend(div);
-
 
         function extractDataFromToken(response) {
 
