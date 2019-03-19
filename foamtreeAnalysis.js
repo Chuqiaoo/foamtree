@@ -155,11 +155,11 @@ function foamtreeStarts(newResponse, tokenUrl) {
             } else if (coverage !== undefined && coverage >= 0.05 ) {
 
                 // Coverage defined, but greater than range
-                vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
+                vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
             }
             else {
                 // Coverage not defined
-                vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
+                vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
             }
         }
     });
