@@ -142,7 +142,7 @@ function foamtreeStarts(newResponse, tokenUrl) {
     foamtree.set({
         groupColorDecorator: function (opts, params, vars) {
             var coverage = params.group.pValue;
-            var profileSelected = ColorProfileEnum.COOPER;
+            var profileSelected = ColorProfileEnum.COPPER;
             if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
                 // Coverage defined. 0% coverage will be yellow,
                 // 100% coverage will be olive.
