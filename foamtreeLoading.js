@@ -118,6 +118,58 @@ function foamtreeLoading(){
         }
     });
 
+    //switching color profiles by url
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m ,key, value) {
+            vars[key] = value;
+        });
+        return vars
+    }
+
+    var colorParam =  getUrlVars()["color"];
+    if (typeof colorParam !== "undefined" ) {
+        foamtree.set({
+            groupColorDecorator: function (opts, props, vars) {
+                // If child groups of some group don't have enough space to
+                // render, draw the parent group in red.
+                if (props.hasChildren && props.browseable === false) {
+                    vars.groupColor = "#E86365";
+                    vars.labelColor = "#000";
+                } else {
+                    //vars.groupColor = "#58C3E5";
+                    //vars.labelColor = "#000";
+                    var profileSelected = ColorProfileEnum[colorParam];
+                    //var colorParam = ""; // TODO get color from queryString
+                    // check in the Enum to get value and to change profileSelected
+                    vars.groupColor = ColorProfileEnum.properties[profileSelected].group;
+                    vars.labelColor = ColorProfileEnum.properties[profileSelected].label;
+                }
+            }
+        });
+    } else {
+        foamtree.set({
+
+            groupColorDecorator: function (opts, props, vars) {
+                // If child groups of some group don't have enough space to
+                // render, draw the parent group in red.
+                if (props.hasChildren && props.browseable === false) {
+                    vars.groupColor = "#E86365";
+                    vars.labelColor = "#000";
+                } else {
+                    //vars.groupColor = "#58C3E5";
+                    //vars.labelColor = "#000";
+                    var profileSelected = ColorProfileEnum.COPPER;
+                    //var colorParam = ""; // TODO get color from queryString
+                    // check in the Enum to get value and to change profileSelected
+                    vars.groupColor = ColorProfileEnum.properties[profileSelected].group;
+                    vars.labelColor = ColorProfileEnum.properties[profileSelected].label;
+                }
+            }
+        });
+    }
+
+
     //load hints
     CarrotSearchFoamTree.hints(foamtree);
 

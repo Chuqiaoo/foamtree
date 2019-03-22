@@ -25,11 +25,11 @@ function foamtreeStarts(newResponse, tokenUrl) {
 
         if (newResponse[group.stId]) {
 
-            group = Object.assign( group, {'pValue': newResponse[group.stId], 'url': group.url+ "&DTAB=AN&ANALYSIS=" + tokenUrl.value });
+            group = Object.assign( group, {'pValue': newResponse[group.stId], 'url': group.url+ "&DTAB=AN&ANALYSIS=" + tokenUrl });
 
         } else {
 
-            group = Object.assign(group, {'pValue': undefined, 'url': group.url+ "&DTAB=AN&ANALYSIS=" + tokenUrl.value  });
+            group = Object.assign(group, {'pValue': undefined, 'url': group.url+ "&DTAB=AN&ANALYSIS=" + tokenUrl  });
         }
     }
 
@@ -65,7 +65,7 @@ function foamtreeStarts(newResponse, tokenUrl) {
 
                 if (newResponse[group.groups[i].stId]) {
 
-                    group.groups[i] = Object.assign( group.groups[i],{'url': group.groups[i].url + "&DTAB=AN&ANALYSIS=" + tokenUrl.value});
+                    group.groups[i] = Object.assign( group.groups[i],{'url': group.groups[i].url + "&DTAB=AN&ANALYSIS=" + tokenUrl});
 
                 }
             }
@@ -138,31 +138,6 @@ function foamtreeStarts(newResponse, tokenUrl) {
         }
     });
 
-    //assign colors based on the Pvalue, use COPPER as default color profile
-    foamtree.set({
-        groupColorDecorator: function (opts, params, vars) {
-            var coverage = params.group.pValue;
-            var profileSelected = ColorProfileEnum.COPPER;
-            if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
-                // Coverage defined. 0% coverage will be yellow,
-                // 100% coverage will be olive.
-                // min yellow : hsl(52, 98%, 60%)
-                //max: olive  : hsl (58, 100, 29)
-                vars.groupColor.h = ColorProfileEnum.properties[profileSelected].min_h + (ColorProfileEnum.properties[profileSelected].max_h - ColorProfileEnum.properties[profileSelected].min_h) * (coverage / 0.05 );
-                vars.groupColor.s = ColorProfileEnum.properties[profileSelected].min_s + (ColorProfileEnum.properties[profileSelected].max_s - ColorProfileEnum.properties[profileSelected].min_s) * (coverage / 0.05 );
-                vars.groupColor.l = ColorProfileEnum.properties[profileSelected].min_l + (ColorProfileEnum.properties[profileSelected].max_l - ColorProfileEnum.properties[profileSelected].min_l) * (coverage / 0.05 );
-
-            } else if (coverage !== undefined && coverage >= 0.05 ) {
-
-                // Coverage defined, but greater than range
-                vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
-            }
-            else {
-                // Coverage not defined
-                vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
-            }
-        }
-    });
     //title bar
     foamtree.set({
         maxLabelSizeForTitleBar: Number.MAX_VALUE,
@@ -172,6 +147,67 @@ function foamtreeStarts(newResponse, tokenUrl) {
     });
 
     CarrotSearchFoamTree.hints(foamtree);
+
+    //switching color profiles by url
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m ,key, value) {
+            vars[key] = value;
+        });
+        return vars
+    }
+    var colorParam =  getUrlVars()["color"];
+    if (typeof colorParam !== "undefined" ) {
+        foamtree.set({
+            groupColorDecorator: function (opts, params, vars) {
+                var coverage = params.group.pValue;
+                var profileSelected = ColorProfileEnum[colorParam];
+                if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
+                    // Coverage defined. 0% coverage will be yellow,
+                    // 100% coverage will be olive.
+                    // min yellow : hsl(52, 98%, 60%)
+                    //max: olive  : hsl (58, 100, 29)
+                    vars.groupColor.h = ColorProfileEnum.properties[profileSelected].min_h + (ColorProfileEnum.properties[profileSelected].max_h - ColorProfileEnum.properties[profileSelected].min_h) * (coverage / 0.05 );
+                    vars.groupColor.s = ColorProfileEnum.properties[profileSelected].min_s + (ColorProfileEnum.properties[profileSelected].max_s - ColorProfileEnum.properties[profileSelected].min_s) * (coverage / 0.05 );
+                    vars.groupColor.l = ColorProfileEnum.properties[profileSelected].min_l + (ColorProfileEnum.properties[profileSelected].max_l - ColorProfileEnum.properties[profileSelected].min_l) * (coverage / 0.05 );
+
+                } else if (coverage !== undefined && coverage >= 0.05 ) {
+
+                    // Coverage defined, but greater than range
+                    vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
+                }
+                else {
+                    vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
+                }
+            }
+
+        });
+    } else {
+        foamtree.set({
+            groupColorDecorator: function (opts, params, vars) {
+                var coverage = params.group.pValue;
+                var profileSelected = ColorProfileEnum.COPPER;
+                if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
+                    // Coverage defined. 0% coverage will be yellow,
+                    // 100% coverage will be olive.
+                    // min yellow : hsl(52, 98%, 60%)
+                    //max: olive  : hsl (58, 100, 29)
+                    vars.groupColor.h = ColorProfileEnum.properties[profileSelected].min_h + (ColorProfileEnum.properties[profileSelected].max_h - ColorProfileEnum.properties[profileSelected].min_h) * (coverage / 0.05 );
+                    vars.groupColor.s = ColorProfileEnum.properties[profileSelected].min_s + (ColorProfileEnum.properties[profileSelected].max_s - ColorProfileEnum.properties[profileSelected].min_s) * (coverage / 0.05 );
+                    vars.groupColor.l = ColorProfileEnum.properties[profileSelected].min_l + (ColorProfileEnum.properties[profileSelected].max_l - ColorProfileEnum.properties[profileSelected].min_l) * (coverage / 0.05 );
+
+                } else if (coverage !== undefined && coverage >= 0.05 ) {
+                    // Coverage defined, but greater than range
+                    vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
+                }
+                else {
+                    vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
+                }
+            }
+
+
+        });
+    }
 
     //switching views
     document.addEventListener("click", function (e) {
