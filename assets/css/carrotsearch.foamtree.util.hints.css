@@ -58,8 +58,6 @@
 .visualization-hint a,
 .visualization-hint .help {
   color: #888;
-    /*custom by CHuqiao*/
-    margin-right: 5px;
 }
 .visualization-hint:hover .help,
 .visualization-hint a:hover {

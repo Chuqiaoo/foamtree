@@ -12,7 +12,7 @@
  * specific language governing permissions and limitations
  * under the License.
  *
- * Copyright 2002-2019, Carrot Search s.c, All Rights Reserved.
+ * Copyright 2002-2018, Carrot Search s.c, All Rights Reserved.
  *
  *
  * A utility that displays contextual interaction hints
@@ -24,24 +24,32 @@
  * @param foamtree the FoamTree instance to be the source
  *        of interaction events for this utility.
  */
+
+
+/*comment div .slidable  style in carrotsearch.foamtree.utill.hints.css and custom css style in custom.css*/
+
 window.CarrotSearchFoamTree.hints = function(foamtree) {
   var macOs = /Mac/.test(window["navigator"]["userAgent"]);
   var touch = ('ontouchstart' in window) || (!!window["DocumentTouch"] && document instanceof window["DocumentTouch"]);
 
-  // The list of available interactions, used to build the
-  // complete interaction guide screen.
+  //The list of available interactions, used to build the
+  //complete interaction guide screen.
   var interactions = [
     [
       {
         desktop: "Left click",
         touch: "Tap",
         action: "select group, again to deselect"
-      },
-      {
-        desktop: (macOs ? "[&#8984;]" : "[Ctrl]") + " + Left click",
-        action: "select multiple groups"
       }
     ],
+
+    //* custom action by Chuqiao
+    [
+        {desktop: "Left click/Double click +Hold",
+            action: "Reactome pathway diagram page"
+        }
+    ],
+    //  *ends
     [
       {
         desktop: "Left double click",
@@ -136,18 +144,27 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
 
   var showHints = state.get("hints");
 
-  // The hints box
+ // The hints box
+ //var hintsHtml =
+     //
+     //'<div class="visualization-hint">\
+     //<span class="slidable hint"></span>\
+     //<a href="#" class="slidable dont-show">don\'t show again</a>\
+     //<span class="slidable help">help</span><span class="info">i</span>\
+     //</div>';
+
+// The default one is above, add a span to stick text in hints box--Chuqiao
   var hintsHtml =
     '<div class="visualization-hint">\
-      <span class="slidable hint"></span>\
-      <a href="#" class="slidable dont-show">don\'t show again</a>\
-      <span class="slidable help">help</span><span class="info">i</span>\
+      <span class ="slidable hint"> Left double click to zoom in, hold for details, right double click to zoom out\
+      <a href="#" class="slidable dont-show"> : Don\'t show again: </a>\
+      <span class="slidable help">Help</span></span><span class="info">i</span>\
     </div>';
 
   // The complete HTML, including interaction guide
   var html =
     (showHints ? hintsHtml : "") +
-   '<div class="visualization-help fadeout">\
+  '<div class="visualization-help fadeout">\
       <a href="#close">&times;</a>' +
       interactions.reduce(function(html, group) {
         return html +
@@ -207,167 +224,10 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
     }
   })();
 
-  // Shows/hides the contextual interaction hints
-  var hint = (function() {
-    var hint = $(".visualization-hint .hint"),
-        hintContainer = $(".visualization-hint");
-
-    return {
-      show: function(text) {
-        hint.innerHTML = text;
-        hintContainer.setAttribute("class", "visualization-hint shown");
-      },
-
-      hide: function() {
-        hint.innerHTML = "";
-        hintContainer.setAttribute("class", "visualization-hint");
-      }
-    }
-  })();
-
-  // The list of interactions that trigger contextual hints.
-  var hints = (function() {
-    var current;
-
-    var conditions = [
-      {
-        for: "expose",
-        complete: false,
-        condition: function(group, groupState, hasChildren, parent, parentState) {
-          return hasChildren;
-        },
-        text: "To zoom in to sub-groups, double click the parent group"
-      },
-      {
-        for: "unexpose",
-        complete: false,
-        condition: function(group, groupState, hasChildren, parent, parentState) {
-          return parentState && parentState.exposed;
-        },
-        text: "To zoom out to parent group, double click with right mouse button"
-      },
-      {
-        for: "open",
-        complete: false,
-        condition: function(group, groupState, hasChildren, parent, parentState) {
-          return hasChildren;
-        },
-        text: "To access subgroups, click and hold"
-      },
-      {
-        for: "close",
-        complete: false,
-        condition: function(group, groupState, hasChildren, parent, parentState) {
-          return parent && parentState.open;
-        },
-        text: "To access parent group, click and hold right mouse button"
-      },
-      {
-        for: "reset",
-        complete: false,
-        condition: function(group, groupState, hasChildren, parent, parentState) {
-          return foamtree.get("exposure").length > 0;
-        },
-        text: "To zoom out and close all groups, press Esc"
-      },
-      {
-        for: "mousewheel",
-        complete: false,
-        condition: function(group, groupState, hasChildren, parent, parentState) {
-          return true;
-        },
-        text: "Use mouse wheel to zoom in and out"
-      }
-    ];
-
-    function actionPerformed(action) {
-      if (current && current.for === action) {
-        hint.hide();
-        current = undefined;
-      }
-      for (var i = conditions.length - 1; i >= 0; i--) {
-        var condition = conditions[i];
-        if (condition.for === action) {
-          condition.complete = true;
-        }
-      }
-    }
-
-    return {
-      hovered: function(event) {
-        var group = event.group;
-        var state = foamtree.get("state", group);
-        var hasChildren = group.groups && group.groups.length > 0;
-        var parent = event.bottommostOpenGroup;
-        var parentState = parent && foamtree.get("state", parent);
-
-        for (var i = 0; i < conditions.length; i++) {
-          var condition = conditions[i];
-          if (!condition.complete && condition.condition(group, state, hasChildren, parent, parentState)) {
-            hint.show(condition.text);
-            current = condition;
-            break;
-          }
-        }
-      },
-
-      performed: actionPerformed
-    };
-  })();
-
-  // Attach FoamTree listeners that will drive the contextual hints
-  var foamtreeListeners = (function() {
-    if (!state.get("hints")) {
-      return;
-    }
-
-    var timeout;
-
-    function clear() {
-      window.clearTimeout(timeout);
-    }
-
-    foamtree.on("groupHover", function(event) {
-      if (!event.group) {
-        return;
-      }
-
-      window.clearTimeout(timeout);
-      timeout = window.setTimeout(function() {
-        hints.hovered(event);
-      }, 1000);
-    });
-
-    foamtree.on("groupClick", clear);
-    foamtree.on("groupDoubleClick", clear);
-    foamtree.on("groupHold", clear);
-    foamtree.on("groupMouseWheel", clear);
-
-    var createDeltaCounter = function(onIncrease, onDecrease) {
-      var previous = 0;
-      return function(event) {
-        if (!event.indirect) {
-          hints.performed(previous <= event.groups.length ? onIncrease : onDecrease);
-          previous = event.groups.length;
-        }
-      };
-    };
-
-    foamtree.on("groupExposureChanged", createDeltaCounter("expose", "unexpose"));
-    foamtree.on("groupOpenOrCloseChanged", createDeltaCounter("open", "close"));
-    foamtree.on("viewReset", function() {
-      hints.performed("reset");
-    });
-    foamtree.on("groupMouseWheel", function() {
-      hints.performed("mousewheel");
-    })
-  })();
-
   // Handle clicks on the hints and guide elements
   var guideElement = $(".visualization-help");
 
-
-  listeners.on($(".visualization-hint"), "mousedown mouseup touchstart", function(event) {
+  listeners.on($(".visualization-hint .slidable.help"), "mousedown mouseup touchstart", function(event) {
     if (event.type !== "mousedown") {
       showHelp();
     }
@@ -375,9 +235,20 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
     event.stopPropagation();
   });
 
+  //* click info icon to trigger sticky text custom by Chuqiao
+  listeners.on($(".visualization-hint .info"), "mousedown mouseup touchstart click", function(event) {
+        if (event.type !== "mousedown") {
+            $(".visualization-hint span:first-child").style.display = "";
+            state.set("hints", false);
+        }
+        event.preventDefault();
+        event.stopPropagation();
+    });
+  //********ends
   listeners.on($(".visualization-hint .dont-show"), "mousedown mouseup touchstart click", function(event) {
     if (event.type !== "mousedown") {
-      $(".visualization-hint").style.display = "none";
+      //  replace .visualization-hint with .slidable.hint in query selector by Chuqiao
+      $(".slidable.hint").style.display = "none";
       state.set("hints", false);
     }
     event.preventDefault();
@@ -417,4 +288,5 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
   function hideHelp() {
     guideElement.setAttribute("class", "visualization-help fadeout");
   }
+
 };

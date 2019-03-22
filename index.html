@@ -11,6 +11,7 @@
     <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="assets/css/common.css" rel="stylesheet"/>
     <link href="assets/css/tooltip.css" rel="stylesheet" />
+    <link href="assets/css/custom.css" rel="stylesheet" />
 
     <!-- The CSS for this demo -->
     <style type="text/css">
@@ -84,7 +85,7 @@
 <script src="assets/js/tooltip.min.js"></script>
 
 <!-- Include the interaction hints utility -->
-<script src="carrotsearch.foamtree.util.hints.js"></script>
+<script src="carrotsearch.foamtree.util.hints.custom.js"></script>
 
 <!-- A number of utilities we'll need -->
 <script src="assets/js/carrotsearch.jsonp.js"></script>
@@ -101,8 +102,22 @@
 <script>
 
     window.addEventListener("load", function() {
-        //default overview
-        foamtreeLoading();
+
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m ,key, value) {
+                vars[key] = value;
+            });
+            return vars
+        }
+        var analysisParam =  getUrlVars()["analysis"];
+
+        if (typeof analysisParam !== "undefined" ){
+            analysis(analysisParam);
+
+        } else {
+            foamtreeLoading();
+        }
     });
 
     var foamtreeData;
@@ -137,11 +152,41 @@
 
     });
 
+
+    function analysis(analysisParam){
+
+        function extractDataFromToken(response) {
+
+            //read external Token data and save to key=>value pair R-HSA-5653656 =>1.1102230246251565e-16
+            var newResponse = {};
+
+            $.each(response.pathways, function (key, val) {
+                newResponse[val.stId] = val.entities.pValue;
+            });
+
+            foamtreeStarts(newResponse, analysisParam);
+
+        }
+
+        //Load Token data. TODO a ajax call here
+        $.ajax({
+            url: "http://dev.reactome.org/AnalysisService/token/" + analysisParam + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
+            dataType: "json",
+            type: "GET",
+            success: function (json) {
+                extractDataFromToken(json);
+            },
+            error: function () {
+                alert("data not found");
+            }
+        });
+    }
+
     //data analysis and redraw foamtree
     var submit = document.getElementById("submit");
     submit.onclick = function () {
 
-        var tokenUrl = document.getElementById("token");
+        var tokenUrl = document.getElementById("token").value;
 
         //remove div and recreate to clear previous embedded foamtree
         $("#visualization").remove();
@@ -166,7 +211,7 @@
 
         //Load Token data. TODO a ajax call here
         $.ajax({
-            url: "https://dev.reactome.org/AnalysisService/token/" + tokenUrl.value + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
+            url: "https://dev.reactome.org/AnalysisService/token/" + tokenUrl + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
             dataType: "json",
             type: "GET",
             success: function (json) {
@@ -189,6 +234,9 @@
         var div = document.createElement('div');
         div.id = 'visualization';
         container.prepend(div);
+
+        //remove color and analysis parameter in current url
+        window.location = window.location.href.split("?")[0];
 
         foamtreeLoading ();
     });
