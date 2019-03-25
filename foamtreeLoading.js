@@ -22,15 +22,9 @@ function foamtreeLoading(){
         finalIncrementalDrawMaxDuration: 50000,
         wireframeDrawMaxDuration: 5000,
 
-        // resize
-        relaxationVisible: false,
-        relaxationQualityThreshold: 5,
-        rolloutDuration: 0,
-        pullbackDuration: 0,
-
         // Use a simple fading animation. Animated rollouts are very expensive for large hierarchies.
-        //rolloutDuration: 0.5,
-        //pullbackDuration: 0,
+        rolloutDuration: 0.5,
+        pullbackDuration: 0,
 
         // Lower groupMinDiameter to fit as many groups as possible
         groupMinDiameter: 0,
@@ -59,6 +53,7 @@ function foamtreeLoading(){
 
         //show labels during relaxation
         wireframeLabelDrawing: "always"
+
 
     });
 
@@ -99,25 +94,6 @@ function foamtreeLoading(){
         }
     });
 
-    //customization colors, use COPPER as default color profile
-    foamtree.set({
-        groupColorDecorator: function (opts, props, vars) {
-            // If child groups of some group don't have enough space to
-            // render, draw the parent group in red.
-            if (props.hasChildren && props.browseable === false) {
-                vars.groupColor = "#E86365";
-                vars.labelColor = "#000";
-            } else {
-                //vars.groupColor = "#58C3E5";
-                //vars.labelColor = "#000";
-                var profileSelected = ColorProfileEnum.COPPER;
-                // check in the Enum to get value and to change profileSelected
-                vars.groupColor = ColorProfileEnum.properties[profileSelected].group;
-                vars.labelColor = ColorProfileEnum.properties[profileSelected].label;
-            }
-        }
-    });
-
     //switching color profiles by url
     function getUrlVars() {
         var vars = {};
@@ -137,10 +113,8 @@ function foamtreeLoading(){
                     vars.groupColor = "#E86365";
                     vars.labelColor = "#000";
                 } else {
-                    //vars.groupColor = "#58C3E5";
-                    //vars.labelColor = "#000";
+
                     var profileSelected = ColorProfileEnum[colorParam];
-                    //var colorParam = ""; // TODO get color from queryString
                     // check in the Enum to get value and to change profileSelected
                     vars.groupColor = ColorProfileEnum.properties[profileSelected].group;
                     vars.labelColor = ColorProfileEnum.properties[profileSelected].label;
@@ -157,10 +131,7 @@ function foamtreeLoading(){
                     vars.groupColor = "#E86365";
                     vars.labelColor = "#000";
                 } else {
-                    //vars.groupColor = "#58C3E5";
-                    //vars.labelColor = "#000";
                     var profileSelected = ColorProfileEnum.COPPER;
-                    //var colorParam = ""; // TODO get color from queryString
                     // check in the Enum to get value and to change profileSelected
                     vars.groupColor = ColorProfileEnum.properties[profileSelected].group;
                     vars.labelColor = ColorProfileEnum.properties[profileSelected].label;
@@ -168,7 +139,6 @@ function foamtreeLoading(){
             }
         });
     }
-
 
     //load hints
     CarrotSearchFoamTree.hints(foamtree);
@@ -196,38 +166,10 @@ function foamtreeLoading(){
         foamtree.set("dataObject", foamtree.get("dataObject"));
     });
 
-    //switching color profiles
-    document.getElementById("colorSelector").addEventListener("change", function (e) {
-        e.preventDefault();
-
-        var color = e.target.value;
-
-        foamtree.set({
-            groupColorDecorator: function (opts, props, vars) {
-                // If child groups of some group don't have enough space to
-                // render, draw the parent group in red.
-                if (props.hasChildren && props.browseable === false) {
-                    vars.groupColor = "#E86365";
-                    vars.labelColor = "#000";
-                } else {
-                    //vars.groupColor = "#58C3E5";
-                    //vars.labelColor = "#000";
-                    var profileSelected = ColorProfileEnum[color];
-                    //var colorParam = ""; // TODO get color from queryString
-                    // check in the Enum to get value and to change profileSelected
-                    vars.groupColor = ColorProfileEnum.properties[profileSelected].group;
-                    vars.labelColor = ColorProfileEnum.properties[profileSelected].label;
-                }
-            }
-        });
-
-        foamtree.set("dataObject", foamtree.get("dataObject"));
-    });
-
-    // resize FoamTree on orientation change
+    // Resize FoamTree on orientation change
     window.addEventListener("orientationchange", foamtree.resize);
 
-    // resize on window size changes
+    // Resize on window size changes
     window.addEventListener("resize", (function() {
         var timeout;
         return function() {

@@ -16,17 +16,35 @@
     <!-- The CSS for this demo -->
     <style type="text/css">
 
-        .set-width {
-            width: 250px;
-        }
-
         body { overflow-x: hidden }
 
-        @media (max-width: 1023px) {
-            #side { position: relative; }
+        #container {
+            position: absolute;
+            width:100%;
+            left: 0;
+            right:0;
+            bottom: 40px;
+            top: 0;
+            overflow-y: hidden;
+            overflow-x: scroll;
+        }
 
+        #nav {
+            position: absolute;
+            bottom: 20px;
+            right: 0;
+            left: 10px;
 
         }
+
+        /*TODO this css is just fot this demo, remove it when move to production qualityt*/
+        .helpText {
+            position: absolute;
+            right: 0;
+            left: 10px;
+            bottom: -45px;
+        }
+
     </style>
 
     <!-- Include the default style for the interaction hints and guide -->
@@ -42,39 +60,19 @@
     <div id="progress"></div>
 </div>
 
-<div id="side">
-
+<div id="nav">
     View:
-    <a href="#flattened">flattened</a> | <a href="#hierarchical">hierarchical</a> <br>
-    <br>
-
-    <div>
-        <label for="colorSelector">Color</label>
-        <select id = "colorSelector">
-            <option value="COPPER">Copper</option>
-            <option value="COPPER_PLUS">Copper plus</option>
-            <option value="BARIUM_LITHIUM">Barium Lithium</option>
-            <option value="CALCIUM_SALTS">Calcium Salts</option>
-        </select>
-
-    </div><br>
-
-    <h5>Data Analysis </h5>
-    <div  align="left" style="float:left">
-        <label>Enter Token</label>
-        <input type="text" name="token" id ="token" class="set-width">
-    </div>
-
-    <div align="right">
-        <button id = "submit">Submit</button>
-    </div>
-
-    <br>
-    <div>
-        <button id = "overview">Overview</button>
-    </div>
+    <a href="#flattened">flattened</a> | <a href="#hierarchical">hierarchical</a>    <button id = "overview">Overview</button>
 
 </div>
+<!--TODO this help is just fot this demo, remove it when move to production quality-->
+<div class = "helpText">
+    <p>Color profiles and Tokens: COPPER, COPPER_PLUS,CALCIUM_SALTS, CALCIUM_SALTS</p>
+    <p>MjAxOTAzMjUxMTM0MzRfMg%253D%253D ; MjAxOTAzMjUxMTM1MDNfMw%253D%253D </p>
+</div>
+
+
+
 <script src="assets/js/jquery-2.0.3.min.js"></script>
 
 <!-- Include Hammer.js for mobile interactions. Not required for desktop-only apps. -->
@@ -181,48 +179,6 @@
             }
         });
     }
-
-    //data analysis and redraw foamtree
-    var submit = document.getElementById("submit");
-    submit.onclick = function () {
-
-        var tokenUrl = document.getElementById("token").value;
-
-        //remove div and recreate to clear previous embedded foamtree
-        $("#visualization").remove();
-        var container = document.getElementById("container");
-        var div = document.createElement('div');
-        div.id = 'visualization';
-        container.prepend(div);
-
-        function extractDataFromToken(response) {
-
-            //read external Token data and save to key=>value pair R-HSA-5653656 =>1.1102230246251565e-16
-            var newResponse = {};
-
-            $.each(response.pathways, function (key, val) {
-                newResponse[val.stId] = val.entities.pValue;
-            });
-
-
-            foamtreeStarts(newResponse, tokenUrl);
-
-        }
-
-        //Load Token data. TODO a ajax call here
-        $.ajax({
-            url: "https://dev.reactome.org/AnalysisService/token/" + tokenUrl + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
-            dataType: "json",
-            type: "GET",
-            success: function (json) {
-                extractDataFromToken(json)
-
-            },
-            error: function () {
-                alert("data not found");
-            }
-        });
-    };
 
     //back to default view when click overview
     var overview = document.getElementById("overview");

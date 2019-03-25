@@ -2,8 +2,7 @@
  * Created by Chuqiao on 07/03/19.
  */
 
-function foamtreeStarts(newResponse, tokenUrl) {
-
+function foamtreeStarts(newResponse, token) {
     var foamtreeMapping = getData(foamtreeData);
 
     //set Max Level for debugging
@@ -25,11 +24,11 @@ function foamtreeStarts(newResponse, tokenUrl) {
 
         if (newResponse[group.stId]) {
 
-            group = Object.assign( group, {'pValue': newResponse[group.stId], 'url': group.url+ "&DTAB=AN&ANALYSIS=" + tokenUrl });
+            group = Object.assign( group, {'pValue': newResponse[group.stId], 'url': group.url+ "&DTAB=AN&ANALYSIS=" + token });
 
         } else {
 
-            group = Object.assign(group, {'pValue': undefined, 'url': group.url+ "&DTAB=AN&ANALYSIS=" + tokenUrl  });
+            group = Object.assign(group, {'pValue': undefined, 'url': group.url+ "&DTAB=AN&ANALYSIS=" + token });
         }
     }
 
@@ -65,7 +64,7 @@ function foamtreeStarts(newResponse, tokenUrl) {
 
                 if (newResponse[group.groups[i].stId]) {
 
-                    group.groups[i] = Object.assign( group.groups[i],{'url': group.groups[i].url + "&DTAB=AN&ANALYSIS=" + tokenUrl});
+                    group.groups[i] = Object.assign( group.groups[i],{'url': group.groups[i].url + "&DTAB=AN&ANALYSIS=" + token});
 
                 }
             }
@@ -123,7 +122,7 @@ function foamtreeStarts(newResponse, tokenUrl) {
 
     });
 
-    //loading data set
+    //Loading data set
     foamtree.set({
         dataObject: {
             groups: foamtreeMapping
@@ -138,6 +137,7 @@ function foamtreeStarts(newResponse, tokenUrl) {
         }
     });
 
+
     //title bar
     foamtree.set({
         maxLabelSizeForTitleBar: Number.MAX_VALUE,
@@ -146,6 +146,7 @@ function foamtreeStarts(newResponse, tokenUrl) {
         }
     });
 
+    //display hints
     CarrotSearchFoamTree.hints(foamtree);
 
     //switching color profiles by url
@@ -163,10 +164,6 @@ function foamtreeStarts(newResponse, tokenUrl) {
                 var coverage = params.group.pValue;
                 var profileSelected = ColorProfileEnum[colorParam];
                 if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
-                    // Coverage defined. 0% coverage will be yellow,
-                    // 100% coverage will be olive.
-                    // min yellow : hsl(52, 98%, 60%)
-                    //max: olive  : hsl (58, 100, 29)
                     vars.groupColor.h = ColorProfileEnum.properties[profileSelected].min_h + (ColorProfileEnum.properties[profileSelected].max_h - ColorProfileEnum.properties[profileSelected].min_h) * (coverage / 0.05 );
                     vars.groupColor.s = ColorProfileEnum.properties[profileSelected].min_s + (ColorProfileEnum.properties[profileSelected].max_s - ColorProfileEnum.properties[profileSelected].min_s) * (coverage / 0.05 );
                     vars.groupColor.l = ColorProfileEnum.properties[profileSelected].min_l + (ColorProfileEnum.properties[profileSelected].max_l - ColorProfileEnum.properties[profileSelected].min_l) * (coverage / 0.05 );
@@ -177,6 +174,7 @@ function foamtreeStarts(newResponse, tokenUrl) {
                     vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
                 }
                 else {
+                    //coverage not defined
                     vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
                 }
             }
@@ -188,10 +186,6 @@ function foamtreeStarts(newResponse, tokenUrl) {
                 var coverage = params.group.pValue;
                 var profileSelected = ColorProfileEnum.COPPER;
                 if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
-                    // Coverage defined. 0% coverage will be yellow,
-                    // 100% coverage will be olive.
-                    // min yellow : hsl(52, 98%, 60%)
-                    //max: olive  : hsl (58, 100, 29)
                     vars.groupColor.h = ColorProfileEnum.properties[profileSelected].min_h + (ColorProfileEnum.properties[profileSelected].max_h - ColorProfileEnum.properties[profileSelected].min_h) * (coverage / 0.05 );
                     vars.groupColor.s = ColorProfileEnum.properties[profileSelected].min_s + (ColorProfileEnum.properties[profileSelected].max_s - ColorProfileEnum.properties[profileSelected].min_s) * (coverage / 0.05 );
                     vars.groupColor.l = ColorProfileEnum.properties[profileSelected].min_l + (ColorProfileEnum.properties[profileSelected].max_l - ColorProfileEnum.properties[profileSelected].min_l) * (coverage / 0.05 );
@@ -201,11 +195,10 @@ function foamtreeStarts(newResponse, tokenUrl) {
                     vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
                 }
                 else {
+                    //coverage not defined
                     vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
                 }
             }
-
-
         });
     }
 
@@ -232,40 +225,10 @@ function foamtreeStarts(newResponse, tokenUrl) {
         foamtree.set("dataObject", foamtree.get("dataObject"));
     });
 
-    //switching color profiles
-    document.getElementById("colorSelector").addEventListener("change", function (e) {
-        e.preventDefault();
-        var color = e.target.value;
-        var profileSelected = ColorProfileEnum[color];
-        foamtree.set({
-            groupColorDecorator: function (opts, params, vars) {
-                var coverage = params.group.pValue;
-                if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
-                    // Coverage defined. 0% coverage will be yellow,
-                    // 100% coverage will be olive.
-                    // min yellow : hsl(52, 98%, 60%)
-                    //max: olive  : hsl (58, 100, 29)
-                    vars.groupColor.h = ColorProfileEnum.properties[profileSelected].min_h + (ColorProfileEnum.properties[profileSelected].max_h - ColorProfileEnum.properties[profileSelected].min_h) * (coverage / 0.05 );
-                    vars.groupColor.s = ColorProfileEnum.properties[profileSelected].min_s + (ColorProfileEnum.properties[profileSelected].max_s - ColorProfileEnum.properties[profileSelected].min_s) * (coverage / 0.05 );
-                    vars.groupColor.l = ColorProfileEnum.properties[profileSelected].min_l + (ColorProfileEnum.properties[profileSelected].max_l - ColorProfileEnum.properties[profileSelected].min_l) * (coverage / 0.05 );
-
-                } else if(coverage !== undefined && coverage >= 0.05 ){
-                    // Coverage defined, but greater than the range
-                    vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
-                } else{
-                    // Coverage not defined, draw the group in fadeout color.
-                    vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
-                }
-            }
-        });
-
-        foamtree.set("dataObject", foamtree.get("dataObject"));
-    });
-
-    // resize FoamTree on orientation change
+    // Resize FoamTree on orientation change
     window.addEventListener("orientationchange", foamtree.resize);
 
-    // resize on window size changes
+    // Resize on window size changes
     window.addEventListener("resize", (function() {
         var timeout;
         return function() {
@@ -273,4 +236,6 @@ function foamtreeStarts(newResponse, tokenUrl) {
             timeout = window.setTimeout(foamtree.resize, 300);
         }
     })());
-};
+
+
+}
