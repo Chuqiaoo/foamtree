@@ -176,6 +176,11 @@
             },
             error: function () {
                 alert("data not found");
+                //remove color and analysis parameter in current url without reloading page
+                var newURL = location.href.split("?")[0];
+                window.history.pushState('object', document.title, newURL);
+
+                foamtreeLoading ();
             }
         });
     }
@@ -191,10 +196,12 @@
         div.id = 'visualization';
         container.prepend(div);
 
-        //remove color and analysis parameter in current url
-        window.location = window.location.href.split("?")[0];
+        //remove color and analysis parameter in current url without reloading page
+        var newURL = location.href.split("?")[0];
+        window.history.pushState('object', document.title, newURL);
 
         foamtreeLoading ();
+
     });
 
 </script>
