@@ -40,7 +40,6 @@ var ColorProfileEnum = {
 
 //load homo sapiens data TODO a ajax call here
 $.ajax({
-    //url: "https://reactome.org/download/current/fireworks/Homo_sapiens.json",
     url: "dataset/Homo_sapiens.json",
     dataType: "json",
     async: false,
@@ -53,7 +52,6 @@ $.ajax({
     }
 
 });
-
 
 function analysis(analysisParam){
 
@@ -80,10 +78,10 @@ function analysis(analysisParam){
         },
         error: function () {
             alert("data not found");
+
             //remove color and analysis parameter in current url without reloading page
             var newURL = location.href.split("?")[0];
             window.history.pushState('object', document.title, newURL);
-
             foamtreeLoading ();
         }
     });

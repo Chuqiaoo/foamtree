@@ -33,6 +33,8 @@ function getData(data) {
 
     var humanDataUrl = {};
     $.each(data.nodes, function (key, val) {
+        // TODO: Use the following once it is deployed in reactome dev
+       // humanDataUrl[val.dbId] = "/PathwayBrowser/#/" + val.stId;
         humanDataUrl[val.dbId] = "https://dev.reactome.org/PathwayBrowser/#/" + val.stId;
     });
 
@@ -77,7 +79,6 @@ function getData(data) {
             // TODO warning here
             async: false,
             //human sapiens top data
-            //url: "https://dev.reactome.org/ContentService/data/pathways/top/9606",
             url: "dataset/top.json",
             dataType: "json",
             success: function (topData) {
