@@ -162,7 +162,7 @@ function foamtreeStarts(newResponse, token) {
         foamtree.set({
             groupColorDecorator: function (opts, params, vars) {
                 var coverage = params.group.pValue;
-                var profileSelected = ColorProfileEnum[colorParam];
+                var profileSelected = ColorProfileEnum[colorParam.toUpperCase()];
                 if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
                     vars.groupColor.h = ColorProfileEnum.properties[profileSelected].min_h + (ColorProfileEnum.properties[profileSelected].max_h - ColorProfileEnum.properties[profileSelected].min_h) * (coverage / 0.05 );
                     vars.groupColor.s = ColorProfileEnum.properties[profileSelected].min_s + (ColorProfileEnum.properties[profileSelected].max_s - ColorProfileEnum.properties[profileSelected].min_s) * (coverage / 0.05 );

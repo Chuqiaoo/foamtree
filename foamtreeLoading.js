@@ -114,7 +114,7 @@ function foamtreeLoading(){
                     vars.labelColor = "#000";
                 } else {
 
-                    var profileSelected = ColorProfileEnum[colorParam];
+                    var profileSelected = ColorProfileEnum[colorParam.toUpperCase()];
                     // check in the Enum to get value and to change profileSelected
                     vars.groupColor = ColorProfileEnum.properties[profileSelected].group;
                     vars.labelColor = ColorProfileEnum.properties[profileSelected].label;
