@@ -279,8 +279,4 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
   function hideHelp() {
     guideElement.setAttribute("class", "visualization-help fadeout");
   }
-
-  //function showHint() {
-  //      guideElement.setAttribute("class", "visualization-hint");
-  //}
 };
