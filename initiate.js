@@ -5,6 +5,9 @@
 
 window.addEventListener("load", function() {
 
+    //hide progress spinner when all elements are loaded here because this ajax call is async
+    jQuery(".waiting").hide();
+
     function getUrlVars() {
         var vars = {};
         var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m ,key, value) {
@@ -15,11 +18,13 @@ window.addEventListener("load", function() {
     var analysisParam =  getUrlVars()["analysis"];
 
     if (typeof analysisParam !== "undefined" ){
+
         analysis(analysisParam);
 
     } else {
         foamtreeLoading();
     }
+
 });
 
 var foamtreeData;
@@ -43,6 +48,9 @@ $.ajax({
     url: "dataset/Homo_sapiens.json",
     dataType: "json",
     async: false,
+    beforeSend: function(){
+        jQuery(".waiting").show()
+    },
     success: function(data) {
 
         foamtreeData = data;
@@ -73,8 +81,16 @@ function analysis(analysisParam){
         url: "http://dev.reactome.org/AnalysisService/token/" + analysisParam + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
         dataType: "json",
         type: "GET",
+        beforeSend: function(){
+            jQuery(".waiting").show()
+        },
         success: function (json) {
             extractDataFromToken(json);
+
+        },
+        complete: function(){
+            //hide progress spinner
+            jQuery(".waiting").hide();
         },
         error: function () {
             alert("data not found");

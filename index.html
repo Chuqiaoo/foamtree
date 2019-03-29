@@ -12,6 +12,7 @@
     <link href="assets/css/common.css" rel="stylesheet"/>
     <link href="assets/css/tooltip.css" rel="stylesheet" />
     <link href="assets/css/custom.css" rel="stylesheet" />
+    <link href="assets/css/spinner.css" rel="stylesheet" />
 
     <!-- The CSS for this demo -->
     <style type="text/css">
@@ -37,14 +38,6 @@
 
         }
 
-        /*TODO this css is just fot this demo, remove it when move to production qualityt*/
-        .helpText {
-            position: absolute;
-            right: 0;
-            left: 10px;
-            bottom: -45px;
-        }
-
     </style>
 
     <!-- Include the default style for the interaction hints and guide -->
@@ -56,8 +49,23 @@
 <div id="container">
     <div id="visualization"></div>
 
-    <!-- The element to use as the relaxation progress indicator -->
-    <div id="progress"></div>
+    <div class="waiting" style="display:none; height: 100%; width: 100%;text-align: center;">
+        <div class="sk-circle">
+            <div class="sk-circle1 sk-child"></div>
+            <div class="sk-circle2 sk-child"></div>
+            <div class="sk-circle3 sk-child"></div>
+            <div class="sk-circle4 sk-child"></div>
+            <div class="sk-circle5 sk-child"></div>
+            <div class="sk-circle6 sk-child"></div>
+            <div class="sk-circle7 sk-child"></div>
+            <div class="sk-circle8 sk-child"></div>
+            <div class="sk-circle9 sk-child"></div>
+            <div class="sk-circle10 sk-child"></div>
+            <div class="sk-circle11 sk-child"></div>
+            <div class="sk-circle12 sk-child"></div>
+        </div>
+    </div>
+
 </div>
 
 <div id="nav">
@@ -65,12 +73,6 @@
     <a href="#flattened">flattened</a> | <a href="#hierarchical">hierarchical</a>    <button id = "overview">Overview</button>
 
 </div>
-<!--TODO this help is just fot this demo, remove it when move to production quality-->
-<div class = "helpText">
-    <p>Color profiles and Tokens: COPPER, COPPER_PLUS,CALCIUM_SALTS, CALCIUM_SALTS</p>
-    <p>MjAxOTAzMjUxMTM0MzRfMg%253D%253D ; MjAxOTAzMjUxMTM1MDNfMw%253D%253D </p>
-</div>
-
 
 
 <script src="assets/js/jquery-2.0.3.min.js"></script>
@@ -97,6 +99,7 @@
 <script src="getData.js"></script>
 <script src="foamtreeLoading.js"></script>
 <script src="foamtreeAnalysis.js"></script>
+
 
 </body>
 </html>
