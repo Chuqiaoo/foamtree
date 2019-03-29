@@ -142,18 +142,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
       hints: true
     });
 
-  var showHints = state.get("hints");
 
- // The hints box
- //var hintsHtml =
-     //
-     //'<div class="visualization-hint">\
-     //<span class="slidable hint"></span>\
-     //<a href="#" class="slidable dont-show">don\'t show again</a>\
-     //<span class="slidable help">help</span><span class="info">i</span>\
-     //</div>';
-
-// The default one is above, add a span to stick text in hints box--Chuqiao
   var hintsHtml =
     '<div class="visualization-hint">\
       <span class ="slidable hint"> Left double click to zoom in, hold for details, right double click to zoom out\
@@ -161,9 +150,10 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
       <span class="slidable help">Help</span></span><span class="info">i</span>\
     </div>';
 
+
   // The complete HTML, including interaction guide
   var html =
-    (showHints ? hintsHtml : "") +
+      hintsHtml +
   '<div class="visualization-help fadeout">\
       <a href="#close">&times;</a>' +
       interactions.reduce(function(html, group) {
@@ -245,6 +235,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
         event.stopPropagation();
     });
   //********ends
+
   listeners.on($(".visualization-hint .dont-show"), "mousedown mouseup touchstart click", function(event) {
     if (event.type !== "mousedown") {
       //  replace .visualization-hint with .slidable.hint in query selector by Chuqiao
@@ -289,4 +280,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
     guideElement.setAttribute("class", "visualization-help fadeout");
   }
 
+  //function showHint() {
+  //      guideElement.setAttribute("class", "visualization-hint");
+  //}
 };
