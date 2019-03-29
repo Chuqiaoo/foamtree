@@ -102,23 +102,3 @@ function analysis(analysisParam){
         }
     });
 }
-
-//back to default view when click overview
-var overview = document.getElementById("overview");
-overview.addEventListener("click", function(){
-
-    //remove div and recreate to clear previous embedded foamtree
-    $("#visualization").remove();
-    var container = document.getElementById("container");
-    var div = document.createElement('div');
-    div.id = 'visualization';
-    container.prepend(div);
-
-    //remove color and analysis parameter in current url without reloading page
-    var newURL = location.href.split("?")[0];
-    window.history.pushState('object', document.title, newURL);
-
-    foamtreeLoading ();
-
-});
-
