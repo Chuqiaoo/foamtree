@@ -1,0 +1,155 @@
+/**
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ *
+ * Copyright 2002-2018, Carrot Search s.c, All Rights Reserved.
+ *
+ *
+ * Styles for the interaction hints and guide.
+ *
+ * Please see demos/hints.html for the usage example.
+ */
+.visualization-hints {
+  max-height: 100%;
+}
+.visualization-hint {
+  color: black;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: pointer;
+  z-index: 1;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.65);
+  height: 25px;
+  line-height: 24px;
+  padding-right: 18px;
+    /*comments by Chuqiao 2019-01-20*/
+  /*transition: background-color 0.3s linear;*/
+}
+.visualization-hint .info {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  font: 15px serif bold;
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  text-align: center;
+  line-height: 17px;
+  color: white;
+  background-color: black;
+  border-radius: 15px;
+}
+.visualization-hint a,
+.visualization-hint .help {
+  color: #888;
+}
+.visualization-hint:hover .help,
+.visualization-hint a:hover {
+  color: #000;
+  text-decoration: none;
+}
+
+.visualization-hint.shown,
+.visualization-hint:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/*  comments by Chuqiao 2019-01-20
+.visualization-hint .slidable {
+  display: inline-block;
+  transition: max-width 0.3s ease, margin 0.3s ease-in-out;
+  overflow: hidden;
+  max-width: 0;
+  margin: 0;
+}*/
+
+.visualization-hint:hover .help       { max-width: 50px; margin: 0 5px; }
+.visualization-hint:hover .dont-show  { max-width: 100px; margin: 0 5px; }
+.visualization-hint.shown .hint       { max-width: 370px; margin: 0 5px; }
+
+.visualization-help {
+  color: black;
+  font-size: 12px;
+  max-width: 600px;
+  max-height: 95%;
+  position: relative;
+  left: 0;
+  right: 0;
+  top: 20px;
+  margin: auto;
+  overflow: auto;
+  z-index: 1;
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: 3px;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.75);
+  padding: 30px 5px 10px 5px;
+  background-color: rgba(255, 255, 255, 0.95);
+}
+.visualization-help dl {
+  font-size: 14px;
+  margin: 0 0 20px 0;
+  clear: both;
+  overflow: hidden;
+}
+.visualization-help dt {
+  float: left;
+  clear: left;
+  width: 40%;
+  text-align: right;
+  font-weight: bold;
+}
+.visualization-help dd {
+  margin-left: 42%;
+}
+.visualization-help .alt {
+  color: #888;
+}
+.visualization-help a[href = "#close"] {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  text-decoration: none;
+  color: black;
+  font-size: 30px;
+  line-height: 30px;
+}
+.visualization-help .key {
+  font-size: 70%;
+  vertical-align: 10%;
+  text-transform: uppercase;
+  border: 1px solid #ddd;
+  background-color: #f4f4f4;
+  padding: 1px 4px;
+  border-radius: 3px;
+  box-shadow: 1px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.visualization-help,
+.visualization-hints {
+  opacity: 1.0;
+  transition: visibility 0s linear 0, opacity 0.2s linear;
+  -webkit-transition: visibility 0s linear 0, opacity 0.2s linear;
+}
+.visualization-hints.fadeout,
+.visualization-help.fadeout {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.5s, opacity 0.2s linear;
+  -webkit-transition: visibility 0s linear 0.5s, opacity 0.2s linear;
+}

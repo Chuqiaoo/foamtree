@@ -4,51 +4,22 @@
     <meta charset="UTF-8">
     <title>Reacfoam</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-    <meta property="og:image" content="//get.carrotsearch.com/foamtree/latest/demos/assets/img/main-thumbnail.jpg"/>
 
     <meta charset="utf-8"/>
-    <link href="images/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="assets/css/common.css" rel="stylesheet"/>
-    <link href="assets/css/tooltip.css" rel="stylesheet" />
-    <link href="assets/css/custom.css" rel="stylesheet" />
-    <link href="assets/css/spinner.css" rel="stylesheet" />
-
-    <!-- The CSS for this demo -->
-    <style type="text/css">
-
-        body { overflow-x: hidden }
-
-        #container {
-            position: absolute;
-            width:100%;
-            left: 0;
-            right:0;
-            bottom: 40px;
-            top: 0;
-            overflow-y: hidden;
-            overflow-x: scroll;
-        }
-
-        #nav {
-            position: absolute;
-            bottom: 20px;
-            right: 0;
-            left: 10px;
-
-        }
-
-    </style>
+    <link href="resources/images/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <link href="lib/foamtree/assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="lib/foamtree/assets/css/common.css" rel="stylesheet"/>
 
     <!-- Include the default style for the interaction hints and guide -->
-    <link href="assets/css/carrotsearch.foamtree.util.hints.css" rel="stylesheet"/>
+    <link href="lib/foamtree/assets/css/carrotsearch.foamtree.util.hints.css" rel="stylesheet"/>
 
+    <!-- Customised for Reactome -->
+    <link href="resources/css/custom.css" rel="stylesheet" />
 </head>
 <body>
 
 <div id="container">
     <div id="visualization"></div>
-
     <div class="waiting" style="display:none; height: 100%; width: 100%;text-align: center;">
         <div class="sk-circle">
             <div class="sk-circle1 sk-child"></div>
@@ -65,41 +36,32 @@
             <div class="sk-circle12 sk-child"></div>
         </div>
     </div>
-
 </div>
 
 <div id="nav">
     View:
     <a href="#flattened">flattened</a> | <a href="#hierarchical">hierarchical</a>
-
 </div>
 
+<!-- Include Hammer.js for mobile interactions and touch events. Not required for desktop-only apps. -->
+<script src="lib/foamtree/assets/js/hammer.min.js"></script>
 
-<script src="assets/js/jquery-2.0.3.min.js"></script>
-
-<!-- Include Hammer.js for mobile interactions. Not required for desktop-only apps. -->
-<script src="assets/js/hammer.min.js"></script>
-<script src="carrotsearch.foamtree.js"></script>
-<script src="carrotsearch.foamtree.util.loading.js"></script>
-<script src="carrotsearch.foamtree.util.relaxationprogress.js"></script>
-<script src="assets/js/tooltip.min.js"></script>
-
-<!-- Include the interaction hints utility -->
-<script src="carrotsearch.foamtree.util.hints.custom.js"></script>
+<!-- Foamtree library -->
+<script src="lib/foamtree/carrotsearch.foamtree.js"></script>
 
 <!-- A number of utilities we'll need -->
-<script src="assets/js/carrotsearch.jsonp.js"></script>
-<script src="assets/js/carrotsearch.template.js"></script>
-<script src="assets/js/jquery-2.0.3.min.js"></script>
-<script src="assets/js/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
 
-<!--custom javascript-->
-<script src="initiate.js"></script>
-<script src="getData.js"></script>
-<script src="foamtreeLoading.js"></script>
-<script src="foamtreeAnalysis.js"></script>
+<!--Custom javascript-->
+<script src="resources/js/initiate.js"></script>
+<script src="resources/js/getData.js"></script>
+<script src="resources/js/tools.js"></script>
+<script src="resources/js/foamtreeLoading.js"></script>
+<script src="resources/js/foamtreeAnalysis.js"></script>
 
+<!-- Include the interaction hints utility -->
+<script src="resources/js/foamtreeHintsCustom.js"></script>
 
 </body>
 </html>
