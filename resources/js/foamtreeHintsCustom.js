@@ -95,8 +95,9 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
 
   var hintsHtml =
     '<div class="visualization-hint">\
-      <span class ="slidable hint">Left double click to zoom in, hold for details, right double click to zoom out\
-      <a href="#" class="slidable dont-show"> : Don\'t show again: </a>\
+      <span class="slidable hint">Left double click to zoom in, hold for details, right double click to zoom out :\
+      &nbsp;<a href="#" class="slidable dont-show">Don\'t show again</a>\
+      <span>&nbsp;:&nbsp;</span>\
       <span class="slidable help">Help</span></span><span class="info">i</span>\
     </div>';
 

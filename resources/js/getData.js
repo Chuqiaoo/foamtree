@@ -9,25 +9,20 @@ function getData(data) {
 
     // Save data as key => value pair, use dbId as key for per pairs
     var humanDataStId = {};
-    $.each(data.nodes, function (key, val) {humanDataStId[val.dbId] = val.stId;});
-
     var humanDataName = {};
-    $.each(data.nodes, function (key, val) {humanDataName[val.dbId] = val.name;});
-
     var humanDataRatio = {};
+    var humanDataUrl = {};
     $.each(data.nodes, function (key, val) {
-
+        humanDataStId[val.dbId] = val.stId;
+        humanDataName[val.dbId] = val.name;
         if (val.ratio != 0) {
             humanDataRatio[val.dbId] = val.ratio * 1000;
         } else {
             // Set ratio = 0.009 when ratio = 0
             humanDataRatio[val.dbId] = 9
         }
+        humanDataUrl[val.dbId] = "/PathwayBrowser/#/" + val.stId;
     });
-    // TODO: Use the following once it is deployed in reactome dev
-    // humanDataUrl[val.dbId] = "/PathwayBrowser/#/" + val.stId;
-    var humanDataUrl = {};
-    $.each(data.nodes, function (key, val) {humanDataUrl[val.dbId] = "https://dev.reactome.org/PathwayBrowser/#/" + val.stId;});
 
     // Get all nested children
     function getNestedChildren(arr, parentId) {

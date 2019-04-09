@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FoamTree.iml" filepath="$PROJECT_DIR$/FoamTree.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/reacfoam.iml" filepath="$PROJECT_DIR$/.idea/reacfoam.iml" />
     </modules>
   </component>
 </project>

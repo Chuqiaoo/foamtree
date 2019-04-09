@@ -46,7 +46,7 @@ function analysis(analysisParam){
     }
     // Load Token data
     $.ajax({
-        url: "http://dev.reactome.org/AnalysisService/token/" + analysisParam + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
+        url: "/AnalysisService/token/" + analysisParam + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
         dataType: "json",
         type: "GET",
         beforeSend: function(){

@@ -181,11 +181,30 @@ body {
 }
 /* end spinner */
 
+.visualization-hint .help {
+    max-width: 50px;
+    margin: 0;
+}
+
+.visualization-hint:hover .help {
+    max-width: 50px;
+    margin: 0 5px 0 0;
+}
+
+.visualization-hint:hover .dont-show {
+    max-width: 100px;
+    margin: 0;
+}
+
+.visualization-hint.shown .hint {
+    max-width: 370px;
+    margin: 0;
+}
 
 /* hint media queries */
 @media  only screen and (max-width: 570px) {
     .visualization-hint {
-        word-break: break-all;
+        word-break: break-word;
         height: 32px;
         white-space: normal;
         margin-left: 10px;
@@ -198,7 +217,7 @@ body {
 
 @media only screen and (max-width: 425px) {
     .visualization-hint {
-        word-break: break-all;
+        word-break: break-word;
         height: 32px;
         white-space: normal;
         margin-left: 10px;
@@ -211,7 +230,7 @@ body {
 
 @media only screen and (max-width: 320px) {
     .visualization-hint {
-        word-break: break-all;
+        word-break: break-word;
         height: 32px;
         white-space: normal;
         margin-left: 10px;
@@ -220,6 +239,26 @@ body {
     .visualization-hint .info{
         top: 6px;
     }
-}
+    .visualization-hint .help {
+        margin-right: 0;
+    }
 
+    .visualization-help dl {
+        margin: 0 0 1px 0;
+    }
+}
 /* end hint media queries */
+
+@media only screen and (orientation: landscape) {
+    .visualization-help dl {
+        margin: 0 0 1px 0;
+    }
+}
+@media only screen and (max-height: 320px) and (orientation: landscape) {
+    .visualization-help {
+        padding-top: 10px;
+    }
+    .visualization-help dl {
+        margin: 0 0 1px 0;
+    }
+}
