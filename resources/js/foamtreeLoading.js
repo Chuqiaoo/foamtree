@@ -3,9 +3,7 @@
  */
 
 function foamtreeLoading(){
-
     var groupsData = getData(foamtreeData);
-
     var foamtree = new CarrotSearchFoamTree({
         id: "visualization",
         stacking: "flattened",

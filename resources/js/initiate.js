@@ -13,27 +13,23 @@ window.addEventListener("load", function(){
     }
 });
 
-var foamtreeData;
-
-
 // Load homo sapiens data TODO a async ajax call here
-//getUrlVar["species"]; you'll get species id
+// getUrlVar["species"]; you'll get species id
 //var speciesName = getName from the mapping (tools.js)
-var speciesName = "Homo_sapiens";
-$.ajax({
-    url: "resources/dataset/fireworks/" + speciesName + ".json",
-    dataType: "json",
-    async: false,
-    beforeSend: function(){
-        $(".waiting").show()
-    },
-    success: function(data) {
-        foamtreeData = data;
-    },
-    error: function(){
-        alert("data not found");
-    }
-});
+    $.ajax({
+            url: (typeof speciesValue !== "undefined" && speciesIdFromUrl in SPECIES_MAP ? "resources/dataset/fireworks/" + speciesValue + ".json" : "resources/dataset/fireworks/" + Homo_sapiens + ".json"),
+            dataType: "json",
+            async: false,
+            beforeSend: function () {
+                $(".waiting").show();
+            },
+            success: function (data) {
+                foamtreeData = data;
+            },
+            error: function () {
+                alert("data not found");
+            }
+        });
 
 function analysis(analysisParam){
     function extractDataFromToken(response) {

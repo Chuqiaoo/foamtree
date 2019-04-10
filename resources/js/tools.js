@@ -21,6 +21,16 @@ var ColorProfileEnum = {
     }
 };
 
+var SPECIES_MAP = {
+    "48887" : "Homo_sapiens"
+};
+
+var speciesIdFromUrl = getUrlVars()["species"];
+var speciesValue = SPECIES_MAP[speciesIdFromUrl];
+var Homo_sapiens = "Homo_sapiens";
+
+var foamtreeData = "";
+
 // get parameters from URL and save data as key => value pair
 function getUrlVars() {
     var vars = {};
@@ -31,9 +41,8 @@ function getUrlVars() {
 }
 
 /* Set the largest nesting level for debugging and color in red when there is no space to draw
-*  usage:m data.forEach(setMaxLevel);
-* */
-
+ *  usage:m data.forEach(setMaxLevel);
+ * */
 function setMaxLevel(group) {
     if (group.groups && group.groups.length > 0) {
         group.groups.forEach(setMaxLevel);
@@ -44,4 +53,3 @@ function setMaxLevel(group) {
         group.maxLevel = 1;
     }
 }
-

@@ -8,20 +8,20 @@ function getData(data) {
     var groups = [];
 
     // Save data as key => value pair, use dbId as key for per pairs
-    var humanDataStId = {};
-    var humanDataName = {};
-    var humanDataRatio = {};
-    var humanDataUrl = {};
+    var dataStId = {};
+    var dataName = {};
+    var dataRatio = {};
+    var dataUrl = {};
     $.each(data.nodes, function (key, val) {
-        humanDataStId[val.dbId] = val.stId;
-        humanDataName[val.dbId] = val.name;
+        dataStId[val.dbId] = val.stId;
+        dataName[val.dbId] = val.name;
         if (val.ratio != 0) {
-            humanDataRatio[val.dbId] = val.ratio * 1000;
+            dataRatio[val.dbId] = val.ratio * 1000;
         } else {
             // Set ratio = 0.009 when ratio = 0
-            humanDataRatio[val.dbId] = 9
+            dataRatio[val.dbId] = 9
         }
-        humanDataUrl[val.dbId] = "/PathwayBrowser/#/" + val.stId;
+        dataUrl[val.dbId] = "/PathwayBrowser/#/" + val.stId;
     });
 
     // Get all nested children
@@ -52,8 +52,8 @@ function getData(data) {
     (function getFullLeveldbId() {
         $.ajax({
             async: false,
-            //human sapiens top 1 level data
-            url: "resources/dataset/toplevel/Homo_sapiens.json",
+            //species top 1 level data
+            url: (typeof speciesValue !== "undefined" && speciesIdFromUrl in SPECIES_MAP ? "resources/dataset/toplevel/" + speciesValue + ".json" : "resources/dataset/toplevel/" + Homo_sapiens + ".json"),
             dataType: "json",
             success: function (topData) {
                 topData.forEach(function (item) {
@@ -70,10 +70,10 @@ function getData(data) {
     addValue(groups);
     function addValue(groups) {
         for (var k = 0; k < groups.length; k++) {
-            if (humanDataStId[groups[k].to]) groups[k] = Object.assign(groups[k], {'stId': humanDataStId[groups[k].to]});
-            if (humanDataName[groups[k].to]) groups[k] = Object.assign(groups[k], {'label': humanDataName[groups[k].to]});
-            if (humanDataRatio[groups[k].to]) groups[k] = Object.assign(groups[k], {'weight': humanDataRatio[groups[k].to]});
-            if (humanDataUrl[groups[k].to]) groups[k] = Object.assign(groups[k], {'url': humanDataUrl[groups[k].to]});
+            if (dataStId[groups[k].to]) groups[k] = Object.assign(groups[k], {'stId': dataStId[groups[k].to]});
+            if (dataName[groups[k].to]) groups[k] = Object.assign(groups[k], {'label': dataName[groups[k].to]});
+            if (dataRatio[groups[k].to]) groups[k] = Object.assign(groups[k], {'weight': dataRatio[groups[k].to]});
+            if (dataUrl[groups[k].to]) groups[k] = Object.assign(groups[k], {'url': dataUrl[groups[k].to]});
             // Delete to (dbId) in arrary
             delete groups[k].to;
         }
@@ -87,10 +87,10 @@ function getData(data) {
             for (var i = 0; i < group.groups.length; i++) {
                 // Delete form (parent key) in arrary
                 delete group.groups[i].from;
-                if (humanDataStId[group.groups[i].to]) group.groups[i] = Object.assign(group.groups[i], {'stId': humanDataStId[group.groups[i].to]});
-                if (humanDataName[group.groups[i].to]) group.groups[i] = Object.assign(group.groups[i], {'label': humanDataName[group.groups[i].to]});
-                if (humanDataRatio[group.groups[i].to]) group.groups[i] = Object.assign(group.groups[i], {'weight': humanDataRatio[group.groups[i].to]});
-                if (humanDataUrl[group.groups[i].to]) group.groups[i] = Object.assign(group.groups[i], {'url': humanDataUrl[group.groups[i].to]});
+                if (dataStId[group.groups[i].to]) group.groups[i] = Object.assign(group.groups[i], {'stId': dataStId[group.groups[i].to]});
+                if (dataName[group.groups[i].to]) group.groups[i] = Object.assign(group.groups[i], {'label': dataName[group.groups[i].to]});
+                if (dataRatio[group.groups[i].to]) group.groups[i] = Object.assign(group.groups[i], {'weight': dataRatio[group.groups[i].to]});
+                if (dataUrl[group.groups[i].to]) group.groups[i] = Object.assign(group.groups[i], {'url': dataUrl[group.groups[i].to]});
                 // Delete to (dbId) in arrary
                 delete group.groups[i].to;
             }
