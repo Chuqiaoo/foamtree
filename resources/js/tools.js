@@ -25,13 +25,16 @@ var SPECIES_MAP = {
     "48887" : "Homo_sapiens"
 };
 
+var speciesData, topSpeciesData, datasetInFoamtree;
+
 var speciesIdFromUrl = getUrlVars()["species"];
 var speciesValue = SPECIES_MAP[speciesIdFromUrl];
 var Homo_sapiens = "Homo_sapiens";
 
-var foamtreeData = "";
+var speciesDataLocation =  typeof speciesValue !== "undefined" && speciesIdFromUrl in SPECIES_MAP ? "resources/dataset/fireworks/" + speciesValue + ".json" : "resources/dataset/fireworks/" + Homo_sapiens + ".json";
+var topSpeciesDataLocation = typeof speciesValue !== "undefined" && speciesIdFromUrl in SPECIES_MAP ? "resources/dataset/toplevel/" + speciesValue + ".json" : "resources/dataset/toplevel/" + Homo_sapiens + ".json";
 
-// get parameters from URL and save data as key => value pair
+// Get parameters from URL and save data as key => value pair
 function getUrlVars() {
     var vars = {};
     window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m ,key, value) {

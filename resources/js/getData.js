@@ -2,7 +2,7 @@
  * Created by Chuqiao on 28/02/19.
  */
 
-function getData(data) {
+function getData(data, topData) {
 
     // Json object container
     var groups = [];
@@ -39,7 +39,6 @@ function getData(data) {
         }
         return out
     }
-
     // Add all Nested children to level 1 parent
     function addAllNestedToParent(arr, parentID) {
         var allNestedChild = getNestedChildren(arr, parentID);
@@ -48,21 +47,10 @@ function getData(data) {
         return parent
     }
 
-    // TODO a async ajax call here
-    (function getFullLeveldbId() {
-        $.ajax({
-            async: false,
-            //species top 1 level data
-            url: (typeof speciesValue !== "undefined" && speciesIdFromUrl in SPECIES_MAP ? "resources/dataset/toplevel/" + speciesValue + ".json" : "resources/dataset/toplevel/" + Homo_sapiens + ".json"),
-            dataType: "json",
-            success: function (topData) {
-                topData.forEach(function (item) {
-                    var each = addAllNestedToParent(data.edges, item.dbId);
-                    groups.push(each);
-                });
-            }
-        });
-    }());
+    topData.forEach(function (item) {
+        var each = addAllNestedToParent(data.edges, item.dbId);
+        groups.push(each);
+    });
 
     // Create a dedicated copy for each parent group to remove shared references
     groups = JSON.parse(JSON.stringify(groups));

@@ -2,13 +2,13 @@
  * Created by Chuqiao on 07/03/19.
  */
 
-function foamtreeStarts(newResponse, token) {
-    var foamtreeMapping = getData(foamtreeData);
+function foamtreeAnalysisStarts(dataFromToken, token, foamtreeMapping) {
+
     // Add Pvalue and analysis url to Top 1 level
     foamtreeMapping.forEach(addTopPvalueAndUrl);
     function addTopPvalueAndUrl(group){
-        if (newResponse[group.stId]) {
-            Object.assign (group, {'pValue': newResponse[group.stId], 'url': group.url+ "&DTAB=AN&ANALYSIS=" + token });
+        if (dataFromToken[group.stId]) {
+            Object.assign (group, {'pValue': dataFromToken[group.stId], 'url': group.url+ "&DTAB=AN&ANALYSIS=" + token });
         } else {
             Object.assign (group, {'pValue': undefined, 'url': group.url+ "&DTAB=AN&ANALYSIS=" + token});
         }
@@ -20,15 +20,14 @@ function foamtreeStarts(newResponse, token) {
             group.groups.forEach(addPvalueToChild);
 
             for (var i =0; i < group.groups.length; i++){
-                if (newResponse[group.groups[i].stId]) {
-                    Object.assign( group.groups[i], {'pValue': newResponse[group.groups[i].stId],'url': group.groups[i].url + "&DTAB=AN&ANALYSIS=" + token});
+                if (dataFromToken[group.groups[i].stId]) {
+                    Object.assign( group.groups[i], {'pValue': dataFromToken[group.groups[i].stId],'url': group.groups[i].url + "&DTAB=AN&ANALYSIS=" + token});
                 } else {
                     Object.assign( group.groups[i], {'pValue': undefined, 'url': group.groups[i].url + "&DTAB=AN&ANALYSIS=" + token});
                 }
             }
         }
     }
-
     // Basic definitions
     var foamtree = new CarrotSearchFoamTree({
         id: "visualization",

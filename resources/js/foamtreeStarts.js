@@ -2,8 +2,8 @@
  * Created by Chuqiao on 28/02/19.
  */
 
-function foamtreeLoading(){
-    var groupsData = getData(foamtreeData);
+function foamtreeStarts(groupsData){
+
     var foamtree = new CarrotSearchFoamTree({
         id: "visualization",
         stacking: "flattened",
@@ -114,7 +114,6 @@ function foamtreeLoading(){
             groupSelectionOutlineColor: ColorProfileEnum.properties[ColorProfileEnum.COPPER].group
         });
     }
-
     // Load hints
     CarrotSearchFoamTree.hints(foamtree);
 
@@ -147,5 +146,4 @@ function foamtreeLoading(){
             timeout = window.setTimeout(foamtree.resize, 300);
         }
     })());
-
 }
