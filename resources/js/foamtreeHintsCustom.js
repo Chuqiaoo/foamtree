@@ -43,7 +43,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
      {desktop: "Right double click<br /><small>or [Shift] + Left double click</small>", touch: "Two-finger double tap", action: "unexpose group"}],
 
     [{desktop: "Left double click", touch: "Tap-and-hold", action: "open group"},
-     {desktop: "Right double click<br /><small>or [Shift] + Left click</small>", touch: "Two-finger tap-and-hold", action: "close group"}],
+     {desktop: "Right double click<br /><small>or [Shift] + Left click</small>", action: "close group"}],
 
     [{desktop: "Mouse wheel", touch: "Pinch", action: "zoom in / out"},
      {desktop: "Mouse drag", touch: "Drag", action: "pan around zoomed visualization"},

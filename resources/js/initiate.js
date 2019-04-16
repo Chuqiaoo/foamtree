@@ -2,8 +2,6 @@
  * Created by Chuqiao on 19/3/26.
  */
 window.addEventListener("load", function(){
-    // Hide progress spinner when all elements are loaded here because this ajax call is async
-    $(".waiting").hide();
 
     var analysisParam =  getUrlVars()["analysis"];
     if (typeof analysisParam !== "undefined" ){
@@ -69,7 +67,7 @@ function foamtreeAnalysis(analysisParam){
     }
 
     $.ajax({
-        url: "AnalysisService/token/" + analysisParam + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
+        url: "/AnalysisService/token/" + analysisParam + "?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
         dataType: "json",
         type: "GET",
         beforeSend:  function() {
