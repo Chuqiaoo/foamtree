@@ -38,12 +38,13 @@ function foamtreeAnalysisStarts(dataFromToken, token, foamtreeMapping) {
         groupMinDiameter: 0,
 
         // Set a simple fading animation. Animated rollouts are very expensive for large hierarchies
-        rolloutDuration: 0.5,
+        rolloutDuration: 0,
         pullbackDuration: 0,
 
         // Lower the border radius a bit to fit more groups
         groupBorderWidth: 2,
-        groupInsetWidth: 4,
+        groupInsetWidth: 3,
+        groupBorderRadius:0,
 
         // Don't use gradients and rounded corners for faster rendering
         groupFillType: "plain",
@@ -69,9 +70,9 @@ function foamtreeAnalysisStarts(dataFromToken, token, foamtreeMapping) {
         descriptionGroupMaxHeight: 0.25,
 
         // Maximum duration of a complete high-quality redraw of the visualization
-        finalCompleteDrawMaxDuration: 50000,
-        finalIncrementalDrawMaxDuration: 50000,
-        wireframeDrawMaxDuration: 5000
+        finalCompleteDrawMaxDuration: 40000,
+        finalIncrementalDrawMaxDuration: 40000,
+        wireframeDrawMaxDuration: 4000
 
     });
     // Loading data set
@@ -99,8 +100,8 @@ function foamtreeAnalysisStarts(dataFromToken, token, foamtreeMapping) {
 
     // Color foamtree by Reactome color profiles
     var colorParam =  getUrlVars()["color"];
-    if (typeof colorParam !== "undefined" && colorParam.toUpperCase() in ColorProfileEnum) {
-        var profileSelected = ColorProfileEnum[colorParam.toUpperCase()];
+    if (typeof colorParam !== "undefined" && colorParam.toUpperCase().replace(/%20/g,"_") in ColorProfileEnum) {
+        var profileSelected = ColorProfileEnum[colorParam.toUpperCase().replace(/%20/g,"_")];
         foamtree.set({
             groupColorDecorator: function (opts, params, vars) {
                 var coverage = params.group.pValue;

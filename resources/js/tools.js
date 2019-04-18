@@ -44,7 +44,7 @@ function getUrlVars() {
 }
 
 /* Set the largest nesting level for debugging and color in red when there is no space to draw
- *  usage:m data.forEach(setMaxLevel);
+ *  usage: data.forEach(setMaxLevel);
  * */
 function setMaxLevel(group) {
     if (group.groups && group.groups.length > 0) {

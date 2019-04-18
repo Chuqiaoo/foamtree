@@ -86,5 +86,4 @@ function foamtreeAnalysis(analysisParam){
             foamtreeLoading();
         }
     });
-
 }
