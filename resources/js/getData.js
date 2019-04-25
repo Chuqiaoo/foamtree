@@ -39,7 +39,7 @@ function getData(data, topData) {
         }
         return out
     }
-    // Add all Nested children to level 1 parent
+    // Add all nested children to level 1 parent
     function addAllNestedToParent(arr, parentID) {
         var allNestedChild = getNestedChildren(arr, parentID);
         var parent = {to: parentID, groups: []};
