@@ -36,5 +36,5 @@ Reacfoam uses Foamtree as visualization library. FoamTree is a JavaScript Vorono
 A working version of Reacfoam has been integrated in dev [Reactome Pathway Browser](http://dev.reactome.org/reacfoam/).
 
 
-<img src="resources/images/Reacfome_dev.png" align="center" width="900" alt="Reacfoam dev">
+<img src="resources/images/Reacfoam_dev.png" align="center" width="900" alt="Reacfoam dev">
 
