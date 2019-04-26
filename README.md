@@ -39,7 +39,7 @@ A beta version of Reacfoam has been integrated in [Reactome Pathway Browser](htt
 <img width="900" alt="Reacfoam_dev" src="https://user-images.githubusercontent.com/6442828/56794384-ea81a180-6805-11e9-81c6-3564580275da.png">
 
 
-## Declarations
+## Declaration
 
 Reacfome is now using trial version of Foamtree which is displaying a small FoamTree logo in the visualization area. Otherwise, it's fully functional.
 
