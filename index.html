@@ -19,6 +19,7 @@
 <body>
 <div id="container">
     <div id="visualization"></div>
+    <!--Loading spinner-->
     <div class="waiting" style="display:none; height: 100%; width: 100%;text-align: center;">
         <div class="sk-circle">
             <div class="sk-circle1 sk-child"></div>
@@ -37,9 +38,15 @@
     </div>
 </div>
 
-<div id="nav">
-    View:
-    <a href="#flattened">flattened</a> | <a href="#hierarchical">hierarchical</a>
+<div class="bottomPanel">
+    <div id="layout">
+        View:
+        <a href="#flattened">flattened</a> | <a href="#hierarchical">hierarchical</a>
+    </div>
+    <div id = "expressionBar" style="display: none">
+        <button name="prev"  class="buttonInExpBar" title="Show Previous">&laquo;</button>
+        <button name="play"  id="playButton" class="buttonInExpBar" title="Play">&#9656;</button>
+        <button name="next"  id="playNext" class="buttonInExpBar" title="Show Next">&raquo;</button></div>
 </div>
 
 <!-- Include Hammer.js for mobile interactions and touch events. Not required for desktop-only apps. -->
@@ -58,6 +65,7 @@
 <script src="resources/js/getData.js"></script>
 <script src="resources/js/foamtreeStarts.js"></script>
 <script src="resources/js/foamtreeAnalysisStarts.js"></script>
+<script src="resources/js/foamtreeAnalysisExpStarts.js"></script>
 
 <!-- Include the interaction hints utility -->
 <script src="resources/js/foamtreeHintsCustom.js"></script>

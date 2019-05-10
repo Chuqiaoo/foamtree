@@ -107,44 +107,24 @@ function foamtreeStarts(groupsData){
 
     /* Switching color profiles by url
     * Color foamtree by Reactome color profiles*/
-    var colorParam =  getUrlVars()["color"];
-    if (typeof colorParam !== "undefined" && colorParam.toUpperCase().replace(/%20/g,"_") in ColorProfileEnum) {
-        var profileSelected = ColorProfileEnum[colorParam.toUpperCase().replace(/%20/g,"_")];
-        foamtree.set({
-            groupColorDecorator: function (opts, props, vars) {
-                // If child groups of some group don't have enough space to
-                // render, draw the parent group in red.
-                if (props.hasChildren && props.browseable === false) {
-                    vars.groupColor = "#E86365";
-                    vars.labelColor = "#000";
-                } else {
-                    // Check in the Enum to get value and to change profileSelected
-                    vars.groupColor = ColorProfileEnum.properties[profileSelected].group;
-                    vars.labelColor = ColorProfileEnum.properties[profileSelected].label;
-                }
-            },
-            // Color of the outline stroke for the selected groups
-            groupSelectionOutlineColor : ColorProfileEnum.properties[profileSelected].group
-        });
-    } else {
-        foamtree.set({
-            groupColorDecorator: function (opts, props, vars) {
-                // If child groups of some group don't have enough space to
-                // render, draw the parent group in red.
-                if (props.hasChildren && props.browseable === false) {
-                    vars.groupColor = "#E86365";
-                    vars.labelColor = "#000";
-                } else {
-                    var profileSelected = ColorProfileEnum.COPPER;
-                    // Check in the Enum to get value and to change profileSelected
-                    vars.groupColor = ColorProfileEnum.properties[profileSelected].group;
-                    vars.labelColor = ColorProfileEnum.properties[profileSelected].label;
-                }
-            },
-            groupSelectionOutlineColor: ColorProfileEnum.properties[ColorProfileEnum.COPPER].group
-        });
-    }
-    // Load hints
+
+    var profileSelected = typeof colorParam !== "undefined" && colorParam.toUpperCase().replace(/%20/g,"_") in ColorProfileEnum ? ColorProfileEnum[colorParam.toUpperCase().replace(/%20/g,"_")] : ColorProfileEnum.COPPER;
+    foamtree.set({
+        groupColorDecorator: function (opts, props, vars) {
+            // If child groups of some group don't have enough space to
+            // render, draw the parent group in red.
+            if (props.hasChildren && props.browseable === false) {
+                vars.groupColor = "#E86365";
+                vars.labelColor = "#000";
+            } else {
+                // Check in the Enum to get value and to change profileSelected
+                vars.groupColor = ColorProfileEnum.properties[profileSelected].group;
+                vars.labelColor = ColorProfileEnum.properties[profileSelected].label;
+            }
+        },
+        // Color of the outline stroke for the selected groups
+        groupSelectionOutlineColor : ColorProfileEnum.properties[profileSelected].group
+    });
     CarrotSearchFoamTree.hints(foamtree);
 
     // Switching views

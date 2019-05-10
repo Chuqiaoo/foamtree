@@ -130,51 +130,37 @@ function foamtreeAnalysisStarts(dataFromToken, token, foamtreeMapping) {
     CarrotSearchFoamTree.hints(foamtree);
 
     // Color foamtree by Reactome color profiles
-    var colorParam =  getUrlVars()["color"];
-    if (typeof colorParam !== "undefined" && colorParam.toUpperCase().replace(/%20/g,"_") in ColorProfileEnum) {
-        var profileSelected = ColorProfileEnum[colorParam.toUpperCase().replace(/%20/g,"_")];
-        foamtree.set({
-            groupColorDecorator: function (opts, params, vars) {
-                var coverage = params.group.pValue;
+    var profileSelected = typeof colorParam !== "undefined" && colorParam.toUpperCase().replace(/%20/g,"_") in ColorProfileEnum ? ColorProfileEnum[colorParam.toUpperCase().replace(/%20/g,"_")] : ColorProfileEnum.COPPER;
 
-                // Calculate color gradient base on the range of pValue 0~0.5
-                if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
-                    vars.groupColor.h = ColorProfileEnum.properties[profileSelected].min_h + (ColorProfileEnum.properties[profileSelected].max_h - ColorProfileEnum.properties[profileSelected].min_h) * (coverage / 0.05 );
-                    vars.groupColor.s = ColorProfileEnum.properties[profileSelected].min_s + (ColorProfileEnum.properties[profileSelected].max_s - ColorProfileEnum.properties[profileSelected].min_s) * (coverage / 0.05 );
-                    vars.groupColor.l = ColorProfileEnum.properties[profileSelected].min_l + (ColorProfileEnum.properties[profileSelected].max_l - ColorProfileEnum.properties[profileSelected].min_l) * (coverage / 0.05 );
-                } else if (coverage !== undefined && coverage >= 0.05 ) {
-                    // Coverage defined, but greater than range
-                    vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
-                }
-                else {
-                    // Coverage not defined
-                    vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
-                }
-            },
-            // Color of the outline stroke for the selected groups
-             groupSelectionOutlineColor : ColorProfileEnum.properties[profileSelected].hit
-        });
-    } else {
-        foamtree.set({
-            groupColorDecorator: function (opts, params, vars) {
-                var coverage = params.group.pValue;
-                var profileSelected = ColorProfileEnum.COPPER;
+    foamtree.set({
+        groupColorDecorator: function (opts, params, vars) {
+            var pValue = params.group.pValue;
+            var colorTopInBar = ColorProfileEnum.properties[profileSelected].min;
+            var colorBottomInBar = ColorProfileEnum.properties[profileSelected].max;
+            var ratio = pValue / 0.05;
+            var colorValue = twoGradient(ratio, colorBottomInBar, colorTopInBar);
 
-                if (coverage !== undefined && coverage >= 0 && coverage <= 0.05) {
-                    vars.groupColor.h = ColorProfileEnum.properties[profileSelected].min_h + (ColorProfileEnum.properties[profileSelected].max_h - ColorProfileEnum.properties[profileSelected].min_h) * (coverage / 0.05 );
-                    vars.groupColor.s = ColorProfileEnum.properties[profileSelected].min_s + (ColorProfileEnum.properties[profileSelected].max_s - ColorProfileEnum.properties[profileSelected].min_s) * (coverage / 0.05 );
-                    vars.groupColor.l = ColorProfileEnum.properties[profileSelected].min_l + (ColorProfileEnum.properties[profileSelected].max_l - ColorProfileEnum.properties[profileSelected].min_l) * (coverage / 0.05 );
-                } else if (coverage !== undefined && coverage >= 0.05 ) {
-                    vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
-                }
-                else {
-                    vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
-                }
-            },
-            groupSelectionOutlineColor: ColorProfileEnum.properties[ColorProfileEnum.COPPER].hit
-        });
-    }
-    // Switching views
+            // Calculate color gradient base on the range of pValue 0~0.5
+            if (pValue !== undefined && pValue >= 0 && pValue <= 0.05) {
+                vars.groupColor.r = colorValue.red;
+                vars.groupColor.g = colorValue.green;
+                vars.groupColor.b = colorValue.blue;
+
+                vars.groupColor.model = "rgb";
+
+            } else if (pValue !== undefined && pValue >= 0.05 ) {
+                // Coverage defined, but greater than range
+                vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
+            }
+            else {
+                // Coverage not defined
+                vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
+            }
+        },
+        // Color of the outline stroke for the selected groups
+        groupSelectionOutlineColor : ColorProfileEnum.properties[profileSelected].hit
+    });
+
     document.addEventListener("click", function (e) {
         if (!e.target.href) {return;}
         e.preventDefault();

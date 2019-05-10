@@ -10,14 +10,7 @@ body {
     bottom: 40px;
     top: 0;
     overflow-y: hidden;
-    overflow-x: scroll;
-}
-
-#nav {
-    position: absolute;
-    bottom: 20px;
-    right: 0;
-    left: 10px;
+    overflow-x: auto;
 }
 
 /*hints*/
@@ -28,7 +21,6 @@ body {
 .visualization-hint .info{
     right: 0
 }
-
 /*spinner*/
 .sk-circle {
     margin: auto;
@@ -200,6 +192,85 @@ body {
     max-width: 370px;
     margin: 0;
 }
+
+/*bottom panel style*/
+.bottomPanel {
+    display: flex;
+    bottom: 10px;
+    position: absolute;
+    width: 100%;
+}
+
+#layout {
+    margin-left: 10px;
+    width:40%;
+}
+#expressionBar {
+    text-align: center;
+    display: flex;
+    position: relative ;
+    background-color: rgba(240, 240, 240, 0.9);
+    border: 1px solid lightgray;
+    width: 400px;
+    height: 30px;
+    border-radius: 5px;
+}
+
+.buttonInExpBar {
+    background-color: #58c3e5;
+    color: white;
+    height: 24px;
+    width: 24px;
+    overflow: hidden;
+    outline: none;
+    background-repeat: no-repeat;
+    border: 0;
+    cursor: pointer;
+    float: left;
+    margin: 2px;
+    border-radius: 50%;
+}
+
+#columnNames span {
+    margin: 5px 1px 0 80px;
+    float: left;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    white-space: nowrap;
+    max-width: 205px;
+}
+
+.buttonInExpBar:hover {
+    background-color: #5491d2;
+}
+
+/* expression bar media queries */
+@media  only screen and (max-width: 700px) {
+    #expressionBar {
+        margin: 10px 0 0 10px;
+    }
+    .bottomPanel {
+        display:block
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    #expressionBar {
+        width: 340px;
+    }
+    #layout{
+        display:flex;
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    #expressionBar {
+        width: 300px;
+    }
+}
+/* end column bar media queries */
 
 /* hint media queries */
 @media  only screen and (max-width: 570px) {

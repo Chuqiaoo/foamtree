@@ -14,10 +14,14 @@ var ColorProfileEnum = {
     BARIUM_LITHIUM: 3,
     CALCIUM_SALTS: 4,
     properties: {
-        1: {group: "#58C3E5", label: "#000", fadeout: "#E6E6E6", hit: "#C2C2C2", min: "#FDE233", max: "#959000", min_h: 52, min_s: 98,  min_l: 60, max_h: 58, max_s: 100, max_l: 29},
-        2: {group: "#58C3E5", label: "#000", fadeout: "#E6E6E6", hit: "#C2C2C2", min: "#FDE233", max: "#959000", min_h: 52, min_s: 98,  min_l: 60, max_h: 58, max_s: 100, max_l: 29},
-        3: {group: "#FF9999", label: "#000", fadeout: "#F8F8F8", hit: "#E0E0E0", min: "#A0A0A0", max: "#000000", min_h: 0,  min_s: 0,   min_l: 63, max_h: 0,  max_s: 0,   max_l: 0},
-        4: {group: "#FF9999", label: "#000", fadeout: "#FFE4E1", hit: "#FFCCCC", min: "#934A00", max: "#FFAD33", min_h: 30, min_s: 100, min_l: 29, max_h: 36, max_s: 100, max_l: 60}
+        1: {group: "#58C3E5", label: "#000", fadeout: "#E6E6E6", hit: "#C2C2C2", min: "#FDE233", max: "#959000", min_h: 52, min_s: 98,  min_l: 60, max_h: 58, max_s: 100, max_l: 29,
+            min_exp: "#FFFF00", max_exp: "#0000FF" ,stop_exp: null} ,
+        2: {group: "#58C3E5", label: "#000", fadeout: "#E6E6E6", hit: "#C2C2C2", min: "#FDE233", max: "#959000", min_h: 52, min_s: 98,  min_l: 60, max_h: 58, max_s: 100, max_l: 29,
+            min_exp: "#FFFF00", max_exp: "#0000FF", stop_exp:"#56D7EE" },
+        3: {group: "#FF9999", label: "#000", fadeout: "#F8F8F8", hit: "#E0E0E0", min: "#A0A0A0", max: "#000000", min_h: 0,  min_s: 0,   min_l: 63, max_h: 0,  max_s: 0,   max_l: 0,
+            min_exp: "#00FF00", max_exp: "#FF0000", stop_exp:"#000000"},
+        4: {group: "#FF9999", label: "#000", fadeout: "#FFE4E1", hit: "#FFCCCC", min: "#934A00", max: "#FFAD33", min_h: 30, min_s: 100, min_l: 29, max_h: 36, max_s: 100, max_l: 60,
+            min_exp: "#934A00", max_exp: "#FFAD33", stop_exp: null}
     }
 };
 
@@ -25,9 +29,9 @@ var SPECIES_MAP = {
     "48887" : "Homo_sapiens"
 };
 
+// Get species info from url and fetch the data file locally
 var speciesData, topSpeciesData, datasetInFoamtree;
-
-var speciesIdFromUrl = getUrlVars()["species"];
+var speciesIdFromUrl = typeof getUrlVars()["species"] !== "undefined" ? getUrlVars()["species"] : 48887;
 var speciesValue = SPECIES_MAP[speciesIdFromUrl];
 var Homo_sapiens = "Homo_sapiens";
 
@@ -42,6 +46,7 @@ function getUrlVars() {
     });
     return vars
 }
+var colorParam =  getUrlVars()["color"];
 
 /* Set the largest nesting level for debugging and color in red when there is no space to draw
  *  usage: data.forEach(setMaxLevel);
@@ -56,3 +61,46 @@ function setMaxLevel(group) {
         group.maxLevel = 1;
     }
 }
+
+// Get color value in expression data analysis
+function twoGradient(ratio, colorBottomInBar,colorTopInBar){
+
+    colorBottomInBar = colorBottomInBar.replace(/#/g, "");
+    colorTopInBar = colorTopInBar.replace(/#/g, "");
+
+    var gradient;
+    gradient = {
+        red: Math.ceil(parseInt(colorBottomInBar.substring(0, 2), 16) * ratio + parseInt(colorTopInBar.substring(0, 2), 16) * (1 - ratio)),
+        green: Math.ceil(parseInt(colorBottomInBar.substring(2, 4), 16) * ratio + parseInt(colorTopInBar.substring(2, 4), 16) * (1 - ratio)),
+        blue: Math.ceil(parseInt(colorBottomInBar.substring(4, 6), 16) * ratio + parseInt(colorTopInBar.substring(4, 6), 16) * (1 - ratio))
+    };
+
+    return gradient
+}
+
+function threeGradient(ratio, ColorStart, ColorEnd, ColorMiddle) {
+
+    // Do we have stop colors for the gradient? Need to adjust the params.
+    var twoColor;
+    if (ColorMiddle) {
+        ColorMiddle = ColorMiddle.replace(/#/g, "");
+        ratio = ratio * 2;
+        var color;
+        switch (true) {
+            case  ratio < 1:
+                color = twoGradient(ratio, ColorMiddle, ColorStart);
+                break;
+            case  ratio >= 1:
+                ratio -= 1;
+                var colorStartNew = ColorEnd;
+                var colorEndNew = ColorMiddle;
+                color = twoGradient(ratio, colorStartNew, colorEndNew);
+                break;
+        }
+        return color
+    }
+    //
+    twoColor = twoGradient(ratio, ColorEnd, ColorStart);
+    return twoColor
+}
+
