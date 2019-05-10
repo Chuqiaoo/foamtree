@@ -50,7 +50,7 @@ function foamtreeStarts(groupsData){
         wireframeDrawMaxDuration: 4000
     });
 
-    // Load data
+    // Loading data
     foamtree.set({
         dataObject: {
             groups: groupsData
