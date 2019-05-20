@@ -91,6 +91,38 @@ function foamtreeStarts(groupsData){
         // Color of the outline stroke for the selected groups
         groupSelectionOutlineColor : ColorProfileEnum.properties[profileSelected].group
     });
+
+    /*Replacing the costly "expose" animation on double click
+     with a simple zoom, which is faster to execute.
+     Store references to parent groups*/
+    foamtree.set({
+        onModelChanging: function addParent(group, parent) {
+            if (!group) { return; }
+            group.parent = parent;
+            if (group.groups) {
+                group.groups.forEach(function(g) {
+                    addParent(g, group);
+                });
+            }
+        },
+        onGroupDoubleClick: function(e) {
+            e.preventDefault();
+            var group = e.secondary ? e.bottommostOpenGroup : e.topmostClosedGroup;
+            var toZoom;
+            if (group) {
+                // Open on left-click, close on right-click
+                this.open({
+                    groups: group,
+                    open: !e.secondary
+                });
+                toZoom = e.secondary ? group.parent : group;
+            } else {
+                toZoom = this.get("dataObject");
+            }
+            this.zoom(toZoom);
+        }
+    });
+
     CarrotSearchFoamTree.hints(foamtree);
 
     // Switching views

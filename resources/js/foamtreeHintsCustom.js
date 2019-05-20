@@ -129,7 +129,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
   element.innerHTML = html;
 
   var foamtreeElement = foamtree.get("element");
-  foamtreeElement.querySelector("div").appendChild(element);
+  foamtreeElement.appendChild(element);
 
   // For quick element selection
   var $ = function(selector) {

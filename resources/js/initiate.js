@@ -126,8 +126,10 @@ function foamtreeAnalysis(analysisParam){
             var type = json.type;
             if ( type == "OVERREPRESENTATION"){
                 extractDataFromToken(json);
-            } else {
+            } else if ( type == "EXPRESSION" || type == "GSA_REGULATION"){
                 extractExpDataFromToken(json);
+            } else {
+                alert("Unable to load '" + type + "' analysis");
             }
         },
         error: function () {
