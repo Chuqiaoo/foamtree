@@ -12,7 +12,7 @@
  * specific language governing permissions and limitations
  * under the License.
  *
- * Copyright 2002-2018, Carrot Search s.c, All Rights Reserved.
+ * Copyright 2002-2019, Carrot Search s.c, All Rights Reserved.
  *
  *
  * A utility that displays contextual interaction hints
@@ -129,7 +129,7 @@ window.CarrotSearchFoamTree.hints = function(foamtree) {
   element.innerHTML = html;
 
   var foamtreeElement = foamtree.get("element");
-  foamtreeElement.appendChild(element);
+  foamtreeElement.querySelector("div").appendChild(element);
 
   // For quick element selection
   var $ = function(selector) {

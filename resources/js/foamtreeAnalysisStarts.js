@@ -2,33 +2,8 @@
  * Created by Chuqiao on 07/03/19.
  */
 
-function foamtreeAnalysisStarts(dataFromToken, token, foamtreeMapping) {
+function foamtreeAnalysisStarts(anaData) {
 
-    // Add Pvalue and analysis url to Top 1 level
-    foamtreeMapping.forEach(addTopPvalueAndUrl);
-    function addTopPvalueAndUrl(group){
-        if (dataFromToken[group.stId]) {
-            Object.assign (group, {'pValue': dataFromToken[group.stId], 'url': group.url+ "&DTAB=AN&ANALYSIS=" + token });
-        } else {
-            Object.assign (group, {'pValue': undefined, 'url': group.url+ "&DTAB=AN&ANALYSIS=" + token});
-        }
-    }
-    // Add Pvalue and analysis url to child groups
-    foamtreeMapping.forEach(addPvalueToChild);
-    function addPvalueToChild(group) {
-        if (group.groups && group.groups.length > 0) {
-            group.groups.forEach(addPvalueToChild);
-
-            for (var i =0; i < group.groups.length; i++){
-                if (dataFromToken[group.groups[i].stId]) {
-                    Object.assign( group.groups[i], {'pValue': dataFromToken[group.groups[i].stId],'url': group.groups[i].url + "&DTAB=AN&ANALYSIS=" + token});
-                } else {
-                    Object.assign( group.groups[i], {'pValue': undefined, 'url': group.groups[i].url + "&DTAB=AN&ANALYSIS=" + token});
-                }
-            }
-        }
-    }
-    // Basic definitions
     var foamtree = new CarrotSearchFoamTree({
         id: "visualization",
         stacking: "flattened",
@@ -78,9 +53,10 @@ function foamtreeAnalysisStarts(dataFromToken, token, foamtreeMapping) {
     // Loading data set
     foamtree.set({
         dataObject: {
-            groups: foamtreeMapping
+            groups: anaData
         }
     });
+
     // Hold a polygonal to open a new tab of Reactome analysis page
     foamtree.set({
         onGroupHold: function (event) {
@@ -88,6 +64,7 @@ function foamtreeAnalysisStarts(dataFromToken, token, foamtreeMapping) {
             window.open(event.group.url);
         }
     });
+
     // Title bar
     foamtree.set({
         maxLabelSizeForTitleBar: Number.MAX_VALUE,
@@ -95,43 +72,11 @@ function foamtreeAnalysisStarts(dataFromToken, token, foamtreeMapping) {
             variables.titleBarText = parameters.group.label;
         }
     });
-    /*Replacing the costly "expose" animation on double click
-     with a simple zoom, which is faster to execute.
-     Store references to parent groups*/
-    foamtree.set({
-        onModelChanging: function addParent(group, parent) {
-            if (!group) { return; }
-            group.parent = parent;
-            if (group.groups) {
-                group.groups.forEach(function(g) {
-                    addParent(g, group);
-                });
-            }
-        },
-        onGroupDoubleClick: function(e) {
-            e.preventDefault();
-            var group = e.secondary ? e.bottommostOpenGroup : e.topmostClosedGroup;
-            var toZoom;
-            if (group) {
-                // Open on left-click, close on right-click
-                this.open({
-                    groups: group,
-                    open: !e.secondary
-                });
-                toZoom = e.secondary ? group.parent : group;
-            } else {
-                toZoom = this.get("dataObject");
-            }
-            this.zoom(toZoom);
-        }
-    });
 
     // Display hints
     CarrotSearchFoamTree.hints(foamtree);
 
-    // Color foamtree by Reactome color profiles
-    var profileSelected = typeof colorParam !== "undefined" && colorParam.toUpperCase().replace(/%20/g,"_") in ColorProfileEnum ? ColorProfileEnum[colorParam.toUpperCase().replace(/%20/g,"_")] : ColorProfileEnum.COPPER;
-
+    // Switching color profiles by color param from url and save to profileSelected
     foamtree.set({
         groupColorDecorator: function (opts, params, vars) {
             var pValue = params.group.pValue;
@@ -161,6 +106,7 @@ function foamtreeAnalysisStarts(dataFromToken, token, foamtreeMapping) {
         groupSelectionOutlineColor : ColorProfileEnum.properties[profileSelected].hit
     });
 
+    // Switching views
     document.addEventListener("click", function (e) {
         if (!e.target.href) {return;}
         e.preventDefault();

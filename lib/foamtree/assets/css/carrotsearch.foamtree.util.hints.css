@@ -12,7 +12,7 @@
  * specific language governing permissions and limitations
  * under the License.
  *
- * Copyright 2002-2018, Carrot Search s.c, All Rights Reserved.
+ * Copyright 2002-2019, Carrot Search s.c, All Rights Reserved.
  *
  *
  * Styles for the interaction hints and guide.
@@ -91,7 +91,7 @@
   position: relative;
   left: 0;
   right: 0;
-  top: 20px;
+  top: 60px;
   margin: auto;
   overflow: auto;
   z-index: 1;

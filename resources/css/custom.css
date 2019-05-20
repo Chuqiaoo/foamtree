@@ -216,7 +216,7 @@ body {
     border-radius: 5px;
 }
 
-.buttonInExpBar {
+#expressionBar button {
     background-color: #58c3e5;
     color: white;
     height: 24px;
@@ -229,8 +229,12 @@ body {
     float: left;
     margin: 2px;
     border-radius: 50%;
+    font-size: 15px;
 }
 
+#columnNames{
+    width: 300px;
+}
 #columnNames span {
     margin: 5px 1px 0 80px;
     float: left;

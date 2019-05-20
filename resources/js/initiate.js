@@ -40,7 +40,7 @@ function foamtreeAnalysis(analysisParam){
 
     function extractDataFromToken(response) {
 
-        //read external Token data and save to key=>value pair R-HSA-5653656 =>1.1102230246251565e-16
+        // Read external Token data and save to key=>value pair R-HSA-5653656 =>1.1102230246251565e-16
         var responseFromToken = {};
 
         $.each(response.pathways, function (key, val) {
@@ -57,9 +57,11 @@ function foamtreeAnalysis(analysisParam){
         ).then(function() {
                 if (speciesData && topSpeciesData) {
 
-                    dataSetInFoamtree = getData(speciesData, topSpeciesData);
+                    var defaultFoamtreeData = getData(speciesData, topSpeciesData);
 
-                    foamtreeAnalysisStarts(responseFromToken, analysisParam, dataSetInFoamtree);
+                    var anaData = addAnaResult(responseFromToken, analysisParam, defaultFoamtreeData);
+
+                    foamtreeAnalysisStarts(anaData);
 
                     $(".waiting").hide();
                 }
@@ -68,15 +70,13 @@ function foamtreeAnalysis(analysisParam){
 
     function extractExpDataFromToken(response) {
 
-        //Create columnArray of expression data sets to be added
+        // Create columnArray of expression data sets to be added
         var columnArray = [];
         var columnNames = response.expressionSummary.columnNames;
-        for (var key in columnNames) {
-            columnArray.push(columnNames[key])
-        }
+        for (var key in columnNames) {columnArray.push(columnNames[key])}
 
-        //get expression column data form token and save to key=>value pair R-HSA-5653656 => exp {...}
-        //and save the pValue to key=>value pair R-HSA-5653656 => 1.1102230246251565e-16
+        // Get expression column data form token and save to key=>value pair R-HSA-5653656 => exp {...}
+        // and save the pValue to key=>value pair R-HSA-5653656 => 1.1102230246251565e-16
         var columnNameResponse = {};
         var pvalueResponse = {};
         $.each(response.pathways, function (key, val) {
@@ -89,7 +89,7 @@ function foamtreeAnalysis(analysisParam){
             });
         });
 
-        // min and max value from token, the min max value in color bar
+        // Min and max value from token, the min max value in color bar
         var min = response.expressionSummary.min;
         var max = response.expressionSummary.max;
 
@@ -103,10 +103,10 @@ function foamtreeAnalysis(analysisParam){
         ).then(function() {
                 if (speciesData && topSpeciesData) {
 
-                    groups = getData(speciesData, topSpeciesData);
+                    var defaultFoamtreeData = getData(speciesData, topSpeciesData);
+                    var anaGroupsData = addExpAnaResult(columnNameResponse, pvalueResponse, analysisParam, defaultFoamtreeData);
 
-                    foamtreeExpStarts(columnNameResponse,pvalueResponse, analysisParam, groups, min, max, columnArray);
-
+                    foamtreeExpStarts( anaGroupsData, min, max, columnArray);
                     $(".waiting").hide();
                 }
                 else {
@@ -116,7 +116,8 @@ function foamtreeAnalysis(analysisParam){
     }
     $.ajax({
         // TODO PARSE FILTER PARAM -- FILTER=pValue:0.88$species:9606
-        url: "/AnalysisService/token/" + analysisParam + "/filter/species/"+ speciesIdFromUrl +"?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
+        url: "https://dev.reactome.org/AnalysisService/token/" + analysisParam + "/filter/species/"+ speciesIdFromUrl +"?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
+      //  url: "/AnalysisService/token/" + analysisParam + "/filter/species/"+ speciesIdFromUrl +"?sortBy=ENTITIES_PVALUE&order=ASC&resource=TOTAL",
         dataType: "json",
         type: "GET",
         beforeSend:  function() {
@@ -133,7 +134,7 @@ function foamtreeAnalysis(analysisParam){
         error: function () {
             alert("data not found");
 
-            //remove color and analysis parameter in current url without reloading page
+            // Remove color and analysis parameter in current url without reloading page
             var newURL = location.href.split("?")[0];
             window.history.pushState('object', document.title, newURL);
 

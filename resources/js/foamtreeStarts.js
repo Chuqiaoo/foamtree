@@ -74,41 +74,7 @@ function foamtreeStarts(groupsData){
         }
     });
 
-    /* Replacing the costly "expose" animation on double click
-     with a simple zoom, which is faster to execute.
-     Store references to parent groups*/
-    foamtree.set({
-        onModelChanging: function addParent(group, parent) {
-            if (!group) { return; }
-            group.parent = parent;
-            if (group.groups) {
-                group.groups.forEach(function(g) {
-                    addParent(g, group);
-                });
-            }
-        },
-        onGroupDoubleClick: function(e) {
-            e.preventDefault();
-            var group = e.secondary ? e.bottommostOpenGroup : e.topmostClosedGroup;
-            var toZoom;
-            if (group) {
-                // Open on left-click, close on right-click
-                this.open({
-                    groups: group,
-                    open: !e.secondary
-                });
-                toZoom = e.secondary ? group.parent : group;
-            } else {
-                toZoom = this.get("dataObject");
-            }
-            this.zoom(toZoom);
-        }
-    });
-
-    /* Switching color profiles by url
-    * Color foamtree by Reactome color profiles*/
-
-    var profileSelected = typeof colorParam !== "undefined" && colorParam.toUpperCase().replace(/%20/g,"_") in ColorProfileEnum ? ColorProfileEnum[colorParam.toUpperCase().replace(/%20/g,"_")] : ColorProfileEnum.COPPER;
+    // Switching color profiles by color param from url and save to profileSelected
     foamtree.set({
         groupColorDecorator: function (opts, props, vars) {
             // If child groups of some group don't have enough space to

@@ -2,65 +2,7 @@
  * Created by Chuqiao on 19/5/9.
  */
 
-function foamtreeExpStarts(columnNameResponse, pvalueResponse, token, foamtreeMapping, min, max, columnArray) {
-
-    // Add Exp to Top 1 level
-    foamtreeMapping.forEach(addTopExpAndUrl);
-    function addTopExpAndUrl(group) {
-        group = columnNameResponse[group.stId] ? Object.assign(group, {'exp': columnNameResponse[group.stId]}) : Object.assign(group, {'exp': undefined});
-    }
-
-    // Add Exp to child groups
-    foamtreeMapping.forEach(addExpToChild);
-    function addExpToChild(group) {
-        if (group.groups && group.groups.length > 0) {
-            group.groups.forEach(addExpToChild);
-
-            for (var i = 0; i < group.groups.length; i++) {
-                if (columnNameResponse[group.groups[i].stId]) {
-                    group.groups[i] = Object.assign(group.groups[i], {'exp': columnNameResponse[group.groups[i].stId]});
-                } else {
-                    group.groups[i] = Object.assign(group.groups[i], {'exp': undefined});
-                }
-            }
-        }
-    }
-
-    // Add pValue and new url to Top 1 level
-    foamtreeMapping.forEach(addTopPvalueAndUrl);
-    function addTopPvalueAndUrl(group){
-        group = pvalueResponse[group.stId] ? Object.assign(group, {'pValue': pvalueResponse[group.stId], 'url': group.url + "&DTAB=AN&ANALYSIS=" + token}) : Object.assign(group, {'pValue': undefined, 'url': group.url + "&DTAB=AN&ANALYSIS=" + token});
-    }
-
-    // Add analysis colorValue url to child groups
-    foamtreeMapping.forEach(addAnalysisUrl);
-    function addAnalysisUrl(group) {
-        if (group.groups && group.groups.length > 0) {
-            group.groups.forEach(addAnalysisUrl);
-
-            for (var i = 0; i < group.groups.length; i++) {
-                if (columnNameResponse[group.groups[i].stId]) {
-                    group.groups[i] = Object.assign(group.groups[i], {'url': group.groups[i].url + "&DTAB=AN&ANALYSIS=" + token});
-                }
-            }
-        }
-    }
-
-    // Add pValue to child groups
-    foamtreeMapping.forEach(addPvalueToChild);
-    function addPvalueToChild(group) {
-        if (group.groups && group.groups.length > 0) {
-            group.groups.forEach(addPvalueToChild);
-
-            for (var i =0; i < group.groups.length; i++){
-                if (pvalueResponse[group.groups[i].stId]) {
-                    group.groups[i] = Object.assign( group.groups[i],{'pValue': pvalueResponse[group.groups[i].stId]});
-                } else {
-                    group.groups[i] = Object.assign(group.groups[i],{'pValue': undefined });
-                }
-            }
-        }
-    }
+function foamtreeExpStarts(expAnaData, min, max, columnArray) {
 
     // Basic definitions
     var foamtree = new CarrotSearchFoamTree({
@@ -115,40 +57,7 @@ function foamtreeExpStarts(columnNameResponse, pvalueResponse, token, foamtreeMa
     // Loading data set
     foamtree.set({
         dataObject: {
-            groups: foamtreeMapping
-        }
-    });
-
-    /* Replacing the costly "expose" animation on double click
-     with a simple zoom, which is faster to execute.
-     Store references to parent groups*/
-    foamtree.set({
-        onModelChanging: function addParent(group, parent) {
-            if (!group) {
-                return;
-            }
-            group.parent = parent;
-            if (group.groups) {
-                group.groups.forEach(function (g) {
-                    addParent(g, group);
-                });
-            }
-        },
-        onGroupDoubleClick: function (e) {
-            e.preventDefault();
-            var group = e.secondary ? e.bottommostOpenGroup : e.topmostClosedGroup;
-            var toZoom;
-            if (group) {
-                // Open on left-click, close on right-click
-                this.open({
-                    groups: group,
-                    open: !e.secondary
-                });
-                toZoom = e.secondary ? group.parent : group;
-            } else {
-                toZoom = this.get("dataObject");
-            }
-            this.zoom(toZoom);
+            groups: expAnaData
         }
     });
 
@@ -171,48 +80,38 @@ function foamtreeExpStarts(columnNameResponse, pvalueResponse, token, foamtreeMa
     // Display hints
     CarrotSearchFoamTree.hints(foamtree);
 
-    // Coloring foamtree by color profile param from url with Exp data
-    var colorParam = getUrlVars()["color"];
-    var colorProfile = typeof colorParam !== "undefined" && colorParam.toUpperCase().replace(/%20/g, "_") in ColorProfileEnum ? colorParam.toUpperCase().replace(/%20/g, "_") : "COPPER";
-    var profileSelected = ColorProfileEnum[colorProfile];
+    // Set color base on pValue range and columns value
+    function setColor(column){
+        foamtree.set({
+            groupColorDecorator: function (opts, params, vars) {
+                if (typeof params.group.exp != "undefined") {
 
-    var colorMaxExpInBar = ColorProfileEnum.properties[profileSelected].min_exp;
-    var colorMinExpInBar = ColorProfileEnum.properties[profileSelected].max_exp;
-    var colorStopExpInBar = ColorProfileEnum.properties[profileSelected].stop_exp;
+                    var coverage = params.group.exp[column];
+                    var pValue = params.group.pValue;
+                    var ratio = 1 - ((coverage - min) / (max - min));
+                    var colorValue = threeGradient(ratio, colorMaxExpInBar, colorMinExpInBar, colorStopExpInBar);
 
-    foamtree.set({
-        groupColorDecorator: function (opts, params, vars) {
-            if (typeof params.group.exp != "undefined") {
+                    if (pValue !== undefined && pValue >= 0 && pValue <= 0.05) {
+                        vars.groupColor.r = colorValue.red;
+                        vars.groupColor.g = colorValue.green;
+                        vars.groupColor.b = colorValue.blue;
 
-                // Use the first data set as default
-                var coverage = params.group.exp[Object.keys(params.group.exp)[0]];
-                var ratio = 1 - ((coverage - min) / (max - min));
-                var pValue = params.group.pValue;
-                var colorValue = threeGradient(ratio, colorMaxExpInBar, colorMinExpInBar, colorStopExpInBar);
+                        vars.groupColor.model = "rgb";
 
-                if (pValue !== undefined && pValue >= 0 && pValue <= 0.05) {
-                    vars.groupColor.r = colorValue.red;
-                    vars.groupColor.g = colorValue.green;
-                    vars.groupColor.b = colorValue.blue;
-
-                    vars.groupColor.model = "rgb";
-
-                } else if (pValue !== undefined && pValue > 0.05) {
-                    vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
+                    } else if (pValue !== undefined && pValue > 0.05) {
+                        vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
+                    }
+                } else {
+                    vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
                 }
-            } else {
-                vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
-            }
-        },
-        //Color of the outline stroke for the selected groups
-        groupSelectionOutlineColor: ColorProfileEnum.properties[profileSelected].hit
-    });
+            },
+            groupSelectionOutlineColor: ColorProfileEnum.properties[profileSelected].hit
+        });
+        // Schedule a redraw to draw the new colors
+        window.setTimeout(foamtree.redraw, 0);
+    }
 
-    //Create expression data sets div and append span list
-    var columnNames = document.createElement("div");
-    columnNames.setAttribute("id", "columnNames");
-    expressionBar.appendChild(columnNames);
-
+    // Exp bar array
     for (var j = 0; j < columnArray.length; j++) {
         var span = document.createElement("span");
         span.setAttribute("value", columnArray[j]);
@@ -222,89 +121,35 @@ function foamtreeExpStarts(columnNameResponse, pvalueResponse, token, foamtreeMa
     }
 
     // Expression bar to change color
-    $(document).ready(function () {
+    var divs = $('#columnNames>span');
+    var now = 0;
+    $("#expressionBar").show();
+    // Currently shown span
+    divs.hide().first().show();
 
-        var divs = $('#columnNames>span');
-        var now = 0;
-        $("#expressionBar").show();
-        // Currently shown span
-        divs.hide().first().show();
+    // Get the first item in columnNames
+    var columnFirst = divs.eq(now).show().attr('value');
+    // Use the first item as default coverage value
+    setColor(columnFirst);
 
-        $("button[name=next]").click(function () {
-
-            divs.eq(now).hide();
-            now = (now + 1 < divs.length) ? now + 1 : 0;
-            divs.eq(now).show(); // show next
-            var column = divs.eq(now).show().attr('value');
-
-            foamtree.set({
-                groupColorDecorator: function (opts, params, vars) {
-                    if (typeof params.group.exp != "undefined") {
-
-                        var coverage = params.group.exp[column];
-                        var pValue = params.group.pValue;
-                        var ratio = 1 - ((coverage - min) / (max - min));
-                        var colorValue = threeGradient(ratio, colorMaxExpInBar, colorMinExpInBar, colorStopExpInBar);
-
-                        if (pValue !== undefined && pValue >= 0 && pValue <= 0.05) {
-                            vars.groupColor.r = colorValue.red;
-                            vars.groupColor.g = colorValue.green;
-                            vars.groupColor.b = colorValue.blue;
-
-                            vars.groupColor.model = "rgb";
-
-                        } else if (pValue !== undefined && pValue > 0.05) {
-                            vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
-                        }
-                    } else {
-                        vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
-                    }
-                },
-                groupSelectionOutlineColor: ColorProfileEnum.properties[profileSelected].hit
-            });
-            // Schedule a redraw to draw the new colors
-            window.setTimeout(foamtree.redraw, 0);
-        });
-
-        $("button[name=prev]").click(function () {
-            divs.eq(now).hide();
-            now = (now > 0) ? now - 1 : divs.length - 1;
-            divs.eq(now).show();
-            var column = divs.eq(now).show().attr('value');
-
-            //TODO foamtreePrevNextExp(column);
-            foamtree.set({
-                groupColorDecorator: function (opts, params, vars) {
-                    if (typeof params.group.exp != "undefined") {
-
-                        var coverage = params.group.exp[column];
-                        var pValue = params.group.pValue;
-                        var ratio = 1 - ((coverage - min) / (max - min));
-                        var colorValue = threeGradient(ratio, colorMaxExpInBar, colorMinExpInBar, colorStopExpInBar);
-
-                        if (pValue !== undefined && pValue >= 0 && pValue <= 0.05) {
-                            vars.groupColor.r = colorValue.red;
-                            vars.groupColor.g = colorValue.green;
-                            vars.groupColor.b = colorValue.blue;
-
-                            vars.groupColor.model = "rgb";
-
-                        } else if (pValue !== undefined && pValue > 0.05) {
-                            vars.groupColor = ColorProfileEnum.properties[profileSelected].hit;
-                        }
-                    } else {
-                        vars.groupColor = ColorProfileEnum.properties[profileSelected].fadeout;
-                    }
-                },
-                groupSelectionOutlineColor: ColorProfileEnum.properties[profileSelected].hit
-            });
-
-            // Schedule a redraw to draw the new colors
-            window.setTimeout(foamtree.redraw, 0);
-        });
+    // Prev and next button color control
+    $("button[name=next]").click(function () {
+        divs.eq(now).hide();
+        now = (now + 1 < divs.length) ? now + 1 : 0;
+        divs.eq(now).show(); // show next
+        var column = divs.eq(now).show().attr('value');
+        setColor(column);
     });
 
-    // switching views
+    $("button[name=prev]").click(function () {
+        divs.eq(now).hide();
+        now = (now > 0) ? now - 1 : divs.length - 1;
+        divs.eq(now).show();
+        var column = divs.eq(now).show().attr('value');
+        setColor(column);
+    });
+
+    // Switching views
     document.addEventListener("click", function (e) {
         if (!e.target.href) {
             return;
@@ -315,7 +160,6 @@ function foamtreeExpStarts(columnNameResponse, pvalueResponse, token, foamtreeMa
             case "#flattened":
                 foamtree.set({
                     stacking: "flattened"
-
                 });
                 break;
             case "#hierarchical":
@@ -339,20 +183,27 @@ function foamtreeExpStarts(columnNameResponse, pvalueResponse, token, foamtreeMa
         }
     })());
 
+    // Play button control
     var intervalId = null;
-    var playButton = document.getElementById("playButton");
-    playButton.addEventListener("click", function(){
+    $("button[name=play]").click(function () {
 
-        playButton.title = playButton.title =="Play" ? playButton.title = "Pause" : playButton.title = "Play";
+        $(this).attr('title', $(this).attr('title')==='Play'? 'Pause':'Play');
+        $(this).html( $(this).html() === String.fromCharCode(9656) ? '&#2405;':'&#9656;');
 
         if (!intervalId) {
             intervalId = setInterval(function () {
-               document.getElementById("playNext").click();
+                $("button[name=next]").click();
             }, 2000);
         } else {
             clearInterval(intervalId);
             intervalId = null;
         }
+    });
+
+    // Colse button control
+    $("button[name=close]").click(function () {
+        $("#expressionBar").hide();
+        window.location.href = location.href.split("?")[0];
     });
 
 }
